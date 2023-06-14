@@ -1,13 +1,12 @@
 <template>
-    <h1>abc</h1>
+  <div id="slider">
+    
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 </style>
