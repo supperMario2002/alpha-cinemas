@@ -6,8 +6,19 @@ const router = createRouter({
     routes: [
       {
         path: '/',
-        name: 'home',
         component: () => import('../layouts/client.vue'),
+        children: [
+          {
+            path: '',
+            name: 'home',
+            component: () => import('../pages/client/HomePage.vue')
+          },
+          {
+            path: '',
+            name: 'movies',
+            component: () => import('../pages/client/MoviePage.vue')
+          }
+        ]
       },
     ]
 });
