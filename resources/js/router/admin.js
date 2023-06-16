@@ -1,30 +1,15 @@
-const admin = [
+const client = [
     {
-        path: "/",
-        component: () => import("../layouts/client.vue"),
+        path: '/admin',
+        component: () => import('../layouts/admin.vue'),
         children: [
             {
-                path: "",
-                name: "home",
-                component: () => import("../pages/client/HomePage.vue"),
-            },
-            {
-                path: "",
-                name: "movies",
-                component: () => import("../pages/client/MoviePage.vue"),
-            },
-            {
-                path: "",
-                name: "schedule",
-                component: () => import("../pages/client/Schedule.vue"),
-            },
-        ],
-    },
-    {
-        path: "/:id",
-        name: "movie-detail",
-        component: () => import("../pages/client/Movie-detail.vue"),
-    },
-];
+                path: '',
+                name: 'admin-home',
+                component: () => import('../pages/admin/home/index.vue'),
+            }
+        ]
+    }
+]
 
-export default admin;
+export default client;
