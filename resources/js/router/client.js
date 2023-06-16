@@ -1,4 +1,4 @@
-const admin = [
+const client = [
     {
         path: "/",
         component: () => import("../layouts/client.vue"),
@@ -27,4 +27,4 @@ const admin = [
     },
 ];
 
-export default admin;
+export default client;
