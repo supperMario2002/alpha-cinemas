@@ -17,8 +17,18 @@ const router = createRouter({
             path: '',
             name: 'movies',
             component: () => import('../pages/client/MoviePage.vue')
+          },
+          {
+            path: '',
+            name: 'schedule',
+            component: () => import('../pages/client/Schedule.vue')
           }
         ]
+      },
+      {
+        path: '/:id',
+        name: 'movie-detail',
+        component: () => import('../pages/client/Movie-detail.vue')
       },
     ]
 });

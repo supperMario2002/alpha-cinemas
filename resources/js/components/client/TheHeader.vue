@@ -30,7 +30,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'home' }" class="nav-link">
+              <router-link :to="{ name: 'schedule' }" class="nav-link">
                 Lịch chiếu
               </router-link>
             </li>
