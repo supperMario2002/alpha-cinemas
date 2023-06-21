@@ -1,9 +1,8 @@
 <template>
     <div id="movie">
         <div class="container my-5">
-            <a-tabs v-model:activeKey="activeKey" >
-                <a-tab-pane key="1" tab="Tab" 
-                    >
+            <a-tabs v-model:activeKey="activeKey" centered>
+                <a-tab-pane key="1" tab="Phim Sắp Chiếu" >
                     <div class="row">
                         <div
                             class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
@@ -102,10 +101,8 @@
                             </router-link>
                         </div>
                     </div>
-                    </a-tab-pane
-                >
-                <a-tab-pane key="2" tab="Tab 2" force-render
-                    >
+                </a-tab-pane>
+                <a-tab-pane key="2" tab="Phim Đang Chiếu" force-render>
                     <div class="row">
                         <div
                             class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
@@ -204,10 +201,8 @@
                             </router-link>
                         </div>
                     </div>
-                    </a-tab-pane
-                >
-                <a-tab-pane key="3" tab="Tab 3"
-                    >
+                </a-tab-pane>
+                <a-tab-pane key="3" tab="Xuất Đặc biệt">
                     <div class="row">
                         <div
                             class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
@@ -306,8 +301,7 @@
                             </router-link>
                         </div>
                     </div>
-                    </a-tab-pane
-                >
+                </a-tab-pane>
             </a-tabs>
         </div>
     </div>
@@ -322,6 +316,9 @@ export default {
             activeKey: ref("1"),
         };
     },
+    props: {
+        Pages: {type: String,}
+    }
 };
 </script>
 
