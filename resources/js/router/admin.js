@@ -7,13 +7,32 @@ const admin = [
                 path: '',
                 name: 'admin-home',
                 component: () => import('../pages/admin/home/index.vue'),
+            }, 
+            {
+                path: 'users',
+                name: 'admin-users',
+                component: () => import('../pages/admin/users/list.vue'),
+            }, 
+            {
+                path: 'users/create',
+                name: 'admin-users-create',
+                component: () => import('../pages/admin/users/create.vue'),
+            }, 
+            {
+                path: 'account',
+                name: 'admin',
+                component: () => import('../pages/admin/users/listAdmin.vue'),
+            }, 
+            {
+                path: 'account/create',
+                name: 'admin-create',
+                component: () => import('../pages/admin/users/createAdmin.vue'),
             },
             {
                 path: 'login',
                 name: 'admin-login',
                 component: () => import('../pages/auth/Login.vue'),
-            }
-            ,
+            },
             {
                 path: 'register',
                 name: 'admin-register',
