@@ -5,10 +5,10 @@
                 <i class="fa-solid fa-house"></i>
             </template>
             <router-link :to="{ name: 'admin-home' }" class="text-decoration-none">
-                <span >Trang chủ</span>
+                <span>Trang chủ</span>
             </router-link>
         </a-menu-item>
-        <a-sub-menu   @titleClick="titleClick">
+        <a-sub-menu @titleClick="titleClick">
             <template #icon>
                 <i class="fa-solid fa-user"></i>
             </template>
@@ -18,16 +18,32 @@
                     <QqOutlined />
                 </template>
                 <template #title>Khách hàng</template>
-                <a-menu-item key="1">Danh sách tài khoản</a-menu-item>
-                <a-menu-item key="2">Thêm tài khoản</a-menu-item>
+                <a-menu-item key="admin-users">
+                    <router-link :to="{ name: 'admin-users' }" class="text-decoration-none">
+                        <span>Danh sách tài khoản</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-users-create">
+                    <router-link :to="{ name: 'admin-users-create' }" class="text-decoration-none">
+                        <span>Thêm tài khoản tài khoản</span>
+                    </router-link>
+                </a-menu-item>
             </a-menu-item-group>
             <a-menu-item-group key="g2">
                 <template #icon>
                     <QqOutlined />
                 </template>
                 <template #title>Quản trị viên</template>
-                <a-menu-item key="3">Danh sách tài khoản</a-menu-item>
-                <a-menu-item key="4">Thêm tài khoản</a-menu-item>
+                <a-menu-item key="admin">
+                    <router-link :to="{ name: 'admin' }" class="text-decoration-none">
+                        <span>Danh sách tài khoản</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-create">
+                    <router-link :to="{ name: 'admin-create' }" class="text-decoration-none">
+                        <span>Thêm tài khoản tài khoản</span>
+                    </router-link>
+                </a-menu-item>
             </a-menu-item-group>
         </a-sub-menu>
     </a-menu>
