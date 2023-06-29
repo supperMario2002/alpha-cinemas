@@ -4,14 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        "fullname",
+        "avatar",
+        "email",
+        "email_verified_at",
+        "password",
+        "phone",
+        "gender",
+        "birthday",
+        "remember_token",
+        "created_at",
+        "updated_at",
+        "deleted_at",
     ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    protected $timestamps = true;
 }

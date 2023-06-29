@@ -140,7 +140,6 @@ export default defineComponent({
     store.onSelectKeys(['admin-create']);
 
     const dateFormatList = 'DD/MM/YYYY';
-    const gender = ref(0);
  
     const errors = ref({});
     const admin = reactive({
@@ -149,7 +148,7 @@ export default defineComponent({
       password: '',
       password_confinmation: '',
       phone: '',
-      gender: [],
+      gender: 1,
       birthday: '',
     });
 
@@ -157,7 +156,7 @@ export default defineComponent({
       axios.post('http://127.0.0.1:8000/api/admin/create', admin)
         .then((response) => {
           errors.value = '';
-          console.log(response);
+          console.log(response.data);
         })
         .catch((error) => {
           errors.value = error.response.data.errors;
@@ -166,7 +165,6 @@ export default defineComponent({
     }
 
     return {
-      gender,
       birthday: ref(dayjs('01/01/2015', dateFormatList)),
       dateFormatList,
       errors,
