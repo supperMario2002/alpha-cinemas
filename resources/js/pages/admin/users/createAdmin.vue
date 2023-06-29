@@ -153,7 +153,7 @@ export default defineComponent({
       birthday: '',
     });
 
-    const createAdmin = () => {
+    const createAdmin = async () => {
       axios.post('http://127.0.0.1:8000/api/admin/create', admin)
         .then((response) => {
           errors.value = '';

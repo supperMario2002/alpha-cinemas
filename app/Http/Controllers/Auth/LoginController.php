@@ -12,4 +12,9 @@ class LoginController extends Controller
     public function registerAdmin(RegisterAdminRequest $request){
         return response()->json($request);
     }
+
+    public function store(RegisterAdminRequest $request)
+    {
+        return response()->json($request); 
+    }
 }
