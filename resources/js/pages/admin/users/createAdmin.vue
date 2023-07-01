@@ -155,6 +155,18 @@ export default defineComponent({
     const createAdmin = async () => {
       axios.post('http://127.0.0.1:8000/api/admin/create', admin)
         .then((response) => {
+          if (response.status == 200) {
+            Object.assign(admin, {
+            fullname: '',
+            email: '',
+            password: '',
+            password_confinmation: '',
+            phone: '',
+            gender: 1,
+            birthday: '',
+          })
+          errors.value = ''
+          }
           console.log(response);
         })
         .catch((error) => {
