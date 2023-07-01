@@ -31,5 +31,5 @@ class Admin extends Model
         'password' => 'hashed',
     ];
 
-    protected $timestamps = true;
+    public $timestamps = true;
 }
