@@ -11,6 +11,7 @@ class Admin extends Model
     use HasFactory, SoftDeletes;
 
 
+    protected $table = 'admin';
     protected $fillable = [
         "fullname",
         "avatar",

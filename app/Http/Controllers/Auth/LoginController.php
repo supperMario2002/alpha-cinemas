@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterAdminRequest;
 use App\Models\Admin;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -17,17 +17,16 @@ class LoginController extends Controller
 
     public function store(RegisterAdminRequest $request)
     {
-        // dd($request);
+        // dd($request->fullname);
         $create = Admin::create([
             "fullname" => $request->fullname,
             "avatar" => 'test',
             "email" => $request->email,
-            "password" => Hash::make($request->password),
+            "password" => bcrypt($request->password),
             "phone" => $request->phone,
             "gender" => $request->gender,
-            "birthday" => $request->birthday,
-            "deleted_at" => $request->deleted_at,
+            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
         ]);
-        return response()->json($request); 
+        return response()->json(['mess' => 'Thêm tài khoản thành công!!']); 
     }
 }

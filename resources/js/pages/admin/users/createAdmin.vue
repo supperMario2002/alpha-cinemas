@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createAdmin">
+  <form @submit.prevent="createAdmin" :form="admin">
     <a-card title="Tạo mới tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
@@ -140,8 +140,9 @@ export default defineComponent({
     store.onSelectKeys(['admin-create']);
 
     const dateFormatList = 'DD/MM/YYYY';
- 
+
     const errors = ref({});
+
     const admin = reactive({
       fullname: '',
       email: '',
@@ -151,16 +152,16 @@ export default defineComponent({
       gender: 1,
       birthday: '',
     });
-
     const createAdmin = async () => {
       axios.post('http://127.0.0.1:8000/api/admin/create', admin)
         .then((response) => {
-          errors.value = '';
-          console.log(response.data);
+          console.log(response);
         })
         .catch((error) => {
-          errors.value = error.response.data.errors;
-          console.log(errors.value);
+          if (error.response.status === 422) {
+            errors.value = error.response.data.errors;
+          }
+          console.log(errors.value); 
         })
     }
 
