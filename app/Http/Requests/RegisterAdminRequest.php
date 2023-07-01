@@ -25,7 +25,7 @@ class RegisterAdminRequest extends FormRequest
             'fullname' => 'required',
             'email'=> 'required|email',
             'password'=> 'required',
-            'password_confinmation'=> 'required',
+            'password_confinmation'=> 'required|same:password',
             'phone'=> 'required', 
             'birthday'=> 'required',
         ];
@@ -38,6 +38,7 @@ class RegisterAdminRequest extends FormRequest
             'email.email'=> 'Không phải email',
             'password.required'=> 'Không được để trống mật khẩu',
             'password_confinmation.required'=> 'Không được để trống nhập lại mật khẩu',
+            'password_confinmation.same'=> 'Mật khẩu không khớp',
             'phone.required'=> 'Không được để trống số điện thoại', 
             'birthday.required'=> 'Không được để trống ngày sinh',
         ];
