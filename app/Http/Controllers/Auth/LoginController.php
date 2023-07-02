@@ -13,13 +13,9 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    
-    public function registerAdmin(RegisterAdminRequest $request){
-        return response()->json($request);
-    }
-
-    public function registerUser(RegisterUserRequest $request){
-        return response()->json($request);
+    public function indexAdmin(){
+        $admin = Admin::all();
+        return response()->json($admin);
     }
     public function indexUser(){
         $user = User::all();

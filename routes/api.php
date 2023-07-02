@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/admin/create', [LoginController::class, 'storeAdmin']);
+Route::get('/admin/index', [LoginController::class, 'indexAdmin']);
+Route::post('/admin/create', [LoginController::class, 'store']);
 Route::post('/user/create', [LoginController::class, 'storeUser']);
 Route::get('/user/index', [LoginController::class, 'indexUser']);
