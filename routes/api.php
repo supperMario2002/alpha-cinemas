@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/admin/index', [LoginController::class, 'indexAdmin']);
 Route::post('/admin/create', [LoginController::class, 'store']);

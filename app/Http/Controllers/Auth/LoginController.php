@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    
+    public function indexAdmin(){
+        $admin = Admin::all();
+        return response()->json($admin);
+    }
     public function registerAdmin(RegisterAdminRequest $request){
         return response()->json($request);
     }
