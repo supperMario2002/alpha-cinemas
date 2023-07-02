@@ -6,13 +6,13 @@
       </div>
       <div class="col-12">
         <div class="row">
-          <div class="col-3 d-none d-md-flex  ">
+          <div class="col-2 d-none d-md-flex  ">
             <a-card title="Menu" style="width: 100%">
               <template #extra> <i class="fa-solid fa-bars"></i></template>
               <TheMenu />
             </a-card>
           </div>
-          <div class="col-9  ">
+          <div class="col-10">
             <router-view></router-view>
           </div>
         </div>
@@ -26,6 +26,7 @@ import TheHeader from '../components/admin/TheHeader.vue'
 import TheMenu from '../components/admin/TheMenu.vue'
 export default {
   components: { TheHeader, TheMenu },
+  
 
 }
 </script>

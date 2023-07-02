@@ -25,6 +25,16 @@ const client = [
         name: "movie-detail",
         component: () => import("../pages/client/Movie-detail.vue"),
     },
+    {
+        path: "/Login",
+        name: "Login",
+        component: () => import("../pages/auth/LoginClient.vue"),
+    },
+    {
+        path: "/SignIn",
+        name: "SignIn",
+        component: () => import("../pages/auth/SignClient.vue"),
+    },
 ];
 
 export default client;

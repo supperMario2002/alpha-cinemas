@@ -152,6 +152,7 @@ export default defineComponent({
       gender: 1,
       birthday: '',
     });
+    
     const createAdmin = async () => {
       axios.post('http://127.0.0.1:8000/api/admin/create', admin)
         .then((response) => {
