@@ -34,22 +34,17 @@ class LoginController extends Controller
     public function updateUser(Request $request, $id) {
         $user = User::find($id);
         try {
-            $user->save([
+            $user->update([
                 "fullname" => $request->fullname,
-                "avatar" => 'test',
                 "email" => $request->email,
                 "phone" => $request->phone,
                 "gender" => $request->gender,
                 "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-                "provider_id" => 1,
-                "provider" => 3,
-                "point" => 3,
             ]);
-            
+
             
         } catch (\Throwable $th) {
-            // dd();
-            return readdir('/admin/user');
+            dd($th);
         }
         
 
