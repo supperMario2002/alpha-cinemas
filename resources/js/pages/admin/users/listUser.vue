@@ -3,10 +3,17 @@
     <template #bodyCell="{ column, index, record }">
       <template v-if="column.key === 'index'">
         <span>{{ index + 1 }}</span>
-      </template> 
+      </template>
       <template v-if="column.key === 'gender'">
         <span v-if="record.gender == 0" class="text-primary">Nam</span>
         <span v-else-if="record.gender == 1" class="text-danger">Nữ</span>
+      </template>
+      <template v-if="column.key === 'action'">
+        <router-link :to="{name: 'admin-users-edit', params: { id: record.id }}">
+          <a-button type="primary">
+            <i class="fa-solid fa-pen-to-square"></i>{{ record.id }}
+          </a-button>
+        </router-link>
       </template>
     </template>
   </a-table>
@@ -67,14 +74,14 @@ export default defineComponent({
       }
     ];
 
-    const getAdmin = () => axios.get('http://127.0.0.1:8000/api/user/index')
+    const getUser = () => axios.get('http://127.0.0.1:8000/api/user/index')
       .then((reponse) => {
         user.value = reponse.data;
       })
       .catch((error) => {
         console.log(error);
       })
-    getAdmin();
+    getUser();
     return {
       user,
       columns

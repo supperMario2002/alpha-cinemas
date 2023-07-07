@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,24 +24,18 @@ class RegisterUserRequest extends FormRequest
         return [
             'fullname' => 'required',
             'email'=> 'required|email',
-            'password'=> 'required',
-            'password_confinmation'=> 'required|same:password',
             'phone'=> 'required', 
-            'birthday'=> 'required',
         ];
     }
 
     public function messages(){
         return [
             'fullname.required' => 'Không được để trống họ tên',
+            'fullname.unique' => 'Tên đã tồn tại',
             'email.required'=> 'Không được để trống email',
             'email.email'=> 'Không phải email',
             'password.required'=> 'Không được để trống mật khẩu',
-            'password_confinmation.required'=> 'Không được để trống nhập lại mật khẩu',
-            'password_confinmation.same'=> 'Mật khẩu không khớp',
             'phone.required'=> 'Không được để trống số điện thoại', 
-            // 'phone.unique'=> 'Số điện thoại đã tồn tại', 
-            'birthday.required'=> 'Không được để trống ngày sinh',
         ];
     }
 }

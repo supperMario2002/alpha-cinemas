@@ -1,6 +1,7 @@
 const client = [
     {
         path: "/",
+        name: "HomePage",
         component: () => import("../layouts/client.vue"),
         children: [
             {

@@ -55,11 +55,14 @@
 
 <script>
 import dayjs from 'dayjs';
+import { message } from 'ant-design-vue';
+import { useRoute } from 'vue-router';
 import { defineComponent, reactive, ref, toRef } from 'vue';
 import axios from 'axios';
 export default {
     setup() {
 
+        const router = useRoute();
         const errors = ref({});
         const dateFormatList = 'DD/MM/YYYY';
         const user = reactive({
@@ -85,7 +88,9 @@ export default {
                             gender: 1,
                             birthday: '',
                         })
-                        errors.value = ''
+                        errors.value = '';
+                        message.success("Đăng ký thành công");
+                        router.push({path: "/Login"});
                     }
                     console.log(response);
                 })
@@ -93,7 +98,6 @@ export default {
                     if (error.response.status === 422) {
                         errors.value = error.response.data.errors;
                     }
-                    console.log(errors.value);
                 })
         }
 

@@ -68,7 +68,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 Thứ tự tạo bảng
 Admin - created
-user
+user - created
 room
 categories
 moies
