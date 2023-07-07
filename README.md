@@ -66,4 +66,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
-test
+Thứ tự tạo bảng
+Admin - created
+user - created
+room
+categories
+moies
+movie_category
+show_time
+type_seat
+seat
+voucher
+tickets

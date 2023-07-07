@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterAdminRequest;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserCollection;
 use App\Models\Admin;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,11 +18,52 @@ class LoginController extends Controller
         $admin = Admin::all();
         return response()->json($admin);
     }
-    public function registerAdmin(RegisterAdminRequest $request){
-        return response()->json($request);
+    public function indexUser(){
+        $user = User::all();
+        return response()->json($user);
     }
 
-    public function store(RegisterAdminRequest $request)
+    public function getUserById($id) {
+        $user = User::find($id);
+
+        return response()->json($user);
+    }
+
+    public function updateUser(UpdateUserRequest $request) {
+        // return "okemon";
+        $update = User::saved([
+            "fullname" => $request->fullname,
+            "avatar" => 'test',
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "gender" => $request->gender,
+            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+            "provider_id" => 1,
+            "provider" => 3,
+            "point" => 3,
+        ]);
+
+    }
+
+    public function storeUser(RegisterUserRequest $request)
+    {
+        // dd($request->fullname);
+        $create = User::create([
+            "fullname" => $request->fullname,
+            "avatar" => 'test',
+            "email" => $request->email,
+            "password" => bcrypt($request->password),
+            "phone" => $request->phone,
+            "gender" => $request->gender,
+            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+            "provider_id" => 1,
+            "provider" => 3,
+            "point" => 3,
+        ]);
+        return response()->json(['mess' => 'Đăng ký thành công!!']); 
+    }
+
+    public function storeAdmin(RegisterAdminRequest $request)
     {
         // dd($request->fullname);
         $create = Admin::create([

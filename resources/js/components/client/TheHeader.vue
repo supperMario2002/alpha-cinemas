@@ -57,10 +57,14 @@
           </ul>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link">Đăng nhập</a>
+              <router-link :to="{ name: 'Login' }" class="nav-link">
+                Đăng Nhập
+              </router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link">Đăng ký</a>
+              <router-link :to="{ name: 'SignIn' }" class="nav-link">
+                Đăng Ký
+              </router-link>
             </li>
           </ul>
         </div>

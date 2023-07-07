@@ -23,11 +23,6 @@
                         <span>Danh sách tài khoản</span>
                     </router-link>
                 </a-menu-item>
-                <a-menu-item key="admin-users-create">
-                    <router-link :to="{ name: 'admin-users-create' }" class="text-decoration-none">
-                        <span>Thêm tài khoản tài khoản</span>
-                    </router-link>
-                </a-menu-item>
             </a-menu-item-group>
             <a-menu-item-group key="g2">
                 <template #icon>

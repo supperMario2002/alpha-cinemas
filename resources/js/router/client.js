@@ -1,6 +1,7 @@
 const client = [
     {
         path: "/",
+        name: "HomePage",
         component: () => import("../layouts/client.vue"),
         children: [
             {
@@ -24,6 +25,16 @@ const client = [
         path: "/:id",
         name: "movie-detail",
         component: () => import("../pages/client/Movie-detail.vue"),
+    },
+    {
+        path: "/Login",
+        name: "Login",
+        component: () => import("../pages/auth/LoginClient.vue"),
+    },
+    {
+        path: "/SignIn",
+        name: "SignIn",
+        component: () => import("../pages/auth/SignClient.vue"),
     },
 ];
 
