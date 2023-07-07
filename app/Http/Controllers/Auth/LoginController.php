@@ -10,7 +10,9 @@ use App\Http\Resources\UserCollection;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\TryCatch;
 
 class LoginController extends Controller
 {
@@ -29,19 +31,27 @@ class LoginController extends Controller
         return response()->json($user);
     }
 
-    public function updateUser(UpdateUserRequest $request) {
-        // return "okemon";
-        $update = User::saved([
-            "fullname" => $request->fullname,
-            "avatar" => 'test',
-            "email" => $request->email,
-            "phone" => $request->phone,
-            "gender" => $request->gender,
-            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-            "provider_id" => 1,
-            "provider" => 3,
-            "point" => 3,
-        ]);
+    public function updateUser(Request $request, $id) {
+        $user = User::find($id);
+        try {
+            $user->save([
+                "fullname" => $request->fullname,
+                "avatar" => 'test',
+                "email" => $request->email,
+                "phone" => $request->phone,
+                "gender" => $request->gender,
+                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+                "provider_id" => 1,
+                "provider" => 3,
+                "point" => 3,
+            ]);
+            
+            
+        } catch (\Throwable $th) {
+            // dd();
+            return readdir('/admin/user');
+        }
+        
 
     }
 
