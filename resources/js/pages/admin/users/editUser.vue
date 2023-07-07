@@ -20,6 +20,9 @@
             </div>
           </div>
         </div>
+        <!-- input hiden -->
+        <input type="hidden" v-model="user.id">
+        <!-- input hiden end -->
         <div class="col-12 col-sm-8">
           <div class="row mb-3">
             <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
@@ -158,6 +161,7 @@ export default defineComponent({
     const errors = ref({});
     // const changePassword = ref({});
     const user = reactive({
+      id: '',
       fullname: '',
       email: '',
       password: '',
@@ -172,9 +176,11 @@ export default defineComponent({
       axios.get(`http://127.0.0.1:8000/api/user/${route.params.id}/edit`)
       .then((response) => {
         console.log(response.data);
+        user.id = response.data.id
         user.fullname = response.data.fullname
         user.email = response.data.email
         user.phone = response.data.phone
+        user.birthday = dayjs(response.data.birthday)
       })
       .catch((err) => {
         console.log(err);

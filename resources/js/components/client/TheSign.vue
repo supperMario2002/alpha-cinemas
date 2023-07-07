@@ -11,28 +11,28 @@
                 <div class="form-field d-flex align-items-center">
                     <span class="far fa-user"></span>
                     <a-input placeholder="Họ và tên" v-model:value="user.fullname" allow-clear />
-                    <span v-if="errors.fullname" class="text-danger">{{ errors.fullname[0] }}</span>
                 </div>
+                <span v-if="errors.fullname" class="text-danger">{{ errors.fullname[0] }}</span>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-envelope"></span>
                     <a-input placeholder="Email" v-model:value="user.email" allow-clear />
-                    <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}</span>
                 </div>
+                <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}</span>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-key"></span>
                     <a-input-password placeholder="Mật khẩu" v-model:value="user.password" allow-clear />
-                    <span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
                 </div>
+                <span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-key"></span>
                     <a-input-password placeholder="Nhập lại mật khẩu" v-model:value="user.password_confinmation" allow-clear />
-                    <span v-if="errors.password_confinmation" class="text-danger">{{ errors.password_confinmation[0] }}</span>
                 </div>
+                <span v-if="errors.password_confinmation" class="text-danger">{{ errors.password_confinmation[0] }}</span>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-phone"></span>
                     <a-input placeholder="Phone" v-model:value="user.phone" allow-clear />
-                    <span v-if="errors.phone" class="text-danger">{{ errors.phone[0] }}</span>
                 </div>
+                <span v-if="errors.phone" class="text-danger">{{ errors.phone[0] }}</span>
                 <div class="form-field d-flex align-items-center">
                     <span class="fa-solid fa-venus-mars"></span> &ensp; &ensp;
                     <a-radio-group v-model:value="user.gender">
