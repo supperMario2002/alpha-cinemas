@@ -14,7 +14,7 @@
       <template v-if="column.key === 'action'">
         <router-link :to="{name: 'admin-users-edit', params: { id: record.id }}">
           <a-button type="primary">
-            <i class="fa-solid fa-pen-to-square"></i>{{ record.id }}
+            <i class="fa-solid fa-pen-to-square"></i>
           </a-button>
         </router-link>
       </template>

@@ -190,7 +190,7 @@ export default defineComponent({
     const updateUser = async () => {
       axios.put(`http://127.0.0.1:8000/api/user/${route.params.id}`, user)
       .then((response) => {
-        console.log(response.data);
+        window.location.href= 'http://127.0.0.1:8000/admin/users'
       })
       .catch((err) => {
         if (err.response.status === 422) {
