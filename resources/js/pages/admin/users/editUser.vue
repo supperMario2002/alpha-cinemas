@@ -172,10 +172,8 @@ export default defineComponent({
     });
     
     const getUser = async () => {
-      console.log(`id là: ${route.params.id}`);
       axios.get(`http://127.0.0.1:8000/api/user/${route.params.id}/edit`)
       .then((response) => {
-        console.log(response.data);
         user.id = response.data.id
         user.fullname = response.data.fullname
         user.email = response.data.email

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+
+use App\Http\Controllers\Admin\UserAdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/admin/index', [LoginController::class, 'indexAdmin']);
-Route::post('/admin/create', [LoginController::class, 'store']);
-Route::post('/user/create', [LoginController::class, 'storeUser']);
-Route::get('/user/index', [LoginController::class, 'indexUser']);
-Route::get('/user/{id}/edit', [LoginController::class, 'getUserById']);
-Route::put('/user/{id}', [LoginController::class, 'updateUser']);
+Route::get('/admin/index', [UserAdminController::class, 'indexAdmin']);
+Route::post('/admin/create', [UserAdminController::class, 'store']);
+Route::get('/admin/{id}/edit', [UserAdminController::class, 'getAdminById']);
+
+Route::post('/user/create', [UserAdminController::class, 'storeUser']);
+Route::get('/user/index', [UserAdminController::class, 'indexUser']);
+Route::get('/user/{id}/edit', [UserAdminController::class, 'getUserById']);
+Route::put('/user/{id}', [UserAdminController::class, 'updateUser']);

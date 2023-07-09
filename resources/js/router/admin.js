@@ -34,7 +34,7 @@ const admin = [
                 component: () => import('../pages/admin/users/createAdmin.vue'),
             },
             {
-                path: 'account/edit',
+                path: 'account/:id/edit',
                 name: 'admin-edit',
                 component: () => import('../pages/admin/users/editAdmin.vue'),
             },
