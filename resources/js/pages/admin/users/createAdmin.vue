@@ -3,7 +3,6 @@
     <a-card title="Tạo mới tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
-
           <div class="row">
             <div class="col-12 d-flex justify-content-center mb-3">
               <a-avatar shape="square" :size="200">
@@ -152,21 +151,21 @@ export default defineComponent({
       gender: 1,
       birthday: '',
     });
-    
+
     const createAdmin = async () => {
       axios.post('http://127.0.0.1:8000/api/admin/create', admin)
         .then((response) => {
           if (response.status == 200) {
             Object.assign(admin, {
-            fullname: '',
-            email: '',
-            password: '',
-            password_confinmation: '',
-            phone: '',
-            gender: 1,
-            birthday: '',
-          })
-          errors.value = ''
+              fullname: '',
+              email: '',
+              password: '',
+              password_confinmation: '',
+              phone: '',
+              gender: 1,
+              birthday: '',
+            })
+            errors.value = ''
           }
           console.log(response);
         })
@@ -174,7 +173,7 @@ export default defineComponent({
           if (error.response.status === 422) {
             errors.value = error.response.data.errors;
           }
-          console.log(errors.value); 
+          console.log(errors.value);
         })
     }
 

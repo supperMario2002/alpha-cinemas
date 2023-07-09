@@ -42,7 +42,17 @@ const admin = [
                 path: 'register',
                 name: 'admin-register',
                 component: () => import('../pages/auth/Register.vue'),
-            }
+            },
+            {
+                path: 'rooms',
+                name: 'admin-rooms',
+                component: () => import('../pages/admin/rooms/index.vue'),
+            },
+            {
+                path: 'rooms/create',
+                name: 'admin-rooms-create',
+                component: () => import('../pages/admin/rooms/createRoom.vue'),
+            },
         ]
     }
 ]
