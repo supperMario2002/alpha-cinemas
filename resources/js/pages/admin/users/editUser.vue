@@ -172,7 +172,7 @@ export default defineComponent({
     });
     
     const getUser = async () => {
-      axios.get(`http://127.0.0.1:8000/api/user/${route.params.id}/edit`)
+      axios.get(`/api/user/${route.params.id}/edit`)
       .then((response) => {
         user.id = response.data.id
         user.fullname = response.data.fullname
@@ -186,7 +186,7 @@ export default defineComponent({
     }
 
     const updateUser = async () => {
-      axios.put(`http://127.0.0.1:8000/api/user/${route.params.id}`, user)
+      axios.put(`/api/user/${route.params.id}`, user)
       .then((response) => {
         window.location.href= 'http://127.0.0.1:8000/admin/users'
       })

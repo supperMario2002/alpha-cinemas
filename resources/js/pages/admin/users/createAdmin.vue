@@ -153,7 +153,7 @@ export default defineComponent({
     });
 
     const createAdmin = async () => {
-      axios.post('http://127.0.0.1:8000/api/admin/create', admin)
+      axios.post('/api/admin/create', admin)
         .then((response) => {
           if (response.status == 200) {
             Object.assign(admin, {

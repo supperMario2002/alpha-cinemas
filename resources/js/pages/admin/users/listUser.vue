@@ -78,7 +78,7 @@ export default defineComponent({
       }
     ];
 
-    const getUser = () => axios.get('http://127.0.0.1:8000/api/user/index')
+    const getUser = () => axios.get('/api/user/index')
       .then((reponse) => {
         user.value = reponse.data;
       })

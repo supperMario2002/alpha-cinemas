@@ -78,7 +78,7 @@ export default defineComponent({
       }
     ];
 
-    const getAdmin = () => axios.get('http://127.0.0.1:8000/api/admin/index')
+    const getAdmin = () => axios.get('/api/admin/index')
       .then((reponse) => {
         admin.value = reponse.data;
         console.log(reponse);

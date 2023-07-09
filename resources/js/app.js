@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 import Antd from 'ant-design-vue';
 import axios from 'axios';
 window.axios = axios;
-
+axios.defaults.baseURL = "http://127.0.0.1:8000";
 import App from '../js/App.vue';
 
 import 'ant-design-vue/dist/antd.css';

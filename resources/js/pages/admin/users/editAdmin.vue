@@ -165,7 +165,7 @@ export default defineComponent({
       birthday: '',
     });
 
-    const getAdmin = () => axios.get(`http://127.0.0.1:8000/api/admin/${route.params.id}/edit`)
+    const getAdmin = () => axios.get(`/api/admin/${route.params.id}/edit`)
       .then((response) => {
         admin.id = response.data.id
         admin.fullname = response.data.fullname
