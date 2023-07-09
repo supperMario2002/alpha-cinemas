@@ -41,6 +41,28 @@
                 </a-menu-item>
             </a-menu-item-group>
         </a-sub-menu>
+        <a-sub-menu @titleClick="titleClick">
+            <template #icon>
+                <i class="fa-solid fa-user"></i>
+            </template>
+            <template #title>Quản lý phòng</template>
+            <a-menu-item-group key="g3">
+                <template #icon>
+                    <QqOutlined />
+                </template>
+                <template #title>Phòng xem phim</template>
+                <a-menu-item key="admin">
+                    <router-link :to="{ name: 'admin-rooms' }" class="text-decoration-none">
+                        <span>Danh sách Phòng</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-create">
+                    <router-link :to="{ name: 'admin-rooms-create' }" class="text-decoration-none">
+                        <span>Thêm phòng</span>
+                    </router-link>
+                </a-menu-item>
+            </a-menu-item-group>
+        </a-sub-menu>
     </a-menu>
 </template>
 
