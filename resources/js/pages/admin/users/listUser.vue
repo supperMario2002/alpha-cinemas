@@ -8,6 +8,9 @@
         <span v-if="record.gender == 0" class="text-primary">Nam</span>
         <span v-else-if="record.gender == 1" class="text-danger">Nữ</span>
       </template>
+      <template v-if="column.key === 'created_at'">
+        <span>{{ formartDateTime(record.created_at) }}</span> 
+      </template>
       <template v-if="column.key === 'action'">
         <router-link :to="{name: 'admin-users-edit', params: { id: record.id }}">
           <a-button type="primary">
@@ -20,13 +23,14 @@
 </template> 
 
 <script>
+import {formartDateTime} from '../../../stores/helper.js';
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useMenu } from '../../../stores/use-menu';
 export default defineComponent({
   setup() {
     const store = useMenu();
-    store.onSelectKeys(['admin']);
+    store.onSelectKeys(['users']);
 
     const user = ref([]);
     const columns = [
@@ -82,9 +86,12 @@ export default defineComponent({
         console.log(error);
       })
     getUser();
+
+
     return {
       user,
-      columns
+      columns,
+      formartDateTime
     }
 
 

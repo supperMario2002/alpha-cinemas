@@ -8,6 +8,16 @@
         <span v-if="record.gender == 0" class="text-primary">Nam</span>
         <span v-else-if="record.gender == 1" class="text-danger">Nữ</span>
       </template>
+      <template v-if="column.key === 'created_at'">
+        <span>{{ formartDateTime(record.created_at)  }}</span> 
+      </template>
+      <template v-if="column.key === 'action'">
+        <router-link :to="{name: 'admin-edit', params: { id: record.id }}">
+          <a-button type="primary">
+            <i class="fa-solid fa-pen-to-square"></i>{{ record.id }}
+          </a-button>
+        </router-link>
+      </template>
     </template>
   </a-table>
 </template> 
@@ -16,6 +26,7 @@
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useMenu } from '../../../stores/use-menu';
+import { formartDateTime } from '../../../stores/helper.js';
 export default defineComponent({
   setup() {
     const store = useMenu();
@@ -70,6 +81,7 @@ export default defineComponent({
     const getAdmin = () => axios.get('http://127.0.0.1:8000/api/admin/index')
       .then((reponse) => {
         admin.value = reponse.data;
+        console.log(reponse);
       })
       .catch((error) => {
         console.log(error);
@@ -77,7 +89,8 @@ export default defineComponent({
     getAdmin();
     return {
       admin,
-      columns
+      columns,
+      formartDateTime
     }
 
 
