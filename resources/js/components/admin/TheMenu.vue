@@ -18,7 +18,7 @@
                     <QqOutlined />
                 </template>
                 <template #title>Khách hàng</template>
-                <a-menu-item key="admin-users">
+                <a-menu-item key="users">
                     <router-link :to="{ name: 'admin-users' }" class="text-decoration-none">
                         <span>Danh sách tài khoản</span>
                     </router-link>
