@@ -18,6 +18,44 @@ class UserAdminController extends Controller
         $admin = Admin::all();
         return response()->json($admin);
     }
+    public function getAdminById($id)
+    {
+        $admin = Admin::find($id);
+        
+        return response()->json($admin);
+    }
+    public function updateAdmin(Request $request, $id)
+    {
+        $user = Admin::find($id);
+        try {
+            $user->update([
+                "fullname" => $request->fullname,
+                "email" => $request->email,
+                "phone" => $request->phone,
+                "gender" => $request->gender,
+                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+                "updated_at" =>Carbon::now(),
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
+    public function storeAdmin(RegisterAdminRequest $request)
+    {
+        $create = Admin::create([
+            "fullname" => $request->fullname,
+            "avatar" => 'test',
+            "email" => $request->email,
+            "password" => bcrypt($request->password),
+            "phone" => $request->phone,
+            "gender" => $request->gender,
+            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+        ]);
+        return response()->json(['mess' => 'Thêm tài khoản thành công!!']);
+    }
+
+
     public function indexUser()
     {
         $user = User::all();
@@ -29,13 +67,6 @@ class UserAdminController extends Controller
         $user = User::find($id);
 
         return response()->json($user);
-    }
-
-    public function getAdminById($id)
-    {
-        $admin = Admin::find($id);
-
-        return response()->json($admin);
     }
 
     public function updateUser(Request $request, $id)
@@ -68,33 +99,4 @@ class UserAdminController extends Controller
         return response()->json(['mess' => 'Đăng ký thành công!!']);
     }
 
-    public function updateAdmin(Request $request, $id)
-    {
-        $user = User::find($id);
-        try {
-            $user->update([
-                "fullname" => $request->fullname,
-                "email" => $request->email,
-                "phone" => $request->phone,
-                "gender" => $request->gender,
-                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-            ]);
-        } catch (\Throwable $th) {
-            dd($th);
-        }
-    }
-
-    public function storeAdmin(RegisterAdminRequest $request)
-    {
-        $create = Admin::create([
-            "fullname" => $request->fullname,
-            "avatar" => 'test',
-            "email" => $request->email,
-            "password" => bcrypt($request->password),
-            "phone" => $request->phone,
-            "gender" => $request->gender,
-            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-        ]);
-        return response()->json(['mess' => 'Thêm tài khoản thành công!!']);
-    }
 }
