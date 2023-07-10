@@ -43,7 +43,7 @@
         </a-sub-menu>
         <a-sub-menu @titleClick="titleClick">
             <template #icon>
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-sharp fa-solid fa-house"></i>
             </template>
             <template #title>Quản lý phòng</template>
             <a-menu-item-group key="g3">
@@ -51,12 +51,12 @@
                     <QqOutlined />
                 </template>
                 <template #title>Phòng xem phim</template>
-                <a-menu-item key="admin">
+                <a-menu-item key="admin-rooms">
                     <router-link :to="{ name: 'admin-rooms' }" class="text-decoration-none">
                         <span>Danh sách Phòng</span>
                     </router-link>
                 </a-menu-item>
-                <a-menu-item key="admin-create">
+                <a-menu-item key="admin-rooms-create">
                     <router-link :to="{ name: 'admin-rooms-create' }" class="text-decoration-none">
                         <span>Thêm phòng</span>
                     </router-link>
