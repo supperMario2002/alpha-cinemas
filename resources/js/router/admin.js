@@ -75,6 +75,11 @@ const admin = [
                 name: "admin-categories-create",
                 component: () => import("../pages/admin/categories/create.vue"),
             },
+            {
+                path: 'categories/:id/edit',
+                name: 'admin-categories-edit',
+                component: () => import('../pages/admin/categories/edit.vue'),
+            },
 
             
         ]
