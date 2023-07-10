@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="" :form="admin">
+  <form @submit.prevent="createRoom" :form="room">
     <a-card title="Thêm phòng mới" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-8">
@@ -11,8 +11,8 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-input placeholder="Tên Phòng"  allow-clear />
-              <!-- <span v-if="errors.fullname" class="text-danger">{{ errors.fullname[0] }}</span> -->
+              <a-input placeholder="Tên Phòng" v-model:value="room.name" allow-clear />
+              <span v-if="errors.name" class="text-danger">{{ errors.name[0] }}</span>
             </div>
           </div>
           <div class="row mb-3">
@@ -23,8 +23,8 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-input placeholder="Địa chỉ"  allow-clear />
-              <!-- <span v-if="errors.email" class="text-danger">{{ errors.email[0] }}</span> -->
+              <a-input placeholder="Địa chỉ" v-model:value="room.address" allow-clear />
+              <span v-if="errors.address" class="text-danger">{{ errors.address[0] }}</span>
             </div>
           </div>
         </div>
@@ -51,14 +51,47 @@ import { useMenu } from '../../../stores/use-menu';
 import { defineComponent, reactive, ref, toRef } from 'vue';
 import axios from 'axios';
 export default {
-    setup(){
-      const store = useMenu();
-      store.onSelectKeys(['admin-rooms']);
+  setup() {
+    const store = useMenu();
+    store.onSelectKeys(['admin-rooms']);
+
+
+    const errors = ref({});
+
+    const room = reactive({
+      name: '',
+      address: '',
+    });
+
+    const createRoom = async () => {
+      axios.post('/api/room/create', room)
+        .then((response) => {
+          if (response.status == 200) {
+            Object.assign(room, {
+              name: '',
+              address: '',
+            })
+            errors.value = ''
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            errors.value = error.response.data.errors;
+          }
+          console.log(errors.value);
+        });
     }
+
+    return {
+      room,
+      createRoom,
+      errors,
+    }
+
+  }
 
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Room\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,6 @@ Route::post('/user/create', [UserAdminController::class, 'storeUser']);
 Route::get('/user/index', [UserAdminController::class, 'indexUser']);
 Route::get('/user/{id}/edit', [UserAdminController::class, 'getUserById']);
 Route::put('/user/{id}', [UserAdminController::class, 'updateUser']);
+
+Route::post('/room/create', [RoomController::class, 'createRoom']);
+Route::get('/room/index', [RoomController::class, 'indexRoom']);
