@@ -63,6 +63,44 @@
                 </a-menu-item>
             </a-menu-item-group>
         </a-sub-menu>
+        <a-sub-menu @titleClick="titleClick">
+            <template #icon>
+                <i class="fa-solid fa-film"></i>
+            </template>
+            <template #title>Quản lý phim</template>
+            <a-menu-item-group key="g4">
+                <template #icon>
+                    <i class="fa-solid fa-film"></i>
+                </template>
+                <template #title>Quản lý danh mục phim</template>
+                <a-menu-item key="admin-categories">
+                    <router-link :to="{ name: 'admin-categories' }" class="text-decoration-none">
+                        <span>Danh danh mục</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-categories-create">
+                    <router-link :to="{ name: 'admin-categories-create' }" class="text-decoration-none">
+                        <span>Thêm danh mục</span>
+                    </router-link>
+                </a-menu-item>
+            </a-menu-item-group>
+            <a-menu-item-group key="g5">
+                <template #icon>
+                    <i class="fa-solid fa-film"></i>
+                </template>
+                <template #title>Quản lý phim</template>
+                <a-menu-item key="admin-rooms">
+                    <router-link :to="{ name: 'admin-rooms' }" class="text-decoration-none">
+                        <span>Danh sách phim</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-rooms-create">
+                    <router-link :to="{ name: 'admin-rooms-create' }" class="text-decoration-none">
+                        <span>Thêm phim</span>
+                    </router-link>
+                </a-menu-item>
+            </a-menu-item-group>
+        </a-sub-menu>
     </a-menu>
 </template>
 
