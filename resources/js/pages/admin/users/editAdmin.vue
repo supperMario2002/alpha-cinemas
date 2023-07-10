@@ -64,7 +64,7 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-input-password placeholder="Mật khẩu" v-model:value="user.password" />
+              <a-input-password placeholder="Mật khẩu" v-model:value="admin.password" />
               <span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
             </div>
           </div>
@@ -76,7 +76,7 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-input-password placeholder="Xác nhận mật khẩu" v-model:value="user.password_confinmation" />
+              <a-input-password placeholder="Xác nhận mật khẩu" v-model:value="admin.password_confinmation" />
               <span v-if="errors.password_confinmation" class="text-danger">{{ errors.password_confinmation[0] }}</span>
             </div>
           </div>
