@@ -53,7 +53,7 @@ import axios from 'axios';
 export default {
   setup() {
     const store = useMenu();
-    store.onSelectKeys(['admin-rooms']);
+    store.onSelectKeys(['admin-rooms-create']);
 
 
     const errors = ref({});

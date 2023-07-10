@@ -23,10 +23,10 @@ class RegisterAdminRequest extends FormRequest
     {
         return [
             'fullname' => 'required',
-            'email'=> 'required|email|unique:App/Models/Admin,email',
+            'email'=> 'required|email|unique:admin,email',
             'password'=> 'required',
             'password_confinmation'=> 'required|same:password',
-            'phone'=> 'required|unique:App/Models/Admin,phone', 
+            'phone'=> 'required|unique:admin,phone', 
             'birthday'=> 'required',
         ];
     }
