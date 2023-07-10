@@ -32,3 +32,6 @@ Route::put('/user/{id}', [UserAdminController::class, 'updateUser']);
 
 Route::post('/room/create', [RoomController::class, 'createRoom']);
 Route::get('/room/index', [RoomController::class, 'indexRoom']);
+Route::get('/room/{id}/edit', [RoomController::class, 'getRoomById']);
+Route::put('/room/{id}', [RoomController::class, 'updateRoom']);
+Route::delete('/room/delete/{id}', [RoomController::class, 'deleteRoom']);

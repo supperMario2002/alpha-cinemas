@@ -58,6 +58,11 @@ const admin = [
                 name: 'admin-rooms-create',
                 component: () => import('../pages/admin/rooms/createRoom.vue'),
             },
+            {
+                path: 'rooms/:id/edit',
+                name: 'admin-rooms-edit',
+                component: () => import('../pages/admin/rooms/editRoom.vue'),
+            },
         ]
     }
 ]
