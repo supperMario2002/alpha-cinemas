@@ -5,24 +5,30 @@
         <span>{{ index + 1 }}</span>
       </template>
       <template v-if="column.key === 'action'">
-        <router-link :to="{ name: 'admin-users-edit', params: { id: record.id } }">
-          <a-button type="primary">
+        <router-link :to="{ name: 'admin-rooms-edit', params: { id: record.id } }">
+          <a-button type="primary" class="mx-2">
             <i class="fa-solid fa-pen-to-square"></i>
-          </a-button>
+          </a-button> 
         </router-link>
+        <a-button type="primary" @click="deleteRoom(record.id)">
+          <i class="fa-solid fa-trash"></i>
+        </a-button>
       </template>
     </template>
   </a-table>
 </template>
 
 <script>
+import { message } from 'ant-design-vue';
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useMenu } from '../../../stores/use-menu';
 export default {
   setup() {
     const store = useMenu();
+
     store.onSelectKeys(['admin-rooms']);
+
 
     const room = ref([]);
 
@@ -44,6 +50,12 @@ export default {
         dataIndex: 'address',
         key: 'address'
       },
+      {
+        title: 'Công cụ',
+        key: 'action',
+        fixed: 'right',
+        width: 200
+      }
     ]
 
 
@@ -56,9 +68,20 @@ export default {
       })
     getRoom();
 
+    const deleteRoom = (id) => axios.delete(`/api/room/delete/${id}`)
+      .then((reponse) => {
+        message.success("Xóa thành công");
+        getRoom()
+        console.log(reponse);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    
     return {
       room,
       columns,
+      deleteRoom
     }
   }
 

@@ -23,4 +23,36 @@ class RoomController extends Controller
         ]);
         return response()->json(['mess' => 'Thêm thành công!!']);
     }
+
+    public function getRoomById($id)
+    {
+        $room = Room::find($id);
+
+        return response()->json($room);
+    }
+
+    public function updateRoom(Request $request, $id)
+    {
+        $room = Room::find($id);
+        try {
+            $room->update([
+                "name" => $request->name,
+                "address" => $request->address,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
+    public function deleteRoom($id)
+    {
+        $room = Room::find($id);
+        try {
+            $room->delete();
+
+            return response()->json(['mess' => 'Xóa thành công!!']);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
 }

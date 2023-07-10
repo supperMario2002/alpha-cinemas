@@ -58,6 +58,11 @@ const admin = [
                 name: "admin-rooms-create",
                 component: () => import("../pages/admin/rooms/createRoom.vue"),
             },
+            {
+                path: 'rooms/:id/edit',
+                name: 'admin-rooms-edit',
+                component: () => import('../pages/admin/rooms/editRoom.vue'),
+            },
 
             // quản lý danh mục phim
             {
@@ -70,8 +75,10 @@ const admin = [
                 name: "admin-categories-create",
                 component: () => import("../pages/admin/categories/create.vue"),
             },
-        ],
-    },
-];
+
+            
+        ]
+    }
+]
 
 export default admin;
