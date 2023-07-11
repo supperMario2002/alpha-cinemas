@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/admin/index', [UserAdminController::class, 'indexAdmin']);
-Route::post('/admin/create', [UserAdminController::class, 'store']);
+Route::post('/admin/create', [UserAdminController::class, 'storeAdmin']);
 Route::get('/admin/{id}/edit', [UserAdminController::class, 'getAdminById']);
 
 Route::post('/user/create', [UserAdminController::class, 'storeUser']);

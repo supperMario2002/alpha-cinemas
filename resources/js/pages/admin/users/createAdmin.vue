@@ -12,10 +12,10 @@
               </a-avatar>
             </div>
             <div class="col-12 d-flex justify-content-center">
-              <a-button type="primary">
-                <i class="fa-solid fa-plus me-2"></i>
-                <span>Thêm ảnh</span>
-              </a-button>
+              <label class="custom-file-upload primary-color bg-info">
+                <input type="file" @change="handleFileUpload"/>
+                <i class="fa fa-cloud-upload"></i> Thêm Ảnh
+              </label>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@
 <script>
 import dayjs from 'dayjs';
 import { useMenu } from '../../../stores/use-menu';
-import { defineComponent, reactive, ref, toRef } from 'vue';
+import { defineComponent, reactive, ref, toRef, computed  } from 'vue';
 import axios from 'axios';
 export default defineComponent({
 
@@ -139,6 +139,8 @@ export default defineComponent({
     store.onSelectKeys(['admin-create']);
 
     const dateFormatList = 'DD/MM/YYYY';
+
+    const file =  ref(null);
 
     const errors = ref({});
 
@@ -153,7 +155,17 @@ export default defineComponent({
     });
 
     const createAdmin = async () => {
-      axios.post('/api/admin/create', admin)
+      const formData = new FormData();
+      formData.append('fullname', admin.fullname);
+      formData.append('avatar', file.value);
+      formData.append('email', admin.email);
+      formData.append('password', admin.password);
+      formData.append('password_confinmation', admin.password_confinmation);
+      formData.append('phone', admin.phone);
+      formData.append('gender', admin.gender);
+      formData.append('birthday', admin.birthday);
+
+      axios.post('/api/admin/create', formData)
         .then((response) => {
           if (response.status == 200) {
             Object.assign(admin, {
@@ -177,13 +189,30 @@ export default defineComponent({
         })
     }
 
+    const handleFileUpload = (event) => {
+      file.value = event.target.files[0];
+    };
+
     return {
       birthday: ref(dayjs('01/01/2015', dateFormatList)),
       dateFormatList,
       errors,
       admin,
       createAdmin,
+      handleFileUpload,
     };
   }
 })
 </script>
+
+<style>
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+</style>

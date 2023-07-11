@@ -9,6 +9,8 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Nette\Utils\Image;
 
 class UserAdminController extends Controller
 {
@@ -86,15 +88,22 @@ class UserAdminController extends Controller
 
     public function storeAdmin(RegisterAdminRequest $request)
     {
-        $create = Admin::create([
-            "fullname" => $request->fullname,
-            "avatar" => 'test',
-            "email" => $request->email,
-            "password" => bcrypt($request->password),
-            "phone" => $request->phone,
-            "gender" => $request->gender,
-            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-        ]);
+        
+        if (!$request->has('image')) {
+            return response()->json(['message' => 'Missing file'], 422);
+        }
+            $fileName = time() . '.' . $request->image->extension();
+            $request->image->storeAs('public/images', $fileName);
+            $create = Admin::create([
+                "fullname" => $request->fullname,
+                "avatar" => $request->avatar->image = $fileName,
+                "email" => $request->email,
+                "password" => bcrypt($request->password),
+                "phone" => $request->phone,
+                "gender" => $request->gender,
+                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+            ]);
+        
         return response()->json(['mess' => 'Thêm tài khoản thành công!!']);
     }
 }
