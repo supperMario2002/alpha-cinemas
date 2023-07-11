@@ -89,13 +89,13 @@
                     <i class="fa-solid fa-film"></i>
                 </template>
                 <template #title>Quản lý phim</template>
-                <a-menu-item key="admin-rooms">
-                    <router-link :to="{ name: 'admin-rooms' }" class="text-decoration-none">
+                <a-menu-item key="admin-movies">
+                    <router-link :to="{ name: 'admin-movies' }" class="text-decoration-none">
                         <span>Danh sách phim</span>
                     </router-link>
                 </a-menu-item>
-                <a-menu-item key="admin-rooms-create">
-                    <router-link :to="{ name: 'admin-rooms-create' }" class="text-decoration-none">
+                <a-menu-item key="admin-movies-create">
+                    <router-link :to="{ name: 'admin-movies-create' }" class="text-decoration-none">
                         <span>Thêm phim</span>
                     </router-link>
                 </a-menu-item>
