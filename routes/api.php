@@ -40,3 +40,5 @@ Route::delete('/room/delete/{id}', [RoomController::class, 'deleteRoom']);
 
 Route::get('/category/index', [CategoryController::class, 'index']);
 Route::post('/category/create', [CategoryController::class, 'store']);
+Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
+Route::put('category/{id}', [CategoryController::class, 'update']);

@@ -22,4 +22,22 @@ class CategoryController extends Controller
         ]);
         return response()->json(['mess' => 'Thêm danh mục thành công!!']);
     }
+
+    public function edit($id){
+        $category = Category::find($id);
+        return response()->json($category);
+    }
+
+    public function update(Request $request, $id){
+        $category = Category::find($id);
+        try {
+            $category->update([
+                "name" => $request->name,
+                "slug" => $request->slug,
+            ]);
+            return response()->json(['mess' => 'Cập nhật thành công!!']);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
 }
