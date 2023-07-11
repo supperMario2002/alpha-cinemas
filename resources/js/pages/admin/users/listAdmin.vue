@@ -8,13 +8,16 @@
         <span v-if="record.gender == 0" class="text-primary">Nam</span>
         <span v-else-if="record.gender == 1" class="text-danger">Nữ</span>
       </template>
+      <template v-if="column.key === 'updated_at'">
+        <span>{{ formartDateTime(record.updated_at)  }}</span> 
+      </template>
       <template v-if="column.key === 'created_at'">
         <span>{{ formartDateTime(record.created_at)  }}</span> 
       </template>
       <template v-if="column.key === 'action'">
         <router-link :to="{name: 'admin-edit', params: { id: record.id }}">
           <a-button type="primary">
-            <i class="fa-solid fa-pen-to-square"></i>{{ record.id }}
+            <i class="fa-solid fa-pen-to-square"></i>
           </a-button>
         </router-link>
       </template>
@@ -69,6 +72,11 @@ export default defineComponent({
         title: 'Ngày tạo',
         dataIndex: 'created_at',
         key: 'created_at'
+      },
+      {
+        title: 'Ngày sửa',
+        dataIndex: 'updated_at',
+        key: 'updated_at'
       },
       {
         title: 'Công cụ',

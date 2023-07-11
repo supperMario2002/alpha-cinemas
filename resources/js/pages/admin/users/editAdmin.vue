@@ -64,7 +64,7 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-input-password placeholder="Mật khẩu" v-model:value="user.password" />
+              <a-input-password placeholder="Mật khẩu" v-model:value="admin.password" />
               <span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
             </div>
           </div>
@@ -76,7 +76,7 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-input-password placeholder="Xác nhận mật khẩu" v-model:value="user.password_confinmation" />
+              <a-input-password placeholder="Xác nhận mật khẩu" v-model:value="admin.password_confinmation" />
               <span v-if="errors.password_confinmation" class="text-danger">{{ errors.password_confinmation[0] }}</span>
             </div>
           </div>
@@ -126,11 +126,11 @@
       <div class="row">
         <div class="col-12 d-grid d-sm-flex justify-content-sm-end mx-auto">
           <a-button type="primary" html-type="submit" class="me-0 me-sm-3 mb-3 mb-sm-0">
-            <span>Đăng ký</span>
+            <span>Lưu</span>
           </a-button>
-          <a-button type="primary">
-            <router-link :to="{ name: 'admin-login' }">
-              <span>Đăng nhập</span>
+          <a-button type="secondary">
+            <router-link :to="{ name: 'admin' }">
+              <span>Hủy</span>
             </router-link>
           </a-button>
         </div>
@@ -178,12 +178,27 @@ export default defineComponent({
         console.log(err);
       });
     getAdmin();
+
+
+    const updateAdmin = async () => {
+      axios.put(`/api/admin/${route.params.id}`, admin)
+        .then((response) => {
+          window.location.href = 'http://127.0.0.1:8000/admin/account'
+        })
+        .catch((err) => {
+          if (err.response.status === 422) {
+            errors.value = err.response.data.errors;
+          }
+          console.log(errors.value);
+        })
+    }
     return {
       birthday: ref(dayjs('01/01/2015', dateFormatList)),
       dateFormatList,
       errors,
       admin,
       checked: ref(false),
+      updateAdmin
     };
   }
 })
