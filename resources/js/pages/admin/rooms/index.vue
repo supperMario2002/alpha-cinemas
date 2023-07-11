@@ -58,7 +58,6 @@ export default {
       }
     ]
 
-
     const getRoom = () => axios.get('/api/room/index')
       .then((reponse) => {
         room.value = reponse.data;
@@ -68,7 +67,7 @@ export default {
       })
     getRoom();
 
-    const deleteRoom = (id) => axios.delete(`/api/room/delete/${id}`)
+    const deleteRoom = (id) => axios.delete(`/api/room/${id}`)
       .then((reponse) => {
         message.success("Xóa thành công");
         getRoom()

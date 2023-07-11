@@ -56,12 +56,12 @@ const admin = [
             {
                 path: "rooms/create",
                 name: "admin-rooms-create",
-                component: () => import("../pages/admin/rooms/createRoom.vue"),
+                component: () => import("../pages/admin/rooms/create.vue"),
             },
             {
                 path: 'rooms/:id/edit',
                 name: 'admin-rooms-edit',
-                component: () => import('../pages/admin/rooms/editRoom.vue'),
+                component: () => import('../pages/admin/rooms/edit.vue'),
             },
 
             // quản lý danh mục phim
