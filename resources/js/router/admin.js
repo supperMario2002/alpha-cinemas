@@ -56,12 +56,12 @@ const admin = [
             {
                 path: "rooms/create",
                 name: "admin-rooms-create",
-                component: () => import("../pages/admin/rooms/createRoom.vue"),
+                component: () => import("../pages/admin/rooms/create.vue"),
             },
             {
                 path: 'rooms/:id/edit',
                 name: 'admin-rooms-edit',
-                component: () => import('../pages/admin/rooms/editRoom.vue'),
+                component: () => import('../pages/admin/rooms/edit.vue'),
             },
 
             // quản lý danh mục phim
@@ -75,7 +75,28 @@ const admin = [
                 name: "admin-categories-create",
                 component: () => import("../pages/admin/categories/create.vue"),
             },
+            {
+                path: 'categories/:id/edit',
+                name: 'admin-categories-edit',
+                component: () => import('../pages/admin/categories/edit.vue'),
+            },
 
+            // quản lý phim
+            {
+                path: "movies",
+                name: "admin-movies",
+                component: () => import("../pages/admin/movies/index.vue"),
+            },
+            {
+                path: "movies/create",
+                name: "admin-movies-create",
+                component: () => import("../pages/admin/movies/create.vue"),
+            },
+            {
+                path: 'movies/:id/edit',
+                name: 'admin-movies-edit',
+                component: () => import('../pages/admin/movies/edit.vue'),
+            },
             
         ]
     }

@@ -22,7 +22,7 @@
   export default {
     setup() {
       const store = useMenu();
-      store.onSelectKeys(['admin-categorys']);
+      store.onSelectKeys(['admin-categories']);
   
       const category = ref([]);
   

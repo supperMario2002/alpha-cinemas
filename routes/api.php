@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\UserAdminController;
-use App\Http\Controllers\Room\RoomController;
+use App\Http\Controllers\Admin\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,12 +32,21 @@ Route::get('/user/index', [UserAdminController::class, 'indexUser']);
 Route::get('/user/{id}/edit', [UserAdminController::class, 'getUserById']);
 Route::put('/user/{id}', [UserAdminController::class, 'updateUser']);
 
-Route::post('/room/create', [RoomController::class, 'createRoom']);
-Route::get('/room/index', [RoomController::class, 'indexRoom']);
-Route::get('/room/{id}/edit', [RoomController::class, 'getRoomById']);
-Route::put('/room/{id}', [RoomController::class, 'updateRoom']);
-Route::delete('/room/delete/{id}', [RoomController::class, 'deleteRoom']);
+
+Route::get('/room/index', [RoomController::class, 'index']);
+Route::post('/room/create', [RoomController::class, 'create']);
+Route::get('/room/{id}/edit', [RoomController::class, 'edit']);
+Route::put('/room/{id}', [RoomController::class, 'update']);
+Route::delete('/room/{id}', [RoomController::class, 'delete']);
 
 
 Route::get('/category/index', [CategoryController::class, 'index']);
 Route::post('/category/create', [CategoryController::class, 'store']);
+Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
+Route::put('/category/{id}', [CategoryController::class, 'update']);
+
+Route::get('/movie/index', [MovieController::class, 'index']);
+Route::post('/movie/create', [MovieController::class, 'store']);
+Route::get('/movie/{id}/edit', [MovieController::class, 'edit']);
+Route::put('/movie/{id}', [MovieController::class, 'update']);
+Route::delete('/movie/{id}', [MovieController::class, 'delete']);

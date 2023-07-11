@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Room;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomRequest;
@@ -9,13 +9,13 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    public function indexRoom()
+    public function index()
     {   
         $room = Room::all();
         return response()->json($room);
     }
 
-    public function createRoom(RoomRequest $request)
+    public function create(RoomRequest $request)
     {
         $create = Room::create([
             "name" => $request->name,
@@ -24,14 +24,14 @@ class RoomController extends Controller
         return response()->json(['mess' => 'Thêm thành công!!']);
     }
 
-    public function getRoomById($id)
+    public function edit($id)
     {
         $room = Room::find($id);
 
         return response()->json($room);
     }
 
-    public function updateRoom(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $room = Room::find($id);
         try {
@@ -44,7 +44,7 @@ class RoomController extends Controller
         }
     }
 
-    public function deleteRoom($id)
+    public function delete($id)
     {
         $room = Room::find($id);
         try {
