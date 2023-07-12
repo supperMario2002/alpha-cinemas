@@ -4,6 +4,9 @@
       <template v-if="column.key === 'index'">
         <span>{{ index + 1 }}</span>
       </template>
+      <template v-if="column.key === 'img'">
+        <a-image :width="200" :src="record.img" />
+      </template>
       <template v-if="column.key === 'updated_at'">
         <span>{{ formartDateTime(record.updated_at) }}</span>
       </template>
@@ -18,7 +21,7 @@
         </router-link>
         <a-button type="dager" @click="deleteMovie(record.id)">
           <i class="fa-solid fa-trash"></i>
-          </a-button>
+        </a-button>
       </template>
     </template>
   </a-table>
@@ -43,6 +46,11 @@ export default {
         key: 'index',
         width: 100,
         sorter: (a, b) => a.index - b.index,
+      },
+      {
+        title: 'Ảnh ',
+        dataIndex: 'img',
+        key: 'img'
       },
       {
         title: 'Tên phim ',
@@ -92,14 +100,14 @@ export default {
       })
     getmovie();
 
-    const deleteMovie = async (id)=>{
+    const deleteMovie = async (id) => {
       axios.delete(`api/movie/${id}`)
-      .then((response) => {
-        getmovie();
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
+        .then((response) => {
+          getmovie();
+        })
+        .catch((error) => {
+          console.log(error);
+        })
     }
 
     return {

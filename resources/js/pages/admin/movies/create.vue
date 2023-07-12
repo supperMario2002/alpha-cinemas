@@ -77,6 +77,25 @@
                             <span v-if="errors.running_time" class="text-danger">{{ errors.running_time[0] }}</span>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            <label>
+                                <span class="text-danger me-1">*</span>
+                                <span>Ảnh bìa phim: </span>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-5">
+                            <input type="file"  @change="uploadImage">
+                            <!-- <a-upload list-type="picture"  :max-count="1"
+                                action="#" :on-success="uploadImage">
+                                <a-button html-type="button">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span class="ms-2">Chọn ảnh</span>
+                                </a-button>
+                            </a-upload> -->
+                            <span v-if="errors.running_time" class="text-danger">{{ errors.running_time[0] }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -107,6 +126,7 @@ export default {
         const movie = reactive({
             name: '',
             slug: '',
+            file: null,
             descrition: '',
             release_date: '',
             director: '',
@@ -114,13 +134,30 @@ export default {
         });
 
 
+        const uploadImage = event => {
+            movie.file = event.target.files[0]; 
+        };
+
         const updateSlug = (e) => {
             movie.slug = ChangeToSlug(e.target.value);
             console.log(ChangeToSlug(e.target.value));
         }
 
         const create = async () => {
-            axios.post('/api/movie/create', movie)
+            const formData = new FormData();
+            formData.append('name', movie.name);
+            formData.append('slug', movie.slug);
+            formData.append('file', movie.file);
+            formData.append('descrition', movie.descrition);
+            formData.append('release_date', movie.release_date);
+            formData.append('director', movie.director);
+            formData.append('running_time', movie.running_time);
+
+            axios.post('/api/movie/create', movie, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
                 .then((response) => {
                     if (response.status == 200) {
                         Object.assign(movie, {
@@ -147,7 +184,8 @@ export default {
             movie,
             create,
             errors,
-            updateSlug
+            updateSlug,
+            uploadImage
         }
 
     }
