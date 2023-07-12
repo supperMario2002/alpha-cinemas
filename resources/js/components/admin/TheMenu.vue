@@ -43,7 +43,7 @@
         </a-sub-menu>
         <a-sub-menu @titleClick="titleClick">
             <template #icon>
-                <i class="fa-sharp fa-solid fa-house"></i>
+                <i class="fa-solid fa-tv"></i>
             </template>
             <template #title>Quản lý phòng</template>
             <a-menu-item-group key="g3">
