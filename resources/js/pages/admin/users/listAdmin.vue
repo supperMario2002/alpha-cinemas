@@ -4,6 +4,9 @@
       <template v-if="column.key === 'index'">
         <span>{{ index + 1 }}</span>
       </template> 
+      <template v-if="column.key === 'img'">
+        <a-image :width="200" :src="record.img" />
+      </template>
       <template v-if="column.key === 'gender'">
         <span v-if="record.gender == 0" class="text-primary">Nam</span>
         <span v-else-if="record.gender == 1" class="text-danger">Nữ</span>

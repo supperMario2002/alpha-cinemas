@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createAdmin" :form="admin">
+  <form @submit.prevent="createAdmin" :form="admin" enctype="multipart/form-data">
     <a-card title="Tạo mới tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
@@ -140,24 +140,28 @@ export default defineComponent({
 
     const dateFormatList = 'DD/MM/YYYY';
 
-    const file =  ref(null);
 
     const errors = ref({});
 
     const admin = reactive({
       fullname: '',
       email: '',
+      avatar: null,
       password: '',
       password_confinmation: '',
       phone: '',
       gender: 1,
       birthday: '',
     });
+    
+    const handleFileUpload = (event) => {
+      admin.avatar = event.target.files[0];
+    };
 
     const createAdmin = async () => {
       const formData = new FormData();
       formData.append('fullname', admin.fullname);
-      formData.append('avatar', file.value);
+      formData.append('avatar', admin.avatar);
       formData.append('email', admin.email);
       formData.append('password', admin.password);
       formData.append('password_confinmation', admin.password_confinmation);
@@ -165,7 +169,11 @@ export default defineComponent({
       formData.append('gender', admin.gender);
       formData.append('birthday', admin.birthday);
 
-      axios.post('/api/admin/create', formData)
+      axios.post('/api/admin/create', formData, {
+        headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+      })
         .then((response) => {
           if (response.status == 200) {
             Object.assign(admin, {
@@ -189,9 +197,7 @@ export default defineComponent({
         })
     }
 
-    const handleFileUpload = (event) => {
-      file.value = event.target.files[0];
-    };
+    
 
     return {
       birthday: ref(dayjs('01/01/2015', dateFormatList)),
@@ -205,7 +211,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 input[type="file"] {
     display: none;
 }

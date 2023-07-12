@@ -28,7 +28,6 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         if($request->hasFile('file')){
-            // dd($request);
             $path = $this->file->uploadImage($request->file, 'movies'); 
         }
         try {
