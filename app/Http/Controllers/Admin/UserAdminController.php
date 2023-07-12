@@ -22,7 +22,7 @@ class UserAdminController extends Controller
 
     public function indexAdmin()
     {
-        $admin = Admin::all();
+        $admin = Admin::get();
         foreach ($admin as $item) {
             $item['avatar'] = asset(Storage::url($item->avatar));
         }
@@ -53,7 +53,7 @@ class UserAdminController extends Controller
 
     public function storeAdmin(RegisterAdminRequest $request)
     {
-        if($request->hasFile('file')){
+        if($request->hasFile('avatar')){
             $path = $this->file->uploadImage($request->avatar, 'avatar'); 
         }
         try {

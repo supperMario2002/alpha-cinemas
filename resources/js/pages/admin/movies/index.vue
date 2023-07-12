@@ -5,7 +5,7 @@
         <span>{{ index + 1 }}</span>
       </template>
       <template v-if="column.key === 'img'">
-        <a-image :width="200" :src="record.img" />
+        <a-image :width="70" :src="record.img" />
       </template>
       <template v-if="column.key === 'updated_at'">
         <span>{{ formartDateTime(record.updated_at) }}</span>

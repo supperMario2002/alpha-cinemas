@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createAdmin" :form="admin" enctype="multipart/form-data">
+  <form @submit.prevent="createAdmin" :form="admin">
     <a-card title="Tạo mới tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
@@ -169,7 +169,7 @@ export default defineComponent({
       formData.append('gender', admin.gender);
       formData.append('birthday', admin.birthday);
 
-      axios.post('/api/admin/create', formData, {
+      axios.post('/api/admin/create', admin, {
         headers: {
                     'Content-Type': 'multipart/form-data',
                 },
