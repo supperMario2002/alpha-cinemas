@@ -70,9 +70,9 @@ Thứ tự tạo bảng
 Admin - done
 user - done
 room - done
-categories
-moies
-movie_category
+categories - done
+moies - done
+movie_category - done
 show_time
 type_seat
 seat
