@@ -46,7 +46,8 @@ Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
 Route::put('/category/{id}', [CategoryController::class, 'update']);
 
 Route::get('/movie/index', [MovieController::class, 'index']);
-Route::post('/movie/create', [MovieController::class, 'store']);
+Route::get('/movie/create', [MovieController::class, 'create']);
+Route::post('/movie', [MovieController::class, 'store']);
 Route::get('/movie/{id}/edit', [MovieController::class, 'edit']);
 Route::put('/movie/{id}', [MovieController::class, 'update']);
 Route::delete('/movie/{id}', [MovieController::class, 'delete']);

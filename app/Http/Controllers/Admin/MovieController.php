@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\FileService;
+use App\Models\Category;
 use App\Models\Movie;
+use App\Models\MovieCategoryModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +14,8 @@ use Illuminate\Support\Facades\Storage;
 class MovieController extends Controller
 {
     protected $file;
-    public function __construct(FileService $file){
+    public function __construct(FileService $file)
+    {
         $this->file = $file;
     }
 
@@ -25,11 +28,15 @@ class MovieController extends Controller
         return response()->json($listMovie);
     }
 
+    public function create()
+    {
+        $listCategories = Category::get();
+        return response()->json($listCategories);
+    }
     public function store(Request $request)
     {
-        if($request->hasFile('file')){
-            // dd($request);
-            $path = $this->file->uploadImage($request->file, 'movies'); 
+        if ($request->hasFile('file')) {
+            $path = $this->file->uploadImage($request->file, 'movies');
         }
         try {
             $create = Movie::create([
@@ -41,6 +48,17 @@ class MovieController extends Controller
                 'director' => $request->director,
                 'running_time' => $request->running_time,
             ]);
+
+            if (!empty($request->catrgories)) {
+                foreach($request->catrgories as $value){
+                    MovieCategoryModel::create([
+                        'movie_id' => $create->id,
+                        'category_id' => $value
+                    ]);
+                }
+            } 
+
+
             return response()->json(['mess' => 'Thêm phim mới thành công!']);
         } catch (\Throwable $th) {
             //throw $th;
@@ -73,7 +91,8 @@ class MovieController extends Controller
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         try {
             $movie = Movie::find($id);
             $movie->delete();

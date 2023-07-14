@@ -23,4 +23,8 @@ class Movie extends Model
         'deleted_at'
     ];
     public $timestaps = true;
+
+    public function categories(){
+        return $this->belongsToMany(Category::class, 'movie_category', 'movie_id', 'category_id' );
+    }
 }

@@ -15,4 +15,9 @@ class Category extends Model
     ];
 
     public $timestamps = false;
+
+
+    public function movies(){
+        return $this->belongsToMany(Movie::class, 'movie_category', 'category_id', 'movie_id' );
+    }
 }

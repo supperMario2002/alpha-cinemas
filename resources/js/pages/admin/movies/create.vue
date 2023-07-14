@@ -56,6 +56,19 @@
                         <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
                             <label>
                                 <span class="text-danger me-1">*</span>
+                                <span>Thể loại: </span>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-5"> 
+                            <a-select v-model:value="movie.catrgories" mode="multiple" placeholder="Inserted are removed"
+                                style="width: 100%" :options="options.map(item => ({ value: item.id , label: item.name}))"></a-select>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            <label>
+                                <span class="text-danger me-1">*</span>
                                 <span>Tác giả: </span>
                             </label>
                         </div>
@@ -85,7 +98,7 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <input type="file"  @change="uploadImage">
+                            <input type="file" @change="uploadImage">
                             <!-- <a-upload list-type="picture"  :max-count="1"
                                 action="#" :on-success="uploadImage">
                                 <a-button html-type="button">
@@ -123,19 +136,21 @@ export default {
 
         const errors = ref({});
 
+        const options = ref([{}]);
         const movie = reactive({
             name: '',
             slug: '',
             file: null,
             descrition: '',
             release_date: '',
+            catrgories: [],
             director: '',
             running_time: '',
         });
 
 
         const uploadImage = event => {
-            movie.file = event.target.files[0]; 
+            movie.file = event.target.files[0];
         };
 
         const updateSlug = (e) => {
@@ -143,17 +158,18 @@ export default {
             console.log(ChangeToSlug(e.target.value));
         }
 
-        const create = async () => {
+        const create = async () => { 
             const formData = new FormData();
             formData.append('name', movie.name);
             formData.append('slug', movie.slug);
             formData.append('file', movie.file);
             formData.append('descrition', movie.descrition);
             formData.append('release_date', movie.release_date);
+            formData.append('catrgories', movie.catrgories);
             formData.append('director', movie.director);
             formData.append('running_time', movie.running_time);
 
-            axios.post('/api/movie/create', movie, {
+            axios.post('/api/movie', movie, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -180,12 +196,22 @@ export default {
                 });
         }
 
+        const getLitsCategories = async () => {
+            axios.get('api/movie/create')
+                .then((response) => {
+                    options.value = response.data;
+                    console.log(options);
+                })
+        }
+        getLitsCategories();
+
         return {
             movie,
             create,
             errors,
             updateSlug,
-            uploadImage
+            uploadImage,
+            options
         }
 
     }

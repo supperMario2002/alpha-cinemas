@@ -6,16 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterAdminRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Services\FileService;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class UserAdminController extends Controller
 {
 
+    protected $file;
+    public function __construct(FileService $file){
+        $this->file = $file;
+    }
+
     public function indexAdmin()
     {
-        $admin = Admin::all();
+        $admin = Admin::get();
+        foreach ($admin as $item) {
+            $item['avatar'] = asset(Storage::url($item->avatar));
+        }
         return response()->json($admin);
     }
     public function getAdminById($id)
@@ -43,16 +53,23 @@ class UserAdminController extends Controller
 
     public function storeAdmin(RegisterAdminRequest $request)
     {
-        $create = Admin::create([
-            "fullname" => $request->fullname,
-            "avatar" => 'test',
-            "email" => $request->email,
-            "password" => bcrypt($request->password),
-            "phone" => $request->phone,
-            "gender" => $request->gender,
-            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-        ]);
-        return response()->json(['mess' => 'Thêm tài khoản thành công!!']);
+        if($request->hasFile('avatar')){
+            $path = $this->file->uploadImage($request->avatar, 'avatar'); 
+        }
+        try {
+            $create = Admin::create([
+                "fullname" => $request->fullname,
+                "avatar" => $path,
+                "email" => $request->email,
+                "password" => bcrypt($request->password),
+                "phone" => $request->phone,
+                "gender" => $request->gender,
+                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+            ]);
+            return response()->json(['mess' => 'Thêm tài khoản thành công!!']);
+         }catch (\Throwable $th) {
+            dd($th);
+         }
     }
 
 
@@ -99,4 +116,5 @@ class UserAdminController extends Controller
         return response()->json(['mess' => 'Đăng ký thành công!!']);
     }
 
+    
 }

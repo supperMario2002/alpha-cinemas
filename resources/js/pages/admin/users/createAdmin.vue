@@ -5,17 +5,14 @@
         <div class="col-12 col-sm-4">
           <div class="row">
             <div class="col-12 d-flex justify-content-center mb-3">
-              <a-avatar shape="square" :size="200">
-                <template #icon>
-                  <UserOutlined />
-                </template>
-              </a-avatar>
+              <label for="input-img" class="preview">
+              </label>
             </div>
             <div class="col-12 d-flex justify-content-center">
-              <a-button type="primary">
-                <i class="fa-solid fa-plus me-2"></i>
-                <span>Thêm ảnh</span>
-              </a-button>
+              <label class="custom-file-upload primary-color bg-info">
+                <input type="file" @change="handleFileUpload" id="input-img" />
+                <i class="fa fa-cloud-upload"></i> Thêm Ảnh
+              </label>
             </div>
           </div>
         </div>
@@ -130,7 +127,7 @@
 <script>
 import dayjs from 'dayjs';
 import { useMenu } from '../../../stores/use-menu';
-import { defineComponent, reactive, ref, toRef } from 'vue';
+import { defineComponent, reactive, ref, toRef, computed } from 'vue';
 import axios from 'axios';
 export default defineComponent({
 
@@ -140,11 +137,13 @@ export default defineComponent({
 
     const dateFormatList = 'DD/MM/YYYY';
 
+
     const errors = ref({});
 
     const admin = reactive({
       fullname: '',
       email: '',
+      avatar: null,
       password: '',
       password_confinmation: '',
       phone: '',
@@ -152,8 +151,31 @@ export default defineComponent({
       birthday: '',
     });
 
+    const handleFileUpload = (event) => {
+      admin.avatar = event.target.files[0];
+
+      let img = document.createElement('img')
+      img.src = URL.createObjectURL(admin.avatar)
+      document.querySelector('.preview').appendChild(img)
+      document.getElementsByTagName('img')[0].style = "width: 100%; height: 100%;"
+    };
+
     const createAdmin = async () => {
-      axios.post('/api/admin/create', admin)
+      const formData = new FormData();
+      formData.append('fullname', admin.fullname);
+      formData.append('avatar', admin.avatar);
+      formData.append('email', admin.email);
+      formData.append('password', admin.password);
+      formData.append('password_confinmation', admin.password_confinmation);
+      formData.append('phone', admin.phone);
+      formData.append('gender', admin.gender);
+      formData.append('birthday', admin.birthday);
+
+      axios.post('/api/admin/create', admin, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
         .then((response) => {
           if (response.status == 200) {
             Object.assign(admin, {
@@ -177,13 +199,45 @@ export default defineComponent({
         })
     }
 
+
+
     return {
       birthday: ref(dayjs('01/01/2015', dateFormatList)),
       dateFormatList,
       errors,
       admin,
       createAdmin,
+      handleFileUpload,
     };
   }
 })
 </script>
+
+<style scoped>
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.preview {
+  border: 2px dashed #ccc;
+  width: 70%;
+  display: block;
+  position: relative;
+  height: 250px;
+  color: white;
+  font-size: 22px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+</style>
