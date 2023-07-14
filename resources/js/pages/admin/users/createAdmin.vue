@@ -1,19 +1,16 @@
 <template>
-  <form @submit.prevent="createAdmin" :form="admin" enctype="multipart/form-data">
+  <form @submit.prevent="createAdmin" :form="admin">
     <a-card title="Tạo mới tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
           <div class="row">
             <div class="col-12 d-flex justify-content-center mb-3">
-              <a-avatar shape="square" :size="200">
-                <template #icon>
-                  <UserOutlined />
-                </template>
-              </a-avatar>
+              <label for="input-img" class="preview">
+              </label>
             </div>
             <div class="col-12 d-flex justify-content-center">
               <label class="custom-file-upload primary-color bg-info">
-                <input type="file" @change="handleFileUpload"/>
+                <input type="file" @change="handleFileUpload" id="input-img" />
                 <i class="fa fa-cloud-upload"></i> Thêm Ảnh
               </label>
             </div>
@@ -130,7 +127,7 @@
 <script>
 import dayjs from 'dayjs';
 import { useMenu } from '../../../stores/use-menu';
-import { defineComponent, reactive, ref, toRef, computed  } from 'vue';
+import { defineComponent, reactive, ref, toRef, computed } from 'vue';
 import axios from 'axios';
 export default defineComponent({
 
@@ -153,9 +150,14 @@ export default defineComponent({
       gender: 1,
       birthday: '',
     });
-    
+
     const handleFileUpload = (event) => {
       admin.avatar = event.target.files[0];
+
+      let img = document.createElement('img')
+      img.src = URL.createObjectURL(admin.avatar)
+      document.querySelector('.preview').appendChild(img)
+      document.getElementsByTagName('img')[0].style = "width: 100%; height: 100%;"
     };
 
     const createAdmin = async () => {
@@ -169,10 +171,10 @@ export default defineComponent({
       formData.append('gender', admin.gender);
       formData.append('birthday', admin.birthday);
 
-      axios.post('/api/admin/create', formData, {
+      axios.post('/api/admin/create', admin, {
         headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+          'Content-Type': 'multipart/form-data',
+        },
       })
         .then((response) => {
           if (response.status == 200) {
@@ -197,7 +199,7 @@ export default defineComponent({
         })
     }
 
-    
+
 
     return {
       birthday: ref(dayjs('01/01/2015', dateFormatList)),
@@ -213,12 +215,29 @@ export default defineComponent({
 
 <style scoped>
 input[type="file"] {
-    display: none;
+  display: none;
 }
+
 .custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
 }
+
+.preview {
+  border: 2px dashed #ccc;
+  width: 70%;
+  display: block;
+  position: relative;
+  height: 250px;
+  color: white;
+  font-size: 22px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-direction: column;
+  cursor: pointer;
+}
+
 </style>
