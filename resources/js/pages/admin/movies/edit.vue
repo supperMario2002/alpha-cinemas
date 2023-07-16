@@ -56,6 +56,20 @@
                         <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
                             <label>
                                 <span class="text-danger me-1">*</span>
+                                <span>Thể loại: </span>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-5">
+                            <a-select v-model:value="movie.categories" mode="multiple" placeholder="Chọn thể loại"
+                                style="width: 100%"
+                                :options="options.map(item => ({ value: item.id, label: item.name }))"></a-select>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            <label>
+                                <span class="text-danger me-1">*</span>
                                 <span>Tác giả: </span>
                             </label>
                         </div>
@@ -74,6 +88,24 @@
                         <div class="col-12 col-sm-5">
                             <a-input-number placeholder="Thời lượng " v-model:value="movie.running_time" min="0" /> <span>
                                 (min)</span>
+                            <span v-if="errors.running_time" class="text-danger">{{ errors.running_time[0] }}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            <label>
+                                <span class="text-danger me-1">*</span>
+                                <span>Ảnh bìa phim: </span>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-5">
+                            <a-upload v-model:file-list="fileList" list-type="picture" :max-count="1" action=""
+                                :before-upload="uploadImage">
+                                <a-button html-type="button">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span class="ms-2">Chọn ảnh</span>
+                                </a-button>
+                            </a-upload>
                             <span v-if="errors.running_time" class="text-danger">{{ errors.running_time[0] }}</span>
                         </div>
                     </div>
@@ -103,44 +135,86 @@ export default {
 
         const router = useRoute();
         const store = useMenu();
-        store.onSelectKeys(['admin-movies-create']);
+        store.onSelectKeys(['admin-movies']);
 
+        const options = ref([{}]);
+        const fileList = ref([{
+            uid: '1',
+            name: 'anh-bia.jpg',
+            status: 'done',
+            url: '',
+            thumbUrl: '',
+        }]);
 
         const errors = ref({});
 
         const movie = reactive({
             name: '',
             slug: '',
+            file: null,
             descrition: '',
             release_date: '',
+            categories: [],
             director: '',
             running_time: '',
         });
 
+        const uploadImage = event => {
+            movie.file = event;
+        };
 
         const updateSlug = (e) => {
             movie.slug = ChangeToSlug(e.target.value);
-            console.log(ChangeToSlug(e.target.value));
         }
 
         const getMovie = async () => {
             axios.get(`/api/movie/${router.params.id}/edit`)
-            .then((response) =>{
-                movie.name = response.data.name;
-                movie.slug = response.data.slug;
-                movie.descrition = response.data.descrition;
-                movie.release_date = dayjs(response.data.release_date);
-                movie.director = response.data.director;
-                movie.running_time = response.data.running_time;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((response) => {
+                    console.log(response);
+                    movie.name = response.data.name;
+                    movie.slug = response.data.slug;
+                    movie.descrition = response.data.descrition;
+                    movie.release_date = dayjs(response.data.release_date);
+                    movie.director = response.data.director;
+                    movie.running_time = response.data.running_time;
+                    fileList.value[0].url = response.data.img;
+                    fileList.value[0].thumbUrl = response.data.img;
+                    response.data.categories.forEach(item => {
+                        movie.categories.push({
+                            label: item.name,
+                            value: item.id,
+                        });
+                    });
+                    console.log(movie);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
         getMovie();
-        
+
+        const getLitsCategories = async () => {
+            axios.get('api/movie/create')
+                .then((response) => {
+                    options.value = response.data;
+                })
+        }
+        getLitsCategories();
+
         const update = async () => {
-            axios.put(`/api/movie/${router.params.id}`, movie)
+            const formData = new FormData();
+            formData.append('name', movie.name);
+            formData.append('slug', movie.slug);
+            formData.append('file', movie.file);
+            formData.append('descrition', movie.descrition);
+            formData.append('release_date', movie.release_date);
+            formData.append('categories', JSON.stringify(movie.categories));
+            formData.append('director', movie.director);
+            formData.append('running_time', movie.running_time);
+            formData.append('_method', 'put');
+
+            console.log(movie);
+            axios.post(`/api/movie/${router.params.id}`, formData)
                 .then((response) => {
                     if (response.status == 200) {
                         history.back(-1);
@@ -157,10 +231,13 @@ export default {
         }
 
         return {
-            movie, 
+            movie,
             errors,
+            fileList,
+            options,
             updateSlug,
-            update
+            update,
+            uploadImage
         }
 
     }

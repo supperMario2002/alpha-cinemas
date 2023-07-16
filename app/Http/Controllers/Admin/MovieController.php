@@ -49,14 +49,14 @@ class MovieController extends Controller
                 'running_time' => $request->running_time,
             ]);
 
-            if (!empty($request->catrgories)) {
-                foreach($request->catrgories as $value){
+            if (!empty($request->categories)) {
+                foreach (json_decode($request->categories) as $value) {
                     MovieCategoryModel::create([
                         'movie_id' => $create->id,
                         'category_id' => $value
                     ]);
                 }
-            } 
+            }
 
 
             return response()->json(['mess' => 'Thêm phim mới thành công!']);
@@ -69,21 +69,74 @@ class MovieController extends Controller
     public function edit($id)
     {
         $movie = Movie::find($id);
+        $movie->img = asset(Storage::url($movie->img));
+        $movie['categories'] = $movie->categories;
         return response()->json($movie);
     }
 
     public function update(Request $request, $id)
     {
         $movie = Movie::find($id);
+        if($request->hasFile('file')){
+            if(Storage::exists($movie->img)){
+                Storage::delete($movie->img);
+            }
+            $path = $this->file->uploadImage($request->file, 'movies');
+        }else{
+            $path = $movie->img;
+        }
+        $arrCategories = $movie->categories->toArray();
+        foreach ($arrCategories as $item) {
+            $old_categories[] = $item['pivot']['category_id'];
+        }
+        $new_categories = json_decode($request->categories);
+        // dd($new_categories);
+
         try {
             $movie->update([
                 'name' => $request->name,
                 'slug' => $request->slug,
+                'img' => $path,
                 'descrition' => $request->descrition,
                 'release_date' => Carbon::parse($request->release_date)->format('Y/m/d'),
                 'director' => $request->director,
                 'running_time' => $request->running_time,
             ]);
+
+            //update category
+            // dd($old_categories, $new_categories);
+            foreach ($new_categories as $value) {
+                if (!is_object($value)) {
+                    if (!empty($new_categories)) {
+                        $delete = array_diff($old_categories, $new_categories);
+                        $add = array_diff($new_categories, $old_categories);
+                        if (!empty($delete)) {
+                            foreach ($delete as $value) {
+                                foreach ($movie->categories as $item) {
+                                    if ($item->pivot->category_id == $value) {
+                                        $item->pivot->delete();
+                                    }
+                                }
+                            }
+                        }
+                        if (!empty($add)) {
+                            foreach ($add as $value) {
+                                MovieCategoryModel::create([
+                                    'movie_id' => $movie->id,
+                                    'category_id' => $value
+                                ]);
+                            }
+                        }
+                    } else {
+                        if (!empty($old_categories)) {
+                            foreach ($movie->categories as $item) {
+                                $item->delete();
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
             return response()->json(['mess' => 'Cập nhật phim thành công!']);
         } catch (\Throwable $th) {
             //throw $th;
