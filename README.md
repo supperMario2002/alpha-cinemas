@@ -74,7 +74,7 @@ categories - done
 moies - done
 movie_category - done
 show_time
-type_seat
-seat
+type_seat - done
+seat - done
 voucher
 tickets
