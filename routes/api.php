@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,3 +52,10 @@ Route::post('/movie', [MovieController::class, 'store']);
 Route::get('/movie/{id}/edit', [MovieController::class, 'edit']);
 Route::put('/movie/{id}', [MovieController::class, 'update']);
 Route::delete('/movie/{id}', [MovieController::class, 'delete']);
+
+Route::get('/schedule/index', [ScheduleController::class, 'index']);
+Route::get('/schedule/create', [ScheduleController::class, 'create']);
+Route::post('/schedule', [ScheduleController::class, 'store']);
+Route::get('/schedule/{id}/edit', [ScheduleController::class, 'edit']);
+Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
+Route::delete('/schedule/{id}', [ScheduleController::class, 'delete']);

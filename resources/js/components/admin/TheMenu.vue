@@ -8,15 +8,12 @@
                 <span>Trang chủ</span>
             </router-link>
         </a-menu-item>
-        <a-sub-menu @titleClick="titleClick">
+        <a-sub-menu >
             <template #icon>
                 <i class="fa-solid fa-user"></i>
             </template>
             <template #title>Quản lý tài khoản</template>
             <a-menu-item-group key="g1">
-                <template #icon>
-                    <QqOutlined />
-                </template>
                 <template #title>Khách hàng</template>
                 <a-menu-item key="users">
                     <router-link :to="{ name: 'admin-users' }" class="text-decoration-none">
@@ -25,9 +22,6 @@
                 </a-menu-item>
             </a-menu-item-group>
             <a-menu-item-group key="g2">
-                <template #icon>
-                    <QqOutlined />
-                </template>
                 <template #title>Quản trị viên</template>
                 <a-menu-item key="admin">
                     <router-link :to="{ name: 'admin' }" class="text-decoration-none">
@@ -41,15 +35,12 @@
                 </a-menu-item>
             </a-menu-item-group>
         </a-sub-menu>
-        <a-sub-menu @titleClick="titleClick">
+        <a-sub-menu >
             <template #icon>
                 <i class="fa-solid fa-tv"></i>
             </template>
             <template #title>Quản lý phòng</template>
             <a-menu-item-group key="g3">
-                <template #icon>
-                    <QqOutlined />
-                </template>
                 <template #title>Phòng xem phim</template>
                 <a-menu-item key="admin-rooms">
                     <router-link :to="{ name: 'admin-rooms' }" class="text-decoration-none">
@@ -63,7 +54,7 @@
                 </a-menu-item>
             </a-menu-item-group>
         </a-sub-menu>
-        <a-sub-menu @titleClick="titleClick">
+        <a-sub-menu >
             <template #icon>
                 <i class="fa-solid fa-film"></i>
             </template>
@@ -97,6 +88,25 @@
                 <a-menu-item key="admin-movies-create">
                     <router-link :to="{ name: 'admin-movies-create' }" class="text-decoration-none">
                         <span>Thêm phim</span>
+                    </router-link>
+                </a-menu-item>
+            </a-menu-item-group>
+        </a-sub-menu>
+        <a-sub-menu >
+            <template #icon>
+                <i class="fa-solid fa-calendar-days"></i>
+            </template>
+            <template #title>Quản lý lịch chiếu phim</template>
+            <a-menu-item-group key="g6">
+                <template #title>Lịch chiếu phim</template>
+                <a-menu-item key="admin-schedules">
+                    <router-link :to="{ name: 'admin-schedules' }" class="text-decoration-none">
+                        <span>Danh sách lịch chiếu</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-schedules-create">
+                    <router-link :to="{ name: 'admin-schedules-create' }" class="text-decoration-none">
+                        <span>Thêm lịch chiếu</span>
                     </router-link>
                 </a-menu-item>
             </a-menu-item-group>

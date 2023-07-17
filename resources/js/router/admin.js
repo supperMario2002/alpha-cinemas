@@ -98,6 +98,22 @@ const admin = [
                 component: () => import('../pages/admin/movies/edit.vue'),
             },
             
+            // quản lý lịch chiếu phim
+            {
+                path: "schedules",
+                name: "admin-schedules",
+                component: () => import("../pages/admin/schedules/index.vue"),
+            },
+            {
+                path: "schedules/create",
+                name: "admin-schedules-create",
+                component: () => import("../pages/admin/schedules/create.vue"),
+            },
+            {
+                path: 'schedules/:id/edit',
+                name: 'admin-schedules-edit',
+                component: () => import('../pages/admin/schedules/edit.vue'),
+            },
         ]
     }
 ]
