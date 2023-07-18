@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('use_point');
             $table->foreignId('seat_id')->constrained('seats');
-            $table->foreignId('show_time_id')->constrained('show_time');;
+            $table->foreignId('schedule_id')->constrained('schedule');;
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('admin_id')->constrained('admin');            ;
             $table->foreignId('voucher_id')->constrained('vouchers');
