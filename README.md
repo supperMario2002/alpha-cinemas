@@ -73,8 +73,8 @@ room - done
 categories - done
 moies - done
 movie_category - done
-schedule
-type_seat
-seat
+show_time
+type_seat - done
+seat - done
 voucher
 tickets

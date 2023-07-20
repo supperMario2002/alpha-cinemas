@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('price');
-            $table->foreignId('type_id')->constrained('type_seat');
-            $table->foreignId('room_id')->constrained('rooms');
-            
         });
     }
 
