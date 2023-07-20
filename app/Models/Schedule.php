@@ -17,4 +17,8 @@ class Schedule extends Model
     ];
 
     public $timestamps = false;
+
+    public function movie(){
+        return $this->belongsTo(Movie::class, 'movie_id');
+    }
 }
