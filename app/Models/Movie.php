@@ -28,4 +28,8 @@ class Movie extends Model
     public function categories(){
         return $this->belongsToMany(Category::class, 'movie_category', 'movie_id', 'category_id' );
     }
+
+    public function schedules(){
+        return $this->hasMany(Schedule::class);
+    }
 }
