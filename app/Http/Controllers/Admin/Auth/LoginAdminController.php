@@ -11,28 +11,25 @@ use Illuminate\Support\Facades\Hash;
 class LoginAdminController extends Controller
 {
     public function login(Request $request){
-        try {
-            $request->validate([
-                'email' => 'email|required',
-                'password' => 'required'
-            ]);
+        try { 
+  
+            // $credentials = request(['email', 'password']);
 
-            $credentials = request(['email', 'password']);
+            // if (!Auth::attempt($credentials)) {
+            //     return response()->json([
+            //         'status_code' => 500,
+            //         'message' => 'Unauthorized'
+            //     ]);
+            // }
 
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Unauthorized'
-                ]);
-            }
+            $admin = Admin::where('email', $request->email)->first();
 
-            $user = Admin::where('email', $request->email)->first();
-
-            if (!Hash::check($request->password, $user->password, [])) {
+            if (!Hash::check($request->password, $admin->password, [])) {
                 throw new \Exception('Error in Login');
             }
 
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
+            $tokenResult = $admin->createToken('authToken')->plainTextToken;
+            // Auth::guard('admin')->login($admin);
 
             return response()->json([
                 'status_code' => 200,
@@ -42,7 +39,7 @@ class LoginAdminController extends Controller
         } catch (\Exception $error) {
             return response()->json([
                 'status_code' => 500,
-                'message' => 'Error in Login',
+                'message' => 'Tài khoản không tồn tại',
                 'error' => $error,
             ]);
         }

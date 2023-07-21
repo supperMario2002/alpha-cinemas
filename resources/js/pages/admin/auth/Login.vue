@@ -7,26 +7,26 @@
                         class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form>
+                    <form @submit.prevent="login" :form="admin">
                         <div class="d-flex flex-row align-items-center justify-content-center mb-3">
                             <p class="lead fw-normal mb-0 me-3 ">Đăng Nhập</p>
                         </div>
 
                         <div class="form-outline mb-4">
-                            <input type="email" id="form3Example3" class="form-control form-control-lg"
-                                placeholder="Nhập email" />
+                            <input type="email" id="email" class="form-control form-control-lg"
+                                placeholder="Nhập email"  v-model="admin.email" />
                             <label class="form-label" for="form3Example3">Email</label>
                         </div>
 
                         <div class="form-outline mb-3">
-                            <input type="password" id="form3Example4" class="form-control form-control-lg"
-                                placeholder="Nhập mật khẩu" />
+                            <input type="password" id="password" class="form-control form-control-lg"
+                                placeholder="Nhập mật khẩu" v-model="admin.password"/>
                             <label class="form-label" for="form3Example4">Mật khẩu</label>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check mb-0">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                                <input class="form-check-input me-2" type="checkbox"  v-model="admin.remmeber" id="remmeber" />
                                 <label class="form-check-label" for="form2Example3">
                                     Ghi nhớ
                                 </label>
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="button" class="btn btn-primary btn-lg"
+                            <button type="submit" class="btn btn-primary btn-lg"
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng nhập</button>
                         </div>
 
@@ -52,15 +52,38 @@
     </section>
 </template>
 <script>
-import { defineComponent } from 'vue';
-export default defineComponent({
-    setup() {
+import axios from 'axios';
+import {  reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
-    },
-    components: {
+export default {
+    setup() {
+        const router = useRouter();
+      
+        const admin = reactive({
+            email: '',
+            password: '',
+            remmeber: false,
+        });
+
+        const login = async ()=>{
+            console.log(admin);
+            axios.post('api/admin/login', admin)
+            .then((response)=>{
+                console.log(response);
+                localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
+                router.push({ name: 'admin-home' });
+                
+            })
+        }
+
+        return {
+            admin,
+            login,
+        };
     }
 
-}) 
+}
 </script>
 <style scoped>
 .h-custom {

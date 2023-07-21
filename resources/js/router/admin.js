@@ -106,7 +106,7 @@ const admin = [
             },
         ],
         meta: {
-            auth: true
+            requiresAuth: true
         }
     },
     // Đăng ký đăng nhập
@@ -115,7 +115,7 @@ const admin = [
         name: "admin-login",
         component: () => import("../pages/admin/auth/Login.vue"),
         meta: {
-            auth: false
+            requiresAuth: false
         }
     },
     {
@@ -123,7 +123,7 @@ const admin = [
         name: "admin-register",
         component: () => import("../pages/auth/Register.vue"),
         meta: {
-            auth: false
+            requiresAuth: false
         }
     },
 ]
