@@ -129,7 +129,7 @@ body {
 }
 
 .wrapper {
-    max-width: 40%;
+    max-width: 400px;
     min-height: 500px;
     margin: 80px auto;
     padding: 40px 30px 30px 30px;
