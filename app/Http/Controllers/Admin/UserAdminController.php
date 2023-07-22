@@ -112,6 +112,9 @@ class UserAdminController extends Controller
             "phone" => $request->phone,
             "gender" => $request->gender,
             "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+            "provider_id" => 1,
+            "provider" => 1,
+            "point" => 1,
         ]);
         return response()->json(['mess' => 'Đăng ký thành công!!']);
     }
