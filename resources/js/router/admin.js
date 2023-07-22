@@ -39,16 +39,6 @@ const admin = [
                 component: () => import("../pages/admin/users/editAdmin.vue"),
             },
             {
-                path: "login",
-                name: "admin-login",
-                component: () => import("../pages/auth/Login.vue"),
-            },
-            {
-                path: "register",
-                name: "admin-register",
-                component: () => import("../pages/auth/Register.vue"),
-            },
-            {
                 path: "rooms",
                 name: "admin-rooms",
                 component: () => import("../pages/admin/rooms/index.vue"),
@@ -114,8 +104,28 @@ const admin = [
                 name: 'admin-schedules-edit',
                 component: () => import('../pages/admin/schedules/edit.vue'),
             },
-        ]
-    }
+        ],
+        meta: {
+            requiresAuth: true
+        }
+    },
+    // Đăng ký đăng nhập
+    {
+        path: "/admin/login",
+        name: "admin-login",
+        component: () => import("../pages/admin/auth/Login.vue"),
+        meta: {
+            requiresAuth: false
+        }
+    },
+    {
+        path: "/admin/register",
+        name: "admin-register",
+        component: () => import("../pages/auth/Register.vue"),
+        meta: {
+            requiresAuth: false
+        }
+    },
 ]
 
 export default admin;
