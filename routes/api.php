@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\client\MovieControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/admin/login', [LoginAdminController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/index', [UserAdminController::class, 'indexAdmin']);
     Route::post('/admin/create', [UserAdminController::class, 'storeAdmin']);
     Route::get('/admin/{id}/edit', [UserAdminController::class, 'getAdminById']);
@@ -38,7 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/room/{id}/edit', [RoomController::class, 'edit']);
     Route::put('/room/{id}', [RoomController::class, 'update']);
     Route::delete('/room/{id}', [RoomController::class, 'delete']);
-
 
     Route::get('/category/index', [CategoryController::class, 'index']);
     Route::post('/category/create', [CategoryController::class, 'store']);
@@ -58,4 +58,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/schedule/{id}/edit', [ScheduleController::class, 'edit']);
     Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
     Route::delete('/schedule/{id}', [ScheduleController::class, 'delete']);
-});
+
+// });
+
+
+//Client routes
+
+Route::get('/client/movie/index', [MovieControler::class, 'index']);
+Route::get('/client/movie/{slug}/show', [MovieControler::class, 'movieBySlug']);
