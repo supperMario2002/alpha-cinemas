@@ -7,16 +7,20 @@
         <div class="text-center mt-4 name">
             BETA
         </div>
-        <form class="p-3 mt-3">
+        <form class="p-3 mt-3" @submit.prevent="login" :form="user">
             <div class="form-field d-flex align-items-center">
                 <i class="fa-solid fa-envelope"></i>
-                <input type="email" name="userName" id="userName" placeholder="Email">
+                <input type="email" id="userName" placeholder="Email" v-model="user.email">
             </div>
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
-                <input type="password" name="password" id="pwd" placeholder="Password">
+                <input type="password" id="pwd" placeholder="Password" v-model="user.password">
             </div>
-            <button class="btn mt-3">Login</button>
+            <div class="d-flex align-items-center">
+                <span class="mx-3">Nhớ mật khẩu</span>
+                <input type="checkbox" class="form-check-input" >
+            </div>
+            <button type="submit" class="btn mt-3">Login</button>
         </form>
         <div class="text-center fs-6">
             <a href="#">Forget password?</a> or <a href="#">Sign up</a>
@@ -26,9 +30,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {  reactive } from 'vue';
+import { useRouter } from 'vue-router';
 export default {
     setup() {
-        
+        const router = useRouter();
+      
+        const user = reactive({
+            email: '',
+            password: '',
+            // remeber: false,
+        });
+
+        const login = async ()=>{
+            console.log(user);
+            axios.post('api/client/login', user)
+            .then((response)=>{
+                
+                console.log(response);
+                if(response.status == 200 && response.data.status_code == 200){
+                    localStorage.setItem("user-token", JSON.stringify(response.data.access_token));
+                    router.push({ name: 'home' });
+                }
+            })
+        }
+
+        return {
+            user,
+            login,
+        };
     }
 
 }

@@ -10,18 +10,22 @@
                                 <div class="card" style="width: 18rem">
                                     <img v-bind:src="movie.img" class="card-img-top" alt="..." />
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ movie.name }}</h5>
-                                        <p class="card-text"><span class="fw-bold">Thể loại: </span><span
+                                        <h5 class="card-title">
+                                            {{ movie.name }}
+                                        </h5>
+                                        <p class="card-text">
+                                            <span class="fw-bold">Thể loại: </span><span
                                                 v-for="category in movie.categories" :key="category.id">{{ category.name
-                                                }}&nbsp;</span></p>
-                                        <p class="card-text"><span class="fw-bold">Thời Lượng: </span>{{ movie.running_time
-                                        }}&nbsp;Phút</p>
+                                                }}&nbsp;</span>
+                                        </p>
+                                        <p class="card-text">
+                                            <span class="fw-bold">Thời Lượng: </span>{{ movie.running_time }}&nbsp;Phút
+                                        </p>
                                         <a href="#" class="btn btn-primary">Mua vé</a>
                                     </div>
                                 </div>
                             </router-link>
                         </div>
-
                     </div>
                 </a-tab-pane>
                 <a-tab-pane key="2" tab="Phim Đang Chiếu" force-render>
@@ -181,8 +185,14 @@ export default {
     setup() {
 
         const movies = ref([]);
-        const getmovie = () => axios.get('/api/client/movie/index')
-            .then((reponse) => {
+        const token = localStorage.getItem('user-token');
+        const getmovie = () => axios.get('/api/client/movie/index',
+            {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            }
+        ).then((reponse) => {
                 movies.value = reponse.data.listMovie;
                 console.log(reponse);
             })
@@ -190,7 +200,7 @@ export default {
                 console.log(error);
             })
         getmovie();
-       
+
         return {
             activeKey: ref("1"),
             movies
