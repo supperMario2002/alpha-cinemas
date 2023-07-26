@@ -13,20 +13,21 @@
                         </div>
 
                         <div class="form-outline mb-4">
-                            <input type="email" id="email" class="form-control form-control-lg"
-                                placeholder="Nhập email"  v-model="admin.email" />
+                            <input type="email" id="email" class="form-control form-control-lg" placeholder="Nhập email"
+                                v-model="admin.email" />
                             <label class="form-label" for="form3Example3">Email</label>
                         </div>
 
                         <div class="form-outline mb-3">
                             <input type="password" id="password" class="form-control form-control-lg"
-                                placeholder="Nhập mật khẩu" v-model="admin.password"/>
+                                placeholder="Nhập mật khẩu" v-model="admin.password" />
                             <label class="form-label" for="form3Example4">Mật khẩu</label>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="form-check mb-0">
-                                <input class="form-check-input me-2" type="checkbox"  v-model="admin.remmeber" id="remmeber" />
+                                <input class="form-check-input me-2" type="checkbox" v-model="admin.remmeber"
+                                    id="remmeber" />
                                 <label class="form-check-label" for="form2Example3">
                                     Ghi nhớ
                                 </label>
@@ -53,28 +54,29 @@
 </template>
 <script>
 import axios from 'axios';
-import {  reactive } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
     setup() {
         const router = useRouter();
-      
+
         const admin = reactive({
             email: '',
             password: '',
             remmeber: false,
         });
 
-        const login = async ()=>{
+        const login = async () => {
             console.log(admin);
             axios.post('api/admin/login', admin)
-            .then((response)=>{
-                console.log(response);
-                localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
-                router.push({ name: 'admin-home' });
-                
-            })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status == 200 && response.data.status_code == 200) {
+                        localStorage.setItem("admin_token", JSON.stringify(response.data.access_token));
+                        router.push({ name: 'admin-home' });
+                    }
+                })
         }
 
         return {

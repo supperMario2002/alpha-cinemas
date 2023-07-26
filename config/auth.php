@@ -42,9 +42,8 @@ return [
         ],
 
         'admin' => [
-            'driver' => 'token',
+            'driver' => 'session',
             'provider' => 'admins',
-            'hash' => true,
         ],
 
     ],
@@ -104,12 +103,6 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-        'admins' => [
-            'provider' => 'admins',
-            'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

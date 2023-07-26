@@ -25,7 +25,7 @@ app.mount("#app");
 
 router.beforeEach((to, from, next) => {
     console.log(to);
-    if (to.meta.requiresAuth && localStorage.getItem("access_token") == null) {
+    if (to.meta.requiresAuth && localStorage.getItem("admin_token") == null) {
         next({
             name: "admin-login",
             query: { redirect: to.fullPath },
