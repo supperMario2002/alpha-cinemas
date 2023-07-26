@@ -6,36 +6,30 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginAdminController extends Controller
 {
-    public function login(Request $request){
-        try { 
-  
-            // $credentials = request(['email', 'password']);
+    public function login(Request $request)
+    {
+        try {
 
-            // if (!Auth::attempt($credentials)) {
-            //     return response()->json([
-            //         'status_code' => 500,
-            //         'message' => 'Unauthorized'
-            //     ]);
-            // }
+            $credentials = request(['email', 'password']);
 
-            $admin = Admin::where('email', $request->email)->first();
-
-            if (!Hash::check($request->password, $admin->password, [])) {
-                throw new \Exception('Error in Login');
+            if (Auth::guard('admin')->attempt($credentials)) {
+                /** @var \App\Models\Admin $admin **/
+                $admin = Auth::guard('admin')->user();
+                $tokenResult = $admin->createToken('adminToken', ['admin'])->plainTextToken;
+                return response()->json([
+                    'status_code' => 200,
+                    'access_token' => $tokenResult,
+                    'token_type' => 'Bearer',
+                ]);
             }
-
-            $tokenResult = $admin->createToken('authToken')->plainTextToken;
-            // Auth::guard('admin')->login($admin);
-
             return response()->json([
-                'status_code' => 200,
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
+                'status_code' => 500,
+                'message' => 'Tài khoản không tồn tại'
             ]);
+
         } catch (\Exception $error) {
             return response()->json([
                 'status_code' => 500,
