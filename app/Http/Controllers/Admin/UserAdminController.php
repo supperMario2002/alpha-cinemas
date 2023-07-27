@@ -10,6 +10,7 @@ use App\Http\Services\FileService;
 use App\Models\Admin;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserAdminController extends Controller
@@ -18,6 +19,38 @@ class UserAdminController extends Controller
     protected $file;
     public function __construct(FileService $file){
         $this->file = $file;
+    }
+
+    public function getAdmin(Request $request){
+        if(Auth::guard('admin')->check()){ 
+            $admin =  $request->user();
+            $admin->avatar = asset(Storage::url($admin->avatar));
+            return response()->json([
+                'status_code' => 200, 
+                'admin' => $admin,
+            ]);
+        }
+        return response()->json([
+            'status_code' => 500, 
+            'message' => $request,
+        ]);
+    }
+
+    public function logoutAdmin(Request $request){
+        if(Auth::guard('admin')->check()){ 
+            $admin =  $request->user();
+            $admin->tokens()->delete();
+            Auth::guard('admin')->logout();
+
+            return response()->json([
+                'status_code' => 200, 
+                'message' => 'Đã đăng xuất',
+            ]);
+        }
+        return response()->json([
+            'status_code' => 500, 
+            'message' => 'Lỗi',
+        ]);
     }
 
     public function indexAdmin()
