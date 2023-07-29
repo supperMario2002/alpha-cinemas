@@ -73,7 +73,7 @@ room - done
 categories - done
 moies - done
 movie_category - done
-show_time
+schedule - done
 type_seat - done
 seat - done
 voucher

@@ -2,7 +2,7 @@
     <form @submit.prevent="creatSchedule" :form="schedule">
         <a-card title="Thêm lịch chiếu phim mới" style="width: 100%;">
             <div class="row">
-                <div class="col-12 col-sm-10">
+                <div class="col-12 col-sm-10" id="schedule">
                     <div class="row mb-3">
                         <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
                             <label>
@@ -40,6 +40,14 @@
                             <a-date-picker v-model:value="schedule.showtime" format="YYYY-MM-DD HH:mm:ss"
                                 placeholder="Chọn thời gian" style="width: 100%" :disabled-date="disabledDate"
                                 :show-time="{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }" />
+                        </div>
+                    </div>
+                    <div class="row mb-3" id="btn">
+                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            
+                        </div>
+                        <div class="col-12 col-sm-5">
+                            <button class="bg-primary float-end text-light" @click="addDatetimePicker">Thêm lịch chiếu</button>
                         </div>
                     </div>
                     <div class="row">
@@ -91,6 +99,25 @@ export default {
             return current && current < dayjs().endOf('day');
         };
 
+        const addDatetimePicker = () => {
+            const form = document.querySelector('#schedule');
+            const date = `
+            <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            <label>
+                                <span class="text-danger me-1">*</span>
+                                <span>Thời gian chiếu: </span>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-5">
+                            <input type="datetime-local"  name="" id="" style="width: 100%;">
+                        </div>
+                    `
+            const datime = document.createElement('div');
+            datime.className = 'row mb-3'
+            datime.innerHTML = date
+            form.insertBefore(datime, btn)
+        } 
+
 
         const getData = () => {
             axios.get('/api/schedule/create')
@@ -131,7 +158,7 @@ export default {
             disabledDate,
             creatSchedule,
             filterOption,
-
+            addDatetimePicker,
         }
 
     }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\client\Auth\LoginClientController;
+use App\Http\Controllers\client\MovieControler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +45,6 @@ Route::middleware(['auth:sanctum' , 'abilities:admin' ])->group(function () {
     Route::put('/room/{id}', [RoomController::class, 'update']);
     Route::delete('/room/{id}', [RoomController::class, 'delete']);
 
-
     Route::get('/category/index', [CategoryController::class, 'index']);
     Route::post('/category/create', [CategoryController::class, 'store']);
     Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
@@ -62,4 +63,17 @@ Route::middleware(['auth:sanctum' , 'abilities:admin' ])->group(function () {
     Route::get('/schedule/{id}/edit', [ScheduleController::class, 'edit']);
     Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
     Route::delete('/schedule/{id}', [ScheduleController::class, 'delete']);
+
+});
+
+
+//Client routes
+
+
+
+Route::post('/client/login', [LoginClientController::class, 'login']);
+
+Route::middleware(['auth:sanctum', 'abilities:user'])->group(function () {
+    Route::get('/client/movie/index', [MovieControler::class, 'index']);
+    Route::get('/client/movie/{slug}/show', [MovieControler::class, 'movieBySlug']);
 });

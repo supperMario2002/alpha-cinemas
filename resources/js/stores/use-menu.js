@@ -8,7 +8,6 @@ export const useMenu = defineStore("menuId", {
     actions:{
         onSelectKeys(data){
             this.selectedKeys = data
-
         },
         onOpenKeys(data){
             this.openKeys = data
