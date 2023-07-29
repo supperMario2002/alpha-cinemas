@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/admin/login', [LoginAdminController::class, 'login']);
 
-Route::middleware(['auth:sanctum' , 'abilities:admin' ])->group(function () {
+Route::middleware(['auth:sanctum' , 'auth:admin' ])->group(function () {
 
     Route::get('/admin', [UserAdminController::class, 'getAdmin']);
     Route::get('/admin/logout', [UserAdminController::class, 'logoutAdmin']);
@@ -74,6 +74,8 @@ Route::middleware(['auth:sanctum' , 'abilities:admin' ])->group(function () {
 Route::post('/client/login', [LoginClientController::class, 'login']);
 
 Route::middleware(['auth:sanctum', 'abilities:user'])->group(function () {
-    Route::get('/client/movie/index', [MovieControler::class, 'index']);
-    Route::get('/client/movie/{slug}/show', [MovieControler::class, 'movieBySlug']);
+    Route::get('/user/info', [LoginClientController::class, 'getUser']);
+    Route::get('/user/logout', [LoginClientController::class, 'logout']);
 });
+Route::get('/client/movie/index', [MovieControler::class, 'index']);
+Route::get('/client/movie/{slug}/show', [MovieControler::class, 'movieBySlug']);

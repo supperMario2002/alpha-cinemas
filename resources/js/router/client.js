@@ -1,7 +1,6 @@
 const client = [
     {
         path: "/",
-        name: "HomePage",
         component: () => import("../layouts/client.vue"),
         children: [
             {
@@ -10,31 +9,44 @@ const client = [
                 component: () => import("../pages/client/HomePage.vue"),
             },
             {
-                path: "",
+                path: "movies",
                 name: "movies",
                 component: () => import("../pages/client/MoviePage.vue"),
             },
             {
-                path: "",
+                path: "schedule",
                 name: "schedule",
                 component: () => import("../pages/client/Schedule.vue"),
+            },
+            {
+                path: "/:id",
+                name: "movie-detail",
+                component: () => import("../pages/client/MovieDetail.vue"),
             },
         ],
     },
     {
-        path: "/:id",
-        name: "movie-detail",
-        component: () => import("../pages/client/Movie-detail.vue"),
-    },
-    {
-        path: "/Login",
-        name: "Login",
-        component: () => import("../pages/auth/LoginClient.vue"),
-    },
-    {
-        path: "/SignIn",
-        name: "SignIn",
-        component: () => import("../pages/auth/SignClient.vue"),
+        path: "/",
+        component: () => import("../layouts/client.vue"),
+        children: [
+            {
+                path: "login",
+                name: "login",
+                component: () => import("../pages/client/auth/Login.vue"),
+            },
+            {
+                path: "register",
+                name: "register",
+                component: () => import("../pages/client/auth/Register.vue"),
+            },
+        ],
+        beforeEnter: (to, from, next) => {
+            if (localStorage.getItem("user_token") == null) {
+                next();
+            } else {
+                next({ name: 'home' }); 
+            }
+        },
     },
 ];
 

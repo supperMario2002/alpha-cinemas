@@ -50,8 +50,9 @@ export default {
                 
                 console.log(response);
                 if(response.status == 200 && response.data.status_code == 200){
-                    localStorage.setItem("user-token", JSON.stringify(response.data.access_token));
+                    localStorage.setItem("user_token", JSON.stringify(response.data.access_token));
                     router.push({ name: 'home' });
+                    location.reload(); 
                 }
             })
         }

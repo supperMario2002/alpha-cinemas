@@ -42,28 +42,28 @@
               </router-link>
             </li>
           </ul>
-          <ul class="navbar-nav ">
+          <ul v-if="user.length == 0" class="navbar-nav ">
             <li class="nav-item">
-              <router-link :to="{ name: 'Login' }" class="nav-link">
+              <router-link :to="{ name: 'login' }" class="nav-link">
                 Đăng Nhập
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'SignIn' }" class="nav-link">
+              <router-link :to="{ name: 'register' }" class="nav-link">
                 Đăng Ký
               </router-link>
             </li>
           </ul>
-          <ul class="navbar-nav d-none">
+          <ul v-else class="navbar-nav ">
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-user"></i> &nbsp;
-                <span>Quang Vinh</span>
+                <span>{{ user.fullname }}</span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Log out</a></li>
+                <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                <li><button @click="logout">Đăng xuất</button></li>
               </ul>
             </div>
           </ul>
@@ -74,11 +74,46 @@
 </template>
 
 <script>
-export default {
+import axios from "axios";
+import { defineComponent, ref } from "vue"; 
+import { useRouter } from 'vue-router';
+export default defineComponent({
   setup() {
+    const router = useRouter();
+    const user = ref([]);
 
+    const getUserInfo = () => {
+      axios.get('api/user/info')
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200 && response.data.status_code == 200) {
+            user.value = response.data.user;
+          }
+          return response.data.message;
+        })
+    }
+    if (localStorage.getItem("user_token") != null) {
+      getUserInfo();
+    }
+
+
+    const logout = () => {
+      axios.get('api/user/logout')
+        .then((response) => {
+          console.log(response);
+          if (response.status == 200 && response.data.status_code == 200) {
+            localStorage.removeItem('user_token');
+            router.push({ name: 'login' });
+            location.reload(); 
+          } 
+        })
+    }
+    return {
+      user,
+      logout
+    }
   }
-};
+});
 </script>
 
 <style></style>

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class LoginClientController extends Controller
 {
@@ -20,7 +21,7 @@ class LoginClientController extends Controller
             if (Auth::guard('user')->attempt($credentials)) {
                 /** @var \App\Models\User $user **/
                 $user = Auth::guard('user')->user();
-                dd($user);
+                // dd($user);
                 $tokenResult = $user->createToken('userToken', ['user'])->plainTextToken;
                 return response()->json([
                     'status_code' => 200,
@@ -41,5 +42,38 @@ class LoginClientController extends Controller
             ]);
         }
     }
+
+    public function getUser(Request $request){
+        if(Auth::guard('user')->check()){ 
+            $user =  $request->user();
+            $user->avatar = asset(Storage::url($user->avatar));
+            return response()->json([
+                'status_code' => 200, 
+                'user' => $user,
+            ]);
+        }
+        return response()->json([
+            'status_code' => 500, 
+            'message' => $request,
+        ]);
+    }
+
+    public function logout(Request $request){
+        if(Auth::guard('user')->check()){ 
+            $user =  $request->user();
+            $user->tokens()->delete();
+            Auth::guard('user')->logout();
+
+            return response()->json([
+                'status_code' => 200, 
+                'message' => 'Đã đăng xuất',
+            ]);
+        }
+        return response()->json([
+            'status_code' => 500, 
+            'message' => 'Lỗi',
+        ]);
+    }
+    
     
 }

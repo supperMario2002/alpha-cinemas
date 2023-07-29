@@ -22,15 +22,3 @@ app.use(pinia);
 app.use(Antd);
 app.mount("#app");
 
-
-router.beforeEach((to, from, next) => {
-    console.log(to);
-    if (to.meta.requiresAuth && localStorage.getItem("admin_token") == null) {
-        next({
-            name: "admin-login",
-            query: { redirect: to.fullPath },
-        });
-    } else {
-        next();
-    }
-});
