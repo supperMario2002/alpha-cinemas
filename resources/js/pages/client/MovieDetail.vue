@@ -1,5 +1,4 @@
 <template>
-    <TheHeader />
     <div id="movie-detail" class="container" >
         <div class="container-fluid">
             <h1 class="h1 text-center" id="pageHeaderTitle">Chi tiết phim</h1>
@@ -251,18 +250,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    <TheFooter />
+    </div> 
 </template>
 
-<script>
-import TheFooter from "../../components/client/TheFooter.vue";
-import TheHeader from "../../components/client/TheHeader.vue";
+<script> 
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
-import { defineComponent, ref, reactive } from "vue";
-export default {
-    components: { TheFooter, TheHeader },
+import { reactive } from "vue";
+export default { 
     setup() {
         const router = useRoute();
 

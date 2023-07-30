@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { defineStore } from "pinia";
 
 export const formartDateTime = (dateTime) => {
     const formattedDateTime = dayjs(dateTime).format("YYYY-MM-DD HH:mm:ss");
@@ -36,3 +37,18 @@ export const ChangeToSlug = (keywords) => {
     //In keywords ra textbox có id “keywords”
     return keywords;
 };
+
+export const SaveInfoLogin = defineStore("SaveInfoLogin", {
+    state: () => ({
+        userInfo: [],
+        adminInfo: [],
+    }),
+    actions:{
+        onLoginUser(data){
+            this.userInfo = data
+        },
+        onLoginAdmin(data){
+            this.adminInfo = data
+        }
+    }
+});

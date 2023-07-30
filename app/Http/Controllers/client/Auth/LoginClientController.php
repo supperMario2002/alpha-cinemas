@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\client\Auth;
+namespace App\Http\Controllers\Client\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -16,17 +16,16 @@ class LoginClientController extends Controller
     {
         try {
 
-            $credentials = request(['email', 'password']);
-            // dd($credentials);
+            $credentials = request(['email', 'password']); 
             if (Auth::guard('user')->attempt($credentials)) {
                 /** @var \App\Models\User $user **/
-                $user = Auth::guard('user')->user();
-                // dd($user);
+                $user = Auth::guard('user')->user(); 
                 $tokenResult = $user->createToken('userToken', ['user'])->plainTextToken;
                 return response()->json([
                     'status_code' => 200,
                     'access_token' => $tokenResult,
                     'token_type' => 'Bearer',
+                    'user' => $user,
                 ]);
             }
             return response()->json([

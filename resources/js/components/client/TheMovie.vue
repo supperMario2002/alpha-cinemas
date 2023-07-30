@@ -186,15 +186,9 @@ export default {
 
         const movies = ref([]);
         const token = localStorage.getItem('user-token');
-        const getmovie = () => axios.get('/api/client/movie/index',
-            {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            }
-        ).then((reponse) => {
-                movies.value = reponse.data.listMovie;
-                console.log(reponse);
+        const getmovie = () => axios.get('/api/client/movie/index')
+        .then((reponse) => {
+                movies.value = reponse.data.listMovie; 
             })
             .catch((error) => {
                 console.log(error);

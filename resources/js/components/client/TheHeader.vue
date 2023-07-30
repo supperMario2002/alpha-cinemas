@@ -42,7 +42,7 @@
               </router-link>
             </li>
           </ul>
-          <ul v-if="user.length == 0" class="navbar-nav ">
+          <ul v-if="userInfo.length == 0"  class="navbar-nav ">
             <li class="nav-item">
               <router-link :to="{ name: 'login' }" class="nav-link">
                 Đăng Nhập
@@ -59,7 +59,7 @@
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-user"></i> &nbsp;
-                <span>{{ user.fullname }}</span>
+                <span>{{ userInfo.fullname }}</span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
@@ -75,19 +75,21 @@
 
 <script>
 import axios from "axios";
+import { storeToRefs } from "pinia";
 import { defineComponent, ref } from "vue"; 
 import { useRouter } from 'vue-router';
+import { SaveInfoLogin } from '../../stores/helper.js'
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const user = ref([]);
+    const info =  SaveInfoLogin();
 
     const getUserInfo = () => {
       axios.get('api/user/info')
-        .then((response) => {
-          console.log(response);
+        .then((response) => { 
           if (response.status == 200 && response.data.status_code == 200) {
-            user.value = response.data.user;
+            // user.value = response.data.user;
+            info.onLoginUser(response.data.user);
           }
           return response.data.message;
         })
@@ -103,14 +105,15 @@ export default defineComponent({
           console.log(response);
           if (response.status == 200 && response.data.status_code == 200) {
             localStorage.removeItem('user_token');
+            info.onLoginUser([]);
             router.push({ name: 'login' });
-            location.reload(); 
+            
           } 
         })
     }
     return {
-      user,
-      logout
+      logout,
+      ...storeToRefs(info)
     }
   }
 });

@@ -33,10 +33,11 @@
 import axios from 'axios';
 import {  reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { SaveInfoLogin } from '../../../stores/helper';
 export default {
     setup() {
         const router = useRouter();
-      
+        const info = SaveInfoLogin();
         const user = reactive({
             email: '',
             password: '',
@@ -46,13 +47,11 @@ export default {
         const login = async ()=>{
             console.log(user);
             axios.post('api/client/login', user)
-            .then((response)=>{
-                
-                console.log(response);
+            .then((response)=>{ 
                 if(response.status == 200 && response.data.status_code == 200){
                     localStorage.setItem("user_token", JSON.stringify(response.data.access_token));
-                    router.push({ name: 'home' });
-                    location.reload(); 
+                    info.onLoginUser(response.data.user);
+                    router.push({ name: 'home' }); 
                 }
             })
         }
