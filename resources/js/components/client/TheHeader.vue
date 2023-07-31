@@ -56,14 +56,14 @@
           </ul>
           <ul v-else class="navbar-nav ">
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-user"></i> &nbsp;
                 <span>{{ userInfo.fullname }}</span>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
-                <li><button @click="logout">Đăng xuất</button></li>
+                <li><a class="dropdown-item" @click="logout">Đăng xuất</a></li>
               </ul>
             </div>
           </ul>
