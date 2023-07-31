@@ -17,38 +17,41 @@ class UserAdminController extends Controller
 {
 
     protected $file;
-    public function __construct(FileService $file){
+    public function __construct(FileService $file)
+    {
         $this->file = $file;
     }
 
-    public function getAdmin(Request $request){
-        if(Auth::guard('admin')->check()){ 
+    public function getAdmin(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
             $admin =  $request->user();
             $admin->avatar = asset(Storage::url($admin->avatar));
             return response()->json([
-                'status_code' => 200, 
+                'status_code' => 200,
                 'admin' => $admin,
             ]);
         }
         return response()->json([
-            'status_code' => 500, 
+            'status_code' => 500,
             'message' => $request,
         ]);
     }
 
-    public function logoutAdmin(Request $request){
-        if(Auth::guard('admin')->check()){ 
+    public function logoutAdmin(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
             $admin =  $request->user();
             $admin->tokens()->delete();
             Auth::guard('admin')->logout();
 
             return response()->json([
-                'status_code' => 200, 
+                'status_code' => 200,
                 'message' => 'Đã đăng xuất',
             ]);
         }
         return response()->json([
-            'status_code' => 500, 
+            'status_code' => 500,
             'message' => 'Lỗi',
         ]);
     }
@@ -64,30 +67,35 @@ class UserAdminController extends Controller
     public function getAdminById($id)
     {
         $admin = Admin::find($id);
-        
+
         return response()->json($admin);
     }
     public function updateAdmin(Request $request, $id)
     {
-        $user = Admin::find($id);
-        try {
-            $user->update([
-                "fullname" => $request->fullname,
-                "email" => $request->email,
-                "phone" => $request->phone,
-                "gender" => $request->gender,
-                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
-                "updated_at" =>Carbon::now(),
-            ]);
-        } catch (\Throwable $th) {
-            dd($th);
-        }
+        // $user = Admin::find($id);
+        // if ($request->hasFile('avatar')) {
+        //     $path = $this->file->uploadImage($request->avatar, 'avatar');
+        // }
+        dd($request->toArray());
+        // $user->update([
+        //     "fullname" => $request->fullname,
+        //     "avatar" => $path,
+        //     "email" => $request->email,
+        //     "phone" => $request->phone,
+        //     "gender" => $request->gender,
+        //     "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+        // ]);
+        // if ($request["change_password"] == "true") {
+        //     $user->update([
+        //         "password" => bcrypt($request->password),
+        //     ]);
+        // }
     }
 
     public function storeAdmin(RegisterAdminRequest $request)
     {
-        if($request->hasFile('avatar')){
-            $path = $this->file->uploadImage($request->avatar, 'avatar'); 
+        if ($request->hasFile('avatar')) {
+            $path = $this->file->uploadImage($request->avatar, 'avatar');
         }
         try {
             $create = Admin::create([
@@ -100,9 +108,9 @@ class UserAdminController extends Controller
                 "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
             ]);
             return response()->json(['mess' => 'Thêm tài khoản thành công!!']);
-         }catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             dd($th);
-         }
+        }
     }
 
 
@@ -122,16 +130,21 @@ class UserAdminController extends Controller
     public function updateUser(Request $request, $id)
     {
         $user = User::find($id);
-        try {
+        if ($request->hasFile('avatar')) {
+            $path = $this->file->uploadImage($request->avatar, 'avatar');
+        }
+        $user->update([
+            "fullname" => $request->fullname,
+            "avatar" => $path,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "gender" => $request->gender,
+            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+        ]);
+        if ($request["change_password"] == "true") {
             $user->update([
-                "fullname" => $request->fullname,
-                "email" => $request->email,
-                "phone" => $request->phone,
-                "gender" => $request->gender,
-                "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+                "password" => bcrypt($request->password),
             ]);
-        } catch (\Throwable $th) {
-            dd($th);
         }
     }
 
@@ -151,6 +164,4 @@ class UserAdminController extends Controller
         ]);
         return response()->json(['mess' => 'Đăng ký thành công!!']);
     }
-
-    
 }

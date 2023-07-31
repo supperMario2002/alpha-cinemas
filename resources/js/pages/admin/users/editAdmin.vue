@@ -6,17 +6,14 @@
 
           <div class="row">
             <div class="col-12 d-flex justify-content-center mb-3">
-              <a-avatar shape="square" :size="200">
-                <template #icon>
-                  <UserOutlined />
-                </template>
-              </a-avatar>
+              <label for="input-img" class="preview">
+              </label>
             </div>
             <div class="col-12 d-flex justify-content-center">
-              <a-button type="primary">
-                <i class="fa-solid fa-plus me-2"></i>
-                <span>Thêm ảnh</span>
-              </a-button>
+              <label class="custom-file-upload primary-color bg-info">
+                <input type="file" @change="handleFileUpload" id="input-img" />
+                <i class="fa fa-cloud-upload"></i> Thêm Ảnh
+              </label>
             </div>
           </div>
         </div>
@@ -53,10 +50,11 @@
               </label>
             </div>
             <div class="col-12 col-sm-5">
-              <a-checkbox v-model:checked="checked"></a-checkbox>
+              <input type="checkbox" v-model="admin.change_password" />
             </div>
           </div>
-          <div class="row mb-3" v-if="checked == true">
+          <template v-if="admin.change_password == true">
+            <div class="row mb-3" >
             <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
               <label>
                 <span class="text-danger me-1">*</span>
@@ -68,7 +66,7 @@
               <span v-if="errors.password" class="text-danger">{{ errors.password[0] }}</span>
             </div>
           </div>
-          <div class="row mb-3" v-if="checked == true">
+          <div class="row mb-3">
             <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
               <label>
                 <span class="text-danger me-1">*</span>
@@ -80,6 +78,7 @@
               <span v-if="errors.password_confinmation" class="text-danger">{{ errors.password_confinmation[0] }}</span>
             </div>
           </div>
+          </template>
           <div class="row mb-3">
             <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
               <label>
@@ -143,7 +142,7 @@
 import dayjs from 'dayjs';
 import { useMenu } from '../../../stores/use-menu';
 import { useRoute } from 'vue-router';
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref, toRef, toRefs } from 'vue';
 import axios from 'axios';
 export default defineComponent({
 
@@ -158,12 +157,23 @@ export default defineComponent({
     const admin = reactive({
       fullname: '',
       email: '',
+      avatar: null,
       password: '',
       password_confinmation: '',
+      change_password: false,
       phone: '',
       gender: 1,
       birthday: '',
     });
+
+    const handleFileUpload = (event) => {
+      admin.avatar = event.target.files[0];
+
+      let img = document.createElement('img')
+      img.src = URL.createObjectURL(admin.avatar)
+      document.querySelector('.preview').appendChild(img)
+      document.getElementsByTagName('img')[0].style = "width: 100%; height: 100%;"
+    };
 
     const getAdmin = () => axios.get(`/api/admin/${route.params.id}/edit`)
       .then((response) => {
@@ -181,9 +191,27 @@ export default defineComponent({
 
 
     const updateAdmin = async () => {
-      axios.put(`/api/admin/${route.params.id}`, admin)
+      const formData = new FormData();
+      formData.append('fullname', admin.fullname);
+      formData.append('email', admin.email);
+      formData.append('avatar', admin.avatar);
+      formData.append('password', admin.password);
+      formData.append('password_confinmation', admin.password_confinmation);
+      formData.append('change_password', admin.change_password);
+      formData.append('phone', admin.phone);
+      formData.append('gender', admin.gender);
+      formData.append('birthday', admin.birthday);
+
+      // console.log(admin);
+
+      axios.put(`/api/admin/${route.params.id}`, admin, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }) 
         .then((response) => {
-          window.location.href = 'http://127.0.0.1:8000/admin/account'
+          // window.location.href = 'http://127.0.0.1:8000/admin/account'
+          console.log(response);
         })
         .catch((err) => {
           if (err.response.status === 422) {
@@ -197,9 +225,38 @@ export default defineComponent({
       dateFormatList,
       errors,
       admin,
-      checked: ref(false),
-      updateAdmin
+      // ...toRefs(admin),
+      updateAdmin,
+      handleFileUpload
     };
   }
 })
 </script>
+<style scoped>
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.preview {
+  border: 2px dashed #ccc;
+  width: 70%;
+  display: block;
+  position: relative;
+  height: 250px;
+  color: white;
+  font-size: 22px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+</style>
