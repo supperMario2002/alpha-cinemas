@@ -14,6 +14,8 @@ class MovieControler extends Controller
         foreach ($listMovie as $item) {
             $item['img'] = asset(Storage::url($item->img));
             $item['categories'] = $item->categories->toArray();
+            $item['schedules'] = $item->schedules->toArray();
+            // dd($item->toArray());
         }
         // dd($item->toArray(),$item->categories->toArray());
         // dd($listMovie->toArray());
