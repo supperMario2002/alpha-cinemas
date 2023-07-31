@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="updateAdmin" :form="admin">
-    <a-card title="Tạo mới tài khoản" style="width: 100%;">
+    <a-card title="Sửa tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
 
@@ -204,11 +204,7 @@ export default defineComponent({
 
       // console.log(admin);
 
-      axios.put(`/api/admin/${route.params.id}`, admin, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }) 
+      axios.put(`/api/admin/${route.params.id}`, formData) 
         .then((response) => {
           // window.location.href = 'http://127.0.0.1:8000/admin/account'
           console.log(response);

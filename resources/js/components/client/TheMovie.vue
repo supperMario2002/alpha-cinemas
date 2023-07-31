@@ -2,7 +2,7 @@
     <div id="movie">
         <div class="container my-5">
             <a-tabs v-model:activeKey="activeKey" centered>
-                <a-tab-pane key="1" tab="Phim Sắp Chiếu">
+                <a-tab-pane key="1" tab="PHIM SẮP CHIẾU">
                     <div class="row">
                         <template v-for="movie in movies" :key="movie.id">
                             <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
@@ -11,7 +11,7 @@
                                     <div class="card" style="width: 18rem">
                                         <img v-bind:src="movie.img" class="card-img-top" alt="..." />
                                         <div class="card-body">
-                                            <h5 class="card-title">
+                                            <h5 class="card-title font-movies">
                                                 {{ movie.name }}
                                             </h5>
                                             <p class="card-text">
@@ -27,11 +27,10 @@
                                     </div>
                                 </router-link>
                             </div>
-
                         </template>
                     </div>
                 </a-tab-pane>
-                <a-tab-pane key="2" tab="Phim Đang Chiếu" force-render>
+                <a-tab-pane key="2" tab="PHIM ĐANG CHIẾU" force-render>
                     <div class="row">
                         <template v-for="movie in movies" :key="movie.id">
                             <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
