@@ -204,7 +204,11 @@ export default defineComponent({
 
       // console.log(admin);
 
-      axios.put(`/api/admin/${route.params.id}`, formData) 
+      axios.put(`/api/admin/${route.params.id}`, admin, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }) 
         .then((response) => {
           // window.location.href = 'http://127.0.0.1:8000/admin/account'
           console.log(response);
