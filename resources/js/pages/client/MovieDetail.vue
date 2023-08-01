@@ -1,50 +1,50 @@
 <template>
     <div id="movie-detail" class="container">
         <div class="container-fluid">
-            <h1 class="h1 text-center" id="pageHeaderTitle">Chi tiết phim</h1>
+            <TheBreadcrumb /> 
             <article class="postcard">
                 <div class="row">
                     <div class="col-12 col-md-4">
                         <div class="img_movie p-2">
-                            <img v-bind:src="movie.img" alt="movie poster" class="rounded-3 mx-auto d-block"
+                            <img v-bind:src="movie.img" alt="movie poster" class="rounded-5 mx-auto d-block"
                                 style="width: 80%;" />
                         </div>
                     </div>
                     <div class="col-12 col-md-8">
                         <div class="descr_movie p-2">
                             <h2 class="h2">{{ movie.name }}</h2>
-                            <p class="" style="text-align: justify">
+                            <span  style="text-align: justify">
                                 {{ movie.descrition }}
-                            </p>
+                            </span>
                             <div class="row mt-3">
                                 <div class="col-3">
                                     <h6>Đạo Diễn :</h6>
                                 </div>
-                                <div class="col-9">{{ movie.director }}</div>
+                                <div class="col-9"><span>{{ movie.director }}</span></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-3">
                                     <h6>Diễn Viên :</h6>
                                 </div>
-                                <div class="col-9">Quang Vinh, Lương Hòa</div>
+                                <div class="col-9"><span>Quang Vinh, Lương Hòa</span></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-3">
                                     <h6>Thời gian :</h6>
                                 </div>
-                                <div class="col-9">{{ movie.running_time }}&nbsp;Phút</div>
+                                <div class="col-9"><span>{{ movie.running_time }}&nbsp;Phút</span></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-3">
                                     <h6>Ngôn Ngữ :</h6>
                                 </div>
-                                <div class="col-9">Tiếng Người</div>
+                                <div class="col-9"><span>Tiếng Người</span></div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-3">
                                     <h6>Ngày Khởi Chiếu</h6>
                                 </div>
-                                <div class="col-9">28/07/2023</div>
+                                <div class="col-9"><span>28/07/2023</span></div>
                             </div>
                         </div>
                     </div>
@@ -52,163 +52,17 @@
             </article>
         </div>
     </div>
-    <div class="container mt-5">
-        <nav>
-            <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-day-1"
-                    type="button" role="tab" aria-controls="nav-day-1" aria-selected="true">
-                    <h3 class="text-primary">15/02 - T5</h3>
-                </button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-day-2" type="button"
-                    role="tab" aria-controls="nav-day-2" aria-selected="false">
-                    <h3 class="text-primary">15/08 - T4</h3>
-                </button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-day-3" type="button"
-                    role="tab" aria-controls="nav-day-3" aria-selected="false">
-                    <h3 class="text-primary">15/08 - T4</h3>
-                </button>
-            </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-day-1" role="tabpanel" aria-labelledby="nav-home-tab">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2">131 ghế trống</div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="nav-day-2" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="nav-day-3" role="tabpanel" aria-labelledby="nav-123-tab">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mt-3">
-                        <div class="time-box">
-                            <div class="time p-3 text-center bg-primary text-white">
-                                16:35
-                            </div>
-                            <div class="table mt-2 text-center">
-                                131 ghế trống
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <TheShowtime />
 </template>
 
 <script>
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
 import { reactive } from "vue";
+import TheBreadcrumb from '../../components/client/TheBreadcrumb.vue';
+import TheShowtime from '../../components/client/TheShowtime.vue';
 export default {
+  components: { TheBreadcrumb, TheShowtime },
     setup() {
         const router = useRoute();
 

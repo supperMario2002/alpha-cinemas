@@ -11,44 +11,45 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between "  id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item text-navigation">
+            <li class="nav-item text-navigation ">
               <router-link :to="{ name: 'home' }" class="nav-link">
-                Trang chủ
+                TRANG CHỦ
               </router-link>
             </li>
             <li class="nav-item text-navigation">
               <router-link :to="{ name: 'schedule' }" class="nav-link">
-                Lịch chiếu
+                LỊCH CHIẾU
               </router-link>
             </li>
             <li class="nav-item text-navigation">
               <router-link :to="{ name: 'movies' }" class="nav-link">
-                Phim
+                PHIM
               </router-link>
             </li>
             <li class="nav-item text-navigation">
               <router-link :to="{ name: 'home' }" class="nav-link">
-                Rạp
+                RẠP
               </router-link>
             </li>
             <li class="nav-item text-navigation">
               <router-link :to="{ name: 'home' }" class="nav-link">
-                Giá vé
+                GIÁ VÉ
               </router-link>
             </li>
             <li class="nav-item text-navigation">
               <router-link :to="{ name: 'home' }" class="nav-link">
-                Ưu đãi
+                ƯU ĐÃI
               </router-link>
             </li>
           </ul>
           <ul v-if="userInfo.length == 0"  class="navbar-nav ">
-            <li class="nav-item text-navigation">
+            <li class="nav-item ">
               <router-link :to="{ name: 'login' }" class="nav-link">
                 Đăng Nhập
               </router-link>
             </li>
-            <li class="nav-item text-navigation">
+            
+            <li class="nav-item ">
               <router-link :to="{ name: 'register' }" class="nav-link">
                 Đăng Ký
               </router-link>
@@ -71,6 +72,7 @@
       </div>
     </nav>
   </div>
+  <div class="box-empty"></div>
 </template>
 
 <script>
