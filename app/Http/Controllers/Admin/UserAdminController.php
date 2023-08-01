@@ -76,7 +76,7 @@ class UserAdminController extends Controller
         // if ($request->hasFile('avatar')) {
         //     $path = $this->file->uploadImage($request->avatar, 'avatar');
         // }
-        dd($request->toArray());
+        dd($request);
         // $user->update([
         //     "fullname" => $request->fullname,
         //     "avatar" => $path,

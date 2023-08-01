@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="updateAdmin" :form="admin">
-    <a-card title="Tạo mới tài khoản" style="width: 100%;">
+    <a-card title="Sửa tài khoản" style="width: 100%;">
       <div class="row">
         <div class="col-12 col-sm-4">
 

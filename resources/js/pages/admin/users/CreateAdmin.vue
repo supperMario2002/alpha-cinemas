@@ -171,11 +171,7 @@ export default defineComponent({
       formData.append('gender', admin.gender);
       formData.append('birthday', admin.birthday);
 
-      axios.post('/api/admin/create', admin, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      axios.post('/api/admin/create', formData)
         .then((response) => {
           if (response.status == 200) {
             Object.assign(admin, {

@@ -9,6 +9,7 @@ axios.defaults.baseURL = "http://127.0.0.1:8000";
 import App from "../js/App.vue";
 
 import "ant-design-vue/dist/antd.css";
+import "../css/app.css";
 import "./static/fontawesome/css/all.min.css";
 import "bootstrap/dist/css/bootstrap-grid.min.css";
 import "bootstrap/dist/css/bootstrap-utilities.min.css";
