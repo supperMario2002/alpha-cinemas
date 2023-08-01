@@ -52,3 +52,15 @@ export const SaveInfoLogin = defineStore("SaveInfoLogin", {
         }
     }
 });
+
+
+export const pageTitle = defineStore('pageTitle', {
+  state: () => ({
+    pageTitle: '',
+  }),
+  actions: {
+    setPageTitle(title) {
+      this.pageTitle = title;
+    },
+  },
+});

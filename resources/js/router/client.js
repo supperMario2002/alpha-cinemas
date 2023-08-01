@@ -19,7 +19,7 @@ const client = [
                 component: () => import("../pages/client/Schedule.vue"),
             },
             {
-                path: "/:id",
+                path: "/chi-tiet-phim/:id",
                 name: "movie-detail",
                 component: () => import("../pages/client/MovieDetail.vue"),
             },

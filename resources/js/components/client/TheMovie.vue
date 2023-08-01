@@ -7,171 +7,94 @@
                         <template v-for="movie in movies" :key="movie.id">
                             <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
                                 v-if="movie.schedules.length === 0">
-                                <router-link :to="`/${movie.slug}`" class="text-decoration-none">
-                                    <div class="card" style="width: 18rem">
-                                        <img v-bind:src="movie.img" class="card-img-top" alt="..." />
-                                        <div class="card-body">
+                                <div class="card border border-0" style="width: 18rem">
+                                    <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }"
+                                        class="text-decoration-none">
+                                        <div class="image-container rounded-5">
+                                            <img v-bind:src="movie.img" class="card-img-top  image-movie"
+                                                alt="anh-movie.png" />
+                                        </div>
+                                    </router-link>
+                                    <div class="card-body">
+                                        <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }">
                                             <h5 class="card-title font-movies">
                                                 {{ movie.name }}
                                             </h5>
-                                            <p class="card-text">
-                                                <span class="fw-bold">Thể loại: </span><span
-                                                    v-for="category in movie.categories" :key="category.id">{{ category.name
-                                                    }}&nbsp;</span>
-                                            </p>
-                                            <p class="card-text">
-                                                <span class="fw-bold">Thời Lượng: </span>{{ movie.running_time }}&nbsp;Phút
-                                            </p>
-                                            <!-- <a href="#" class="btn btn-primary">Mua vé</a> -->
-                                        </div>
+                                        </router-link>
+                                        <p class="card-text m-0">
+                                            <span class="fw-bold">Thể loại: </span><span
+                                                v-for="category in movie.categories" :key="category.id">{{ category.name
+                                                }}&nbsp;</span>
+                                        </p>
+                                        <p class="card-text">
+                                            <span class="fw-bold">Thời Lượng: </span>{{ movie.running_time }}&nbsp;Phút
+                                        </p>
+                                        <a href="#" class="btn btn-2 text-white fs-5 w-100 ">MUA VÉ</a>
                                     </div>
-                                </router-link>
+                                </div>
                             </div>
                         </template>
                     </div>
                 </a-tab-pane>
-                <a-tab-pane key="2" tab="PHIM ĐANG CHIẾU" force-render>
+                <a-tab-pane key="2" tab="PHIM ĐANG CHIẾU">
                     <div class="row">
                         <template v-for="movie in movies" :key="movie.id">
                             <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
-                                v-if="!movie.schedules.length == 0">
-                                <router-link :to="`/${movie.slug}`" class="text-decoration-none">
-                                    <div class="card" style="width: 18rem">
-                                        <img v-bind:src="movie.img" class="card-img-top" alt="..." />
-                                        <div class="card-body">
-                                            <h5 class="card-title">
+                                v-if="movie.schedules.length === 0">
+                                <div class="card border border-0" style="width: 18rem">
+                                    <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }"
+                                        class="text-decoration-none">
+                                        <div class="image-container rounded-5">
+                                            <img v-bind:src="movie.img" class="card-img-top  image-movie"
+                                                alt="anh-movie.png" />
+                                        </div>
+                                    </router-link>
+                                    <div class="card-body">
+                                        <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }">
+                                            <h5 class="card-title font-movies">
                                                 {{ movie.name }}
                                             </h5>
-                                            <p class="card-text">
-                                                <span class="fw-bold">Thể loại: </span><span
-                                                    v-for="category in movie.categories" :key="category.id">{{ category.name
-                                                    }}&nbsp;</span>
-                                            </p>
-                                            <p class="card-text">
-                                                <span class="fw-bold">Thời Lượng: </span>{{ movie.running_time }}&nbsp;Phút
-                                            </p>
-                                            <a href="#" class="btn btn-primary">Mua vé</a>
-                                        </div>
+                                        </router-link>
+                                        <p class="card-text m-0">
+                                            <span class="fw-bold">Thể loại: </span><span
+                                                v-for="category in movie.categories" :key="category.id">{{ category.name
+                                                }}&nbsp;</span>
+                                        </p>
+                                        <p class="card-text">
+                                            <span class="fw-bold">Thời Lượng: </span>{{ movie.running_time }}&nbsp;Phút
+                                        </p>
+                                        <a href="#" class="btn btn-2 text-white fs-5 w-100 ">MUA VÉ</a>
                                     </div>
-                                </router-link>
+                                </div>
                             </div>
-
                         </template>
                     </div>
                 </a-tab-pane>
-                <!-- <a-tab-pane key="3" tab="Xuất Đặc biệt">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3">
-                            <router-link :to="`/${123}`">
-                                <div class="card" style="width: 18rem">
-                                    <img src="https://bloganchoi.com/wp-content/uploads/2021/07/app-chinh-mau-anh-phim-1967vintage-1.jpg"
-                                        class="card-img-top" alt="..." />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            Some quick example text to build on
-                                            the card title and make up the bulk
-                                            of the card's content.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3">
-                            <router-link :to="`/${123}`">
-                                <div class="card" style="width: 18rem">
-                                    <img src="https://bloganchoi.com/wp-content/uploads/2021/07/app-chinh-mau-anh-phim-1967vintage-1.jpg"
-                                        class="card-img-top" alt="..." />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            Some quick example text to build on
-                                            the card title and make up the bulk
-                                            of the card's content.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3">
-                            <router-link :to="`/${123}`">
-                                <div class="card" style="width: 18rem">
-                                    <img src="https://bloganchoi.com/wp-content/uploads/2021/07/app-chinh-mau-anh-phim-1967vintage-1.jpg"
-                                        class="card-img-top" alt="..." />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            Some quick example text to build on
-                                            the card title and make up the bulk
-                                            of the card's content.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3">
-                            <router-link :to="`/${123}`">
-                                <div class="card" style="width: 18rem">
-                                    <img src="https://bloganchoi.com/wp-content/uploads/2021/07/app-chinh-mau-anh-phim-1967vintage-1.jpg"
-                                        class="card-img-top" alt="..." />
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">
-                                            Some quick example text to build on
-                                            the card title and make up the bulk
-                                            of the card's content.
-                                        </p>
-                                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </div>
-                    </div>
-                </a-tab-pane> -->
             </a-tabs>
         </div>
     </div>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { ref } from "vue";
 import axios from 'axios';
 
 export default {
     setup() {
 
-        const movies = ref([]);
-        const token = localStorage.getItem('user-token');
+        const movies = ref([]); 
         const getmovie = () => axios.get('/api/client/movie/index')
             .then((reponse) => {
-                console.log(reponse.data.listMovie);
                 movies.value = reponse.data.listMovie;
             })
             .catch((error) => {
                 console.log(error);
             })
-        getmovie();
-        const checkMovie = (test) => {
-            console.log(test);
-            // for(movie in movies) {
-            //     console.log(movie);
-            //     if(movie.schedules === 0){
-            //         schedules = false
-            //     }
-            // }
-        }
-        checkMovie();
-        return {
-            activeKey: ref("1"),
+        getmovie(); 
+        return { 
             movies,
         };
-    },
-    props: {
-        Pages: { type: String, }
-    }
+    } 
 };
 </script>
 
