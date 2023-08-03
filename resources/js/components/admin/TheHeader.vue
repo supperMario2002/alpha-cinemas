@@ -24,6 +24,7 @@ import { defineComponent, ref } from "vue";
 import { UserOutlined } from "@ant-design/icons-vue";
 import TheMenu from "./TheMenu.vue";
 import axios from "axios";
+import { useRouter } from "vue-router"; 
 export default defineComponent({
     setup() {
         const visible = ref(false);
@@ -31,11 +32,12 @@ export default defineComponent({
             visible.value = true;
         };
         const admin = ref([]);
+        const router = useRouter();
 
         const getAdminInfo = () => {
             axios.get('api/admin')
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
                     if (response.status == 200 && response.data.status_code == 200) {
                         admin.value = response.data.admin;
                         // console.log(admin.value.id);

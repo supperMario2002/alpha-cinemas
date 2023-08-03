@@ -17,7 +17,7 @@ class LoginClientController extends Controller
         try {
 
             $credentials = request(['email', 'password']); 
-            if (Auth::guard('user')->attempt($credentials)) {
+            if (Auth::guard('user')->attempt($credentials, true)) {
                 /** @var \App\Models\User $user **/
                 $user = Auth::guard('user')->user(); 
                 $tokenResult = $user->createToken('userToken', ['user'])->plainTextToken;
