@@ -15,7 +15,7 @@ class LoginAdminController extends Controller
 
             $credentials = request(['email', 'password']);
 
-            if (Auth::guard('admin')->attempt($credentials)) {
+            if (Auth::guard('admin')->attempt($credentials, true)) {
                 /** @var \App\Models\Admin $admin **/
                 $admin = Auth::guard('admin')->user();
                 $tokenResult = $admin->createToken('adminToken', ['admin'])->plainTextToken;
