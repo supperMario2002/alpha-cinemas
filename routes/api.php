@@ -73,7 +73,7 @@ Route::middleware(['auth:sanctum' , 'auth:admin' ])->group(function () {
 
 Route::post('/client/login', [LoginClientController::class, 'login']);
 
-Route::middleware(['auth:sanctum', 'abilities:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'auth:user'])->group(function () {
     Route::get('/user/info', [LoginClientController::class, 'getUser']);
     Route::get('/user/logout', [LoginClientController::class, 'logout']);
 });

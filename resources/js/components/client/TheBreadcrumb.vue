@@ -10,10 +10,10 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
-        items: {
-            type: Array,
-            required: true,
-        },
+        // items: {
+        //     type: Array,
+        //     required: true,
+        // },
     },
 });
 </script>

@@ -1,12 +1,12 @@
 <template>
     <div id="movie">
         <div class="container my-5">
-            <a-tabs v-model:activeKey="activeKey" centered>
+            <a-tabs  centered>
                 <a-tab-pane key="1" tab="PHIM SẮP CHIẾU">
                     <div class="row">
                         <template v-for="movie in movies" :key="movie.id">
                             <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
-                                v-if="movie.schedules.length === 0">
+                                v-if="movie.schedules.length == 0">
                                 <div class="card border border-0" style="width: 18rem">
                                     <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }"
                                         class="text-decoration-none">
@@ -26,8 +26,11 @@
                                                 v-for="category in movie.categories" :key="category.id">{{ category.name
                                                 }}&nbsp;</span>
                                         </p>
-                                        <p class="card-text">
+                                        <p class="card-text m-0">
                                             <span class="fw-bold">Thời Lượng: </span>{{ movie.running_time }}&nbsp;Phút
+                                        </p>
+                                        <p class="card-text ">
+                                            <span class="fw-bold">Ngày khởi chiếu: </span>{{ movie.release_date }}
                                         </p>
                                         <a href="#" class="btn btn-2 text-white fs-5 w-100 ">MUA VÉ</a>
                                     </div>
@@ -40,7 +43,7 @@
                     <div class="row">
                         <template v-for="movie in movies" :key="movie.id">
                             <div class="col-12 col-md-6 col-lg-4 col-xxl-3 d-flex justify-content-center mt-3"
-                                v-if="movie.schedules.length === 0">
+                                v-if="movie.schedules.length > 0">
                                 <div class="card border border-0" style="width: 18rem">
                                     <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }"
                                         class="text-decoration-none">
