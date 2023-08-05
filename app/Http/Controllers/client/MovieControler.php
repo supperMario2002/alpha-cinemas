@@ -25,6 +25,7 @@ class MovieControler extends Controller
         $movie = Movie::where('slug','=',$slug)->first();
         $movie->img = asset(Storage::url($movie->img));
         $movie['categories'] = $movie->categories;
+        $movie['schedules'] = $movie->schedules;
         return response()->json($movie);
     }
 }

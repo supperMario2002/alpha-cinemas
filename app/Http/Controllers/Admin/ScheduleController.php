@@ -13,6 +13,7 @@ class ScheduleController extends Controller
 {
     public function index(){
         $listSchedule = Schedule::get();
+        // dd($listSchedule);
         foreach($listSchedule as $value){
             $movie = Movie::where('id', '=', $value->movie_id)->first();
             $room = Room::where('id', '=', $value->room_id)->first();
