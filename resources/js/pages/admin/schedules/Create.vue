@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="creatSchedule" :form="schedule">
+    <form @submit.prevent="creatSchedule" :form="schedules">
         <a-card title="Thêm lịch chiếu phim mới" style="width: 100%;">
             <div class="row">
                 <div class="col-12 col-sm-10" id="schedule">
@@ -11,8 +11,8 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-select v-model:value="schedule.movie" show-search placeholder="Chọn phim" style="width: 100%"
-                                :options="options" :filter-option="false"
+                            <a-select v-model:value="schedules.movie" show-search placeholder="Chọn phim"
+                                style="width: 100%" :options="options" :filter-option="false"
                                 :field-names="{ label: 'name', value: 'id' }"></a-select>
                         </div>
                     </div>
@@ -24,8 +24,8 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-select v-model:value="schedule.room" show-search placeholder="Chọn phòng" style="width: 100%"
-                                :options="optionsRoom" :filter-option="false"
+                            <a-select v-model:value="schedules.room" show-search placeholder="Chọn phòng"
+                                style="width: 100%" :options="optionsRoom" :filter-option="false"
                                 :field-names="{ label: 'name', value: 'id' }"></a-select>
                         </div>
                     </div>
@@ -37,17 +37,35 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-date-picker v-model:value="schedule.showtime" format="YYYY-MM-DD HH:mm:ss"
-                                placeholder="Chọn thời gian" style="width: 100%" :disabled-date="disabledDate"
-                                :show-time="{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }" />
-                        </div>
-                    </div>
-                    <div class="row mb-3" id="btn">
-                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
-                            
-                        </div>
-                        <div class="col-12 col-sm-5">
-                            <button class="bg-primary float-end text-light" @click="addDatetimePicker">Thêm lịch chiếu</button>
+                            <a-space v-for="(value, index) in schedules.showtime" :key="value.id"
+                                style="margin-bottom: 8px; width: 100%">
+                                <div class="d-flex ">
+                                    <a-form-item :name="['schedule', index, 'date']">
+                                        <a-date-picker v-model:value="value.date" placeholder="Chọn ngày" :disabled-date="disabledDate" />
+                                    </a-form-item>
+                                    <i class="fa-regular fa-trash-can p-2" @click="removeDate(value)"></i>
+                                </div>
+                                <div class="" style=" max-width: 299px;">
+                                    <a-space v-for="(time, index) in value.list_time" :key="time.id">
+                                        <div class="d-flex ">
+                                            <a-form-item :name="['schedule', index, 'time']">
+                                                <a-time-picker  v-model:value="time.time" placeholder="Chọn thời gian"  format="HH:mm"/>
+                                            </a-form-item>
+                                            <i class="fa-regular fa-trash-can p-2" @click="removeTime(value, time)"></i>
+                                        </div>
+                                    </a-space>
+                                    <a-form-item>
+                                        <a-button type="dashed" block @click="addTime(value)">
+                                            Thêm thời gian
+                                        </a-button>
+                                    </a-form-item>
+                                </div>
+                            </a-space>
+                            <a-form-item>
+                                <a-button type="dashed" block @click="addDate">
+                                    Thêm ngày chiều phim
+                                </a-button>
+                            </a-form-item>
                         </div>
                     </div>
                     <div class="row">
@@ -56,7 +74,7 @@
                                 <span>Lưu</span>
                             </a-button>
                             <a-button type="primary">
-                                <!-- <router-link :to="{ name: 'admin-schedules-create' }">
+                                <!-- <router-link :to="{ name: 'admin-schedule-create' }">
                                     <span>Nhập lại</span>
                                 </router-link> -->
                             </a-button>
@@ -76,17 +94,20 @@ import axios from 'axios';
 export default {
     setup() {
         const store = useMenu();
-        store.onSelectKeys(['admin-schedules-create']);
+        store.onSelectKeys(['admin-schedule-create']);
 
 
         const errors = ref({});
 
         const options = ref([{}]);
         const optionsRoom = ref([{}]);
-        const schedule = reactive({
+        const schedules = reactive({
             movie: undefined,
             room: undefined,
-            showtime: ''
+            showtime: [{
+                list_time: [],
+            }],
+
         });
 
         const filterOption = (input) => {
@@ -94,30 +115,37 @@ export default {
             // return options.value.filter(option => option.name.toLowerCase().indexOf(input.toLowerCase()));
         };
 
-        const disabledDate = current => {
-            // Can not select days before today and today
-            return current && current < dayjs().endOf('day');
+        const disabledDate = current => { 
+            return current && current < dayjs().endOf('day') ;
         };
 
-        const addDatetimePicker = () => {
-            const form = document.querySelector('#schedule');
-            const date = `
-            <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
-                            <label>
-                                <span class="text-danger me-1">*</span>
-                                <span>Thời gian chiếu: </span>
-                            </label>
-                        </div>
-                        <div class="col-12 col-sm-5">
-                            <input type="datetime-local"  name="" id="" style="width: 100%;">
-                        </div>
-                    `
-            const datime = document.createElement('div');
-            datime.className = 'row mb-3'
-            datime.innerHTML = date
-            form.insertBefore(datime, btn)
-        } 
+        const removeDate = item => {
+            let index = schedules.showtime.indexOf(item);
+            if (index !== -1) {
+                schedules.showtime.splice(index, 1);
+            }
+        };
+        const addDate = () => {
+            schedules.showtime.push({
+                date: '',
+                list_time: [],
+                id: Date.now(),
+            });
+        };
 
+        const removeTime = (arr, item) => {
+            let index = arr.list_time.indexOf(item);
+            if (index !== -1) {
+                arr.list_time.splice(index, 1);
+
+            }
+        };
+        const addTime = (item) => {
+            item.list_time.push({
+                time: '',
+                id: Date.now(),
+            })
+        };
 
         const getData = () => {
             axios.get('/api/schedule/create')
@@ -129,8 +157,8 @@ export default {
         getData();
 
         const creatSchedule = async () => {
-            console.log(schedule);
-            axios.post('/api/schedule', schedule)
+            console.log(schedules);
+            axios.post('/api/schedule', schedules)
                 .then((response) => {
                     if (response.status == 200) {
                         Object.assign(schedule, {
@@ -151,14 +179,18 @@ export default {
 
         return {
             dayjs,
-            schedule,
+            schedules,
             errors,
             options,
             optionsRoom,
             disabledDate,
             creatSchedule,
             filterOption,
-            addDatetimePicker,
+            removeDate,
+            removeTime,
+            addDate,
+            addTime
+
         }
 
     }
