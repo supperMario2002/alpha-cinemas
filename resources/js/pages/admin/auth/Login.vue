@@ -68,7 +68,7 @@ export default {
         });
 
         const login = async () => {
-            console.log(admin);
+            // console.log(admin);
             axios.post('api/admin/login', admin)
                 .then((response) => {
                     console.log(response);

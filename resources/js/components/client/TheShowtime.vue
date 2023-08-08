@@ -149,7 +149,8 @@
                     <div class="col mt-3">
                         <div class="time-box">
                             <div class="time p-3 text-center bg-default text-white">
-                                {{ timePart(schedule.label) }}
+                                <router-link :to="{ name: 'book-ticket', params: { id: movie.slug } }">{{ timePart(schedule.label) }}</router-link>
+                                
                             </div>
                             <div class="table mt-2 text-center">131 ghế trống</div>
                         </div>

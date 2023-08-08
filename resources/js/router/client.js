@@ -23,6 +23,11 @@ const client = [
                 name: "movie-detail",
                 component: () => import("../pages/client/MovieDetail.vue"),
             },
+            {
+                path: "/:id/dat-ve",
+                name: "book-ticket",
+                component: () => import("../pages/client/BookPage.vue"),
+            },
         ],
     },
     {
