@@ -13,7 +13,8 @@ class Schedule extends Model
     protected $fillable = [
         'movie_id',
         'room_id',
-        'showtime'
+        'date',
+        'time'
     ];
 
     public $timestamps = false;

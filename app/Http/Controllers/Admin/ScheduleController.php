@@ -32,11 +32,24 @@ class ScheduleController extends Controller
 
     public function store(Request $request){
         try {
-            $create = Schedule::create([
-                'movie_id' => $request->movie,
-                'room_id' => $request->room,
-                'showtime' => Carbon::parse($request->showtime)->format('Y/m/d H:m:s')
-            ]);
+            // dd($request);
+            foreach($request->showtime as $value){ 
+                foreach($value['list_time'] as $time){
+                    // $a[] = [
+                    //         'movie_id' => $request->movie,
+                    //         'room_id' => $request->room,
+                    //         'date' => Carbon::parse($value['date'])->format('Y/m/d'),
+                    //         'time' => Carbon::parse($time['time'])->format('HH:mm'),
+                    // ];
+                    Schedule::create([
+                        'movie_id' => $request->movie,
+                        'room_id' => $request->room,
+                        'date' => Carbon::parse($value['date'])->format('Y/m/d'),
+                        'time' => Carbon::parse($time['time'])->format('H:i'),
+                    ]);
+                }
+            }
+            // Schedule::create($a);
             return response()->json(['mess' => 'Thêm thành công!']);
         } catch (\Throwable $th) {
             //throw $th;
