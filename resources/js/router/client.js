@@ -26,7 +26,7 @@ const client = [
             {
                 path: "/:id/dat-ve",
                 name: "book-ticket",
-                component: () => import("../pages/client/BookPage.vue"),
+                component: () => import("../pages/client/BookingPage.vue"),
             },
         ],
     },
