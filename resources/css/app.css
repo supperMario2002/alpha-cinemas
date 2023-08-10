@@ -79,3 +79,7 @@ p,span,label{
 .ant-picker-input > input {
     font-size: 16px !important;
 }
+
+.ant-table-tbody > tr > td, .ant-table-tbody > tr > td > span {
+    font-size: 16px !important;
+}
