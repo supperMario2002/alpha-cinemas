@@ -10,7 +10,7 @@
                                 <span>Chọn phim: </span>
                             </label>
                         </div>
-                        <div class="col-12 col-sm-5">
+                        <div class="col-12 col-sm-6">
                             <a-select v-model:value="schedules.movie" show-search placeholder="Chọn phim"
                                 style="width: 100%" :options="options" :filter-option="false"
                                 :field-names="{ label: 'name', value: 'id' }"></a-select>
@@ -23,7 +23,7 @@
                                 <span>Chọn phòng: </span>
                             </label>
                         </div>
-                        <div class="col-12 col-sm-5">
+                        <div class="col-12 col-sm-6">
                             <a-select v-model:value="schedules.room" show-search placeholder="Chọn phòng"
                                 style="width: 100%" :options="optionsRoom" :filter-option="false"
                                 :field-names="{ label: 'name', value: 'id' }"></a-select>
@@ -36,20 +36,20 @@
                                 <span>Thời gian chiếu: </span>
                             </label>
                         </div>
-                        <div class="col-12 col-sm-5">
+                        <div class="col-12 col-sm-6">
                             <a-space v-for="(value, index) in schedules.showtime" :key="value.id"
-                                style="margin-bottom: 8px; width: 100%">
-                                <div class="d-flex ">
-                                    <a-form-item :name="['schedule', index, 'date']">
-                                        <a-date-picker v-model:value="value.date" placeholder="Chọn ngày" :disabled-date="disabledDate" />
+                                style="margin-bottom: 8px;">
+                                <div class="d-flex">
+                                    <a-form-item :name="['schedule', index, 'date']" style="width: 200px;">
+                                        <a-date-picker v-model:value="value.date" placeholder="Chọn ngày" style="width: 100%; font-size: 16px;"  :disabled-date="disabledDate" />
                                     </a-form-item>
                                     <i class="fa-regular fa-trash-can p-2" @click="removeDate(value)"></i>
                                 </div>
-                                <div class="" style=" max-width: 299px;">
+                                <div class="d-flex flex-column" >
                                     <a-space v-for="(time, index) in value.list_time" :key="time.id">
                                         <div class="d-flex ">
-                                            <a-form-item :name="['schedule', index, 'time']">
-                                                <a-time-picker  v-model:value="time.time" placeholder="Chọn thời gian"  format="HH:mm"/>
+                                            <a-form-item :name="['schedule', index, 'time']" style="width: 200px;">
+                                                <a-time-picker  v-model:value="time.time" placeholder="Chọn thời gian" style="width: 100%;" value-format="HH:mm"/>
                                             </a-form-item>
                                             <i class="fa-regular fa-trash-can p-2" @click="removeTime(value, time)"></i>
                                         </div>
@@ -61,7 +61,7 @@
                                     </a-form-item>
                                 </div>
                             </a-space>
-                            <a-form-item>
+                            <a-form-item >
                                 <a-button type="dashed" block @click="addDate">
                                     Thêm ngày chiều phim
                                 </a-button>
@@ -108,12 +108,7 @@ export default {
                 list_time: [],
             }],
 
-        });
-
-        const filterOption = (input) => {
-            console.log(input.toLowerCase());
-            // return options.value.filter(option => option.name.toLowerCase().indexOf(input.toLowerCase()));
-        };
+        }); 
 
         const disabledDate = current => { 
             return current && current < dayjs().endOf('day') ;
@@ -184,8 +179,7 @@ export default {
             options,
             optionsRoom,
             disabledDate,
-            creatSchedule,
-            filterOption,
+            creatSchedule, 
             removeDate,
             removeTime,
             addDate,
@@ -198,4 +192,6 @@ export default {
 }
 </script>
   
-<style></style>
+<style>
+
+</style>

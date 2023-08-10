@@ -75,3 +75,7 @@ p,span,label{
 .time-box:hover .bg-default{
     background-color: #2086df !important;
 }
+
+.ant-picker-input > input {
+    font-size: 16px !important;
+}
