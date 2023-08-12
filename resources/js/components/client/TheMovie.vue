@@ -32,7 +32,7 @@
                                         <p class="card-text ">
                                             <span class="fw-bold">Ngày khởi chiếu: </span>{{ movie.release_date }}
                                         </p>
-                                        <a href="#" class="btn btn-2 text-white fs-5 w-100 ">MUA VÉ</a>
+                                        <!-- <a href="#" class="btn btn-2 text-white fs-5 w-100 ">MUA VÉ</a> -->
                                     </div>
                                 </div>
                             </div>
