@@ -16,7 +16,7 @@ class SeatTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('seats')->truncate();
         $giatri = array("thuong", "vip");
-        for($i = 1; $i < 10; $i++){
+        for($i = 1; $i < 121; $i++){
             $name = 'a'. $i;
             $price = $i * 100;
             $type_seat = "thuong";

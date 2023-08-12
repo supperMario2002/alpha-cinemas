@@ -18,4 +18,8 @@ class Room extends Model
     ];
 
     public $timestamps = false;
+
+    public function schedules() {
+        return $this->hasMany(Schedule::class);
+    }
 }

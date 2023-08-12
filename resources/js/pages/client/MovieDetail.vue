@@ -52,7 +52,7 @@
             </article>
         </div>
     </div>
-    <TheShowtime />
+    <TheShowtime :movie="movie" />
 </template>
 
 <script>
@@ -73,6 +73,7 @@ export default {
             descrition: '',
             release_date: '',
             categories: [],
+            schedules: [],
             director: '',
             running_time: '',
         });
@@ -80,7 +81,6 @@ export default {
         const getMovie = async () => {
             axios.get(`/api/client/movie/${router.params.id}/show`)
                 .then((response) => {
-                    console.log(response);
                     movie.name = response.data.name;
                     movie.slug = response.data.slug;
                     movie.descrition = response.data.descrition;
@@ -88,20 +88,15 @@ export default {
                     movie.director = response.data.director;
                     movie.img = response.data.img;
                     movie.running_time = response.data.running_time;
-                    response.data.categories.forEach(item => {
-                        movie.categories.push({
-                            label: item.name,
-                            value: item.id,
-                        });
-                    });
-                    console.log(movie);
+                    movie.categories = response.data.categories;
+                    movie.schedules = response.data.schedules;
+                    console.log(response);
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
         getMovie();
-
         return {
             movie
         }
