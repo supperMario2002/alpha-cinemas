@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Client\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -74,5 +76,22 @@ class LoginClientController extends Controller
         ]);
     }
     
+
+    public function register(RegisterUserRequest $request)
+    {
+        $create = User::create([
+            "fullname" => $request->fullname,
+            "avatar" => 'test',
+            "email" => $request->email,
+            "password" => bcrypt($request->password),
+            "phone" => $request->phone,
+            "gender" => $request->gender,
+            "birthday" => Carbon::parse($request->birthday)->format('Y/m/d'),
+            "provider_id" => 1,
+            "provider" => 1,
+            "point" => 1,
+        ]);
+        return response()->json(['mess' => 'Đăng ký thành công!!']);
+    }
     
 }
