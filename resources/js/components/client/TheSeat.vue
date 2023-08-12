@@ -25,8 +25,7 @@
     </div>
     <div class="row mt-3">
       <div class="col-6"><i class="fa-solid fa-tag"></i> Thể Loại</div>
-      <div class="col-6"><span v-for="category in movieBooking.categories" :key="category.id">{{ category.name
-      }}&nbsp;</span></div>
+      <div class="col-6"><span>B11</span></div>
     </div>
     <div class="row mt-3">
       <div class="col-6"><i class="fa-solid fa-clock"></i> Thời Lượng</div>
@@ -39,19 +38,31 @@
     </div>
     <div class="row mt-3">
       <div class="col-6"><i class="fa-regular fa-calendar"></i> Ngày Chiếu</div>
-      <div class="col-6"><span>{{ movieBooking.release_date }}</span></div>
+      <div class="col-6" >
+        <template v-for="schedule in movieBooking.schedules" :key="schedule.id">
+          <span v-if="schedule.id == timeId ">{{ schedule.date }}</span>
+        </template>
+      </div>
     </div>
     <div class="row mt-3">
       <div class="col-6"><i class="fa-regular fa-clock"></i> Giờ Chiếu</div>
-      <div class="col-6"><span>14:00</span></div>
+      <div class="col-6">
+        <template v-for="schedule in movieBooking.schedules" :key="schedule.id">
+          <span v-if="schedule.id == timeId ">{{ schedule.time }}</span>
+        </template>
+      </div>
     </div>
     <div class="row mt-3">
       <div class="col-6"><i class="fa fa-desktop"></i> Phòng Chiếu</div>
-      <div class="col-6"><span>P2</span></div>
+      <div class="col-6">
+        <template v-for="schedule in movieBooking.schedules" :key="schedule.id">
+          <span v-if="schedule.id == timeId ">{{ schedule.room.name }}</span>
+        </template>
+      </div>
     </div>
     <div class="row mt-3">
       <div class="col-6"><i class="fa fa-cubes"></i> Ghế Ngồi</div>
-      <div class="col-6"><span>A11</span></div>
+      <div class="col-6" id="seatClick"><span>{{ seatClick }}</span></div>
     </div>
     <div class="mt-3 text-center">
       <button type="button" class="btn btn-primary">Mua vé</button>
@@ -62,33 +73,40 @@
 <script>
 import { ref, reactive, toRefs } from 'vue';
 import axios from 'axios';
+
+import dayjs from 'dayjs';
+import { useRoute } from 'vue-router';
 export default {
   props: {
-        movieBooking: Object
-
-    },
+    movieBooking: Object
+  },
   setup(props) {
+    const route = useRoute()
+    const timeId = route.params.timeId
     const seats = ref([])
-    const movieBooking = props.movieBooking.value;
     const getSeats = () => axios.get('/api/client/movie/seat')
       .then((reponse) => {
         seats.value = reponse.data.listSeat;
-        // console.log(seats.value);
-
       })
       .catch((error) => {
         console.log(error);
       })
     getSeats()
     const handleSeat = (id) => {
-      console.log(id);
+      const seats = document.getElementById('seatClick')
+      const clickedSeat = document.getElementById(id).textContent
+      if (seats.textContent.includes(clickedSeat)) {
+        seats.textContent = seats.textContent.replace(clickedSeat, " ");
+      }else {
+        seats.textContent += clickedSeat + ' '
+      }
       document.getElementById(id).classList.toggle('bg-primary')
     }
-    console.log(movieBooking);
-
+    
+   
     return {
       seats,
-      movieBooking,
+      timeId,
       handleSeat,
     }
   }
