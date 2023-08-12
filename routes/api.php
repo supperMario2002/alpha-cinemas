@@ -34,7 +34,7 @@ Route::post('/admin/login', [LoginAdminController::class, 'login']);
     Route::get('/admin/{id}/edit', [UserAdminController::class, 'getAdminById']);
     Route::put('/admin/{id}', [UserAdminController::class, 'updateAdmin']);
 
-    Route::post('/user/create', [UserAdminController::class, 'storeUser']);
+    
     Route::get('/user/index', [UserAdminController::class, 'indexUser']);
     Route::get('/user/{id}/edit', [UserAdminController::class, 'getUserById']);
     Route::put('/user/{id}', [UserAdminController::class, 'updateUser']);
@@ -73,7 +73,7 @@ Route::post('/admin/login', [LoginAdminController::class, 'login']);
 
 
 Route::post('/client/login', [LoginClientController::class, 'login']);
-
+Route::post('/user/create', [LoginClientController::class, 'register']);
 Route::middleware(['auth:sanctum', 'auth:user'])->group(function () {
     Route::get('/user/info', [LoginClientController::class, 'getUser']);
     Route::get('/user/logout', [LoginClientController::class, 'logout']);
