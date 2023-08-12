@@ -50,9 +50,14 @@
           key: 'room'
         },
         {
-          title: 'Thời gian chiếu',
-          dataIndex: 'showtime',
-          key: 'showtime'
+          title: 'Ngày chiếu',
+          dataIndex: 'date',
+          key: 'date'
+        },
+        {
+          title: 'Giờ chiếu',
+          dataIndex: 'time',
+          key: 'time'
         },
         {
           title: 'Công cụ',

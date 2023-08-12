@@ -33,13 +33,24 @@
                         <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
                             <label>
                                 <span class="text-danger me-1">*</span>
-                                <span>Thời gian chiếu: </span>
+                                <span>Ngày chiếu: </span>
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-date-picker v-model:value="schedule.showtime" format="YYYY-MM-DD HH:mm:ss"
-                                placeholder="Chọn thời gian" style="width: 100%" :disabled-date="disabledDate"
-                                :show-time="{ defaultValue: dayjs('00:00:00', 'HH:mm:ss') }" />
+                            <a-date-picker v-model:value="schedule.date"
+                                placeholder="Chọn thời gian" style="width: 100%"  value-format="YYYY/MM/DD" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-sm-3 text-start text-sm-end mb-1">
+                            <label>
+                                <span class="text-danger me-1">*</span>
+                                <span>Giờ chiếu: </span>
+                            </label>
+                        </div>
+                        <div class="col-12 col-sm-5">
+                            <a-time-picker v-model:value="schedule.time"
+                                placeholder="Chọn thời gian" style="width: 100%"  value-format="HH:mm" />
                         </div>
                     </div>
                     <div class="row">
@@ -47,10 +58,10 @@
                             <a-button type="primary" html-type="submit" class="me-0 me-sm-3 mb-3 mb-sm-0">
                                 <span>Lưu</span>
                             </a-button>
-                            <a-button type="primary">
-                                <!-- <router-link :to="{ name: 'admin-schedules-create' }">
-                                    <span>Nhập lại</span>
-                                </router-link> -->
+                            <a-button>
+                                <router-link :to="{ name: 'admin-schedules' }">
+                                    <span>Hủy</span>
+                                </router-link>
                             </a-button>
                         </div>
                     </div>
@@ -79,19 +90,9 @@ export default {
         const schedule = reactive({
             movie: undefined,
             room: undefined,
-            showtime: ''
+            date: '',
+            time: ''
         });
-
-        const filterOption = (input) => {
-            console.log(input.toLowerCase());
-            // return options.value.filter(option => option.name.toLowerCase().indexOf(input.toLowerCase()));
-        };
-
-        const disabledDate = current => {
-            // Can not select days before today and today
-            return current && current < dayjs().endOf('day');
-        };
-
 
         const getData = () => {
             axios.get(`/api/schedule/${route.params.id}/edit`)
@@ -100,13 +101,15 @@ export default {
                     optionsRoom.value = response.data.listRoom;
                     schedule.movie = response.data.schedule.movie_id;
                     schedule.room = response.data.schedule.room_id;
-                    schedule.showtime = dayjs(response.data.schedule.showtime);
+                    schedule.date = dayjs(response.data.schedule.date);
+                    schedule.time =  response.data.schedule.time;
 
                 })
         }
         getData();
 
         const updateSchedule = async () => {
+            console.log(schedule);
             axios.put(`/api/schedule/${route.params.id}`, schedule)
                 .then((response) => {
                     if (response.status == 200) { 
@@ -130,9 +133,7 @@ export default {
             errors,
             options,
             optionsRoom,
-            disabledDate,
-            updateSchedule,
-            filterOption,
+            updateSchedule, 
 
         }
 

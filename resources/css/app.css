@@ -75,3 +75,11 @@ p,span,label{
 .time-box:hover .bg-default{
     background-color: #2086df !important;
 }
+
+.ant-picker-input > input {
+    font-size: 16px !important;
+}
+
+.ant-table-tbody > tr > td, .ant-table-tbody > tr > td > span {
+    font-size: 16px !important;
+}
