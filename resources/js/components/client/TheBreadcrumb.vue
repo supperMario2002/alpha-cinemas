@@ -1,7 +1,7 @@
 <template>
     <a-breadcrumb class="breadcrumb">
         <a-breadcrumb-item>Trang chủ</a-breadcrumb-item> 
-        <a-breadcrumb-item> <span class="name-movie">Quái vật và người đẹp</span></a-breadcrumb-item>
+        <a-breadcrumb-item> <span class="name-movie">{{ items.items }}</span></a-breadcrumb-item>
     </a-breadcrumb>
 </template>
 
@@ -10,11 +10,14 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
-        // items: {
-        //     type: Array,
-        //     required: true,
-        // },
+        items: Object,
     },
+    setup(items){
+        
+        return {
+        items,    
+        }
+    }
 });
 </script>
 

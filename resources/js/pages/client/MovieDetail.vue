@@ -1,7 +1,8 @@
 <template>
     <div id="movie-detail" class="container">
         <div class="container-fluid">
-            <TheBreadcrumb />
+ 
+            <TheBreadcrumb :items="movie.name" />  
             <article class="postcard">
                 <div class="row">
                     <div class="col-12 col-md-4">
