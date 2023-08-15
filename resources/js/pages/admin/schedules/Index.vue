@@ -70,21 +70,13 @@
       const getschedule = () => axios.get('/api/schedule/index')
         .then((reponse) => {
           schedule.value = reponse.data;
-          console.log(reponse);
-        })
-        .catch((error) => {
-          console.log(error);
         })
       getschedule();
   
       const deleteschedule = async (id) => {
-        console.log(id);
         axios.delete(`api/schedule/${id}`)
           .then((response) => {
             getschedule();
-          })
-          .catch((error) => {
-            console.log(error);
           })
       }
   

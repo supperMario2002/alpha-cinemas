@@ -88,9 +88,6 @@ export default {
       .then((reponse) => {
         seats.value = reponse.data.listSeat;
       })
-      .catch((error) => {
-        console.log(error);
-      })
     getSeats()
     const handleSeat = (id) => {
       const seats = document.getElementById('seatClick')

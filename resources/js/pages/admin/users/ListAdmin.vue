@@ -92,10 +92,6 @@ export default defineComponent({
     const getAdmin = () => axios.get('/api/admin/index')
       .then((reponse) => {
         admin.value = reponse.data;
-        console.log(reponse);
-      })
-      .catch((error) => {
-        console.log(error);
       })
     getAdmin();
     return {

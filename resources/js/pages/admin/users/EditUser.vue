@@ -180,9 +180,6 @@ export default defineComponent({
         user.phone = response.data.phone
         user.birthday = dayjs(response.data.birthday)
       })
-      .catch((err) => {
-        console.log(err);
-      });
     }
 
     const updateUser = async () => {
@@ -194,7 +191,6 @@ export default defineComponent({
         if (err.response.status === 422) {
             errors.value = err.response.data.errors;
           }
-          console.log(errors.value); 
       })
     }
     getUser();

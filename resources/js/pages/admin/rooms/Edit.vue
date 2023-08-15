@@ -71,9 +71,6 @@ export default {
                 room.name = response.data.name
                 room.address = response.data.address
             })
-            .catch((err) => {
-                console.log(err);
-            });
         getAdmin();
 
         const updateRoom = async () => {
@@ -85,7 +82,6 @@ export default {
                     if (err.response.status === 422) {
                         errors.value = err.response.data.errors;
                     }
-                    console.log(errors.value);
                 })
         }
         return {

@@ -152,7 +152,6 @@ export default {
         getData();
 
         const creatSchedule = async () => {
-            console.log(schedules);
             axios.post('/api/schedule', schedules)
                 .then((response) => {
                     if (response.status == 200) {
@@ -162,13 +161,11 @@ export default {
                         })
                         errors.value = ''
                     }
-                    console.log(response);
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
                         errors.value = error.response.data.errors;
                     }
-                    console.log(errors.value);
                 });
         }
 

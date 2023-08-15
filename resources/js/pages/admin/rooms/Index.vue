@@ -62,19 +62,12 @@ export default {
       .then((reponse) => {
         room.value = reponse.data;
       })
-      .catch((error) => {
-        console.log(error);
-      })
     getRoom();
 
     const deleteRoom = (id) => axios.delete(`/api/room/${id}`)
       .then((reponse) => {
         message.success("Xóa thành công");
         getRoom()
-        console.log(reponse);
-      })
-      .catch((error) => {
-        console.log(error);
       })
     
     return {

@@ -119,7 +119,6 @@ export default {
                         message.success("Đăng ký thành công");
                         router.push({ path: "/Login" });
                     }
-                    // console.log(response);
                 })
                 .catch((error) => {
                     if (error.status === 422) {

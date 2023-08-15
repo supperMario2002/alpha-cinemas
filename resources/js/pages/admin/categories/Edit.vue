@@ -64,7 +64,6 @@ export default {
 
         const updateSlug = (e)  =>{
             category.slug = ChangeToSlug(e.target.value);
-            console.log(ChangeToSlug(e.target.value));
         }
 
         const show = async () => {
@@ -75,13 +74,11 @@ export default {
                         category.slug = response.data.slug;
                         errors.value = ''
                     }
-                    console.log(response);
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
                         errors.value = error.response.data.errors;
                     }
-                    console.log(errors.value);
                 });
         }
         show();
@@ -89,12 +86,8 @@ export default {
         const update = async () => {
             axios.put(`/api/category/${route.params.id}`, category)
             .then((response)=>{
-                console.log(response);
                 history.back();
             })
-            .catch((error)=>{
-                console.log(error);
-            });
         }
         return {
             category, 

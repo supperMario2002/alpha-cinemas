@@ -170,7 +170,6 @@ export default {
         const getMovie = async () => {
             axios.get(`/api/movie/${router.params.id}/edit`)
                 .then((response) => {
-                    console.log(response);
                     movie.name = response.data.name;
                     movie.slug = response.data.slug;
                     movie.descrition = response.data.descrition;
@@ -185,11 +184,7 @@ export default {
                             value: item.id,
                         });
                     });
-                    console.log(movie);
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
         }
         getMovie();
 
@@ -213,20 +208,17 @@ export default {
             formData.append('running_time', movie.running_time);
             formData.append('_method', 'put');
 
-            console.log(movie);
             axios.post(`/api/movie/${router.params.id}`, formData)
                 .then((response) => {
                     if (response.status == 200) {
                         history.back(-1);
                         errors.value = ''
                     }
-                    console.log(response);
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
                         errors.value = error.response.data.errors;
                     }
-                    console.log(errors);
                 });
         }
 

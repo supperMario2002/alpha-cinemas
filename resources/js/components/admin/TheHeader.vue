@@ -37,21 +37,17 @@ export default defineComponent({
         const getAdminInfo = () => {
             axios.get('api/admin')
                 .then((response) => {
-                    // console.log(response);
                     if (response.status == 200 && response.data.status_code == 200) {
                         admin.value = response.data.admin;
-                        // console.log(admin.value.id);
                     }
                     return response.data.message;
                 })
         }
         getAdminInfo();
-        // console.log(admin);
 
         const logout = () => {
             axios.get('api/admin/logout')
             .then((response)=>{
-                console.log(response);
                 if(response.status == 200 && response.data.status_code == 200){
                     localStorage.removeItem('admin_token');
                     router.push({ name: 'admin-login' });
