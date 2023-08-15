@@ -62,7 +62,6 @@ export default {
 
         const updateSlug = (e)  =>{
             category.slug = ChangeToSlug(e.target.value);
-            console.log(ChangeToSlug(e.target.value));
         }
 
         const create = async () => {
@@ -75,13 +74,11 @@ export default {
                         })
                         errors.value = ''
                     }
-                    console.log(response);
                 })
                 .catch((error) => {
                     if (error.response.status === 422) {
                         errors.value = error.response.data.errors;
                     }
-                    console.log(errors.value);
                 });
         }
 

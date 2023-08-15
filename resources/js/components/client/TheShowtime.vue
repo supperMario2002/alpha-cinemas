@@ -173,8 +173,6 @@ export default {
     },
     setup(props) {
         const movie = props.movie
-        
-        // console.log(movie.schedules);
 
         const arrayTransformation = (arr) => {
             const schedules = []
@@ -188,10 +186,6 @@ export default {
             });
             return schedules;
         }
-
-        
-        console.log(arrayTransformation(movie.schedules));        
-
 
         return {
             movie,

@@ -49,11 +49,9 @@ export default {
         const user = reactive({
             email: '',
             password: '',
-            // remeber: false,
         });
 
         const login = async ()=>{
-            console.log(user);
             axios.post('api/client/login', user)
             .then((response)=>{ 
                 if(response.status == 200 && response.data.status_code == 200){

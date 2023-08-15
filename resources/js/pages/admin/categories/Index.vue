@@ -55,10 +55,6 @@
       const getcategory = () => axios.get('/api/category/index')
         .then((reponse) => {
           category.value = reponse.data;
-          console.log(reponse);
-        })
-        .catch((error) => {
-          console.log(error);
         })
       getcategory();
   

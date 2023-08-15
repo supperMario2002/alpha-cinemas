@@ -68,10 +68,8 @@ export default {
         });
 
         const login = async () => {
-            // console.log(admin);
             axios.post('api/admin/login', admin)
                 .then((response) => {
-                    console.log(response);
                     if (response.status == 200 && response.data.status_code == 200) {
                         localStorage.setItem("admin_token", JSON.stringify(response.data.access_token));
                         router.push({ name: 'admin-home' });

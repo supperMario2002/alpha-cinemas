@@ -184,9 +184,6 @@ export default defineComponent({
         admin.gender = response.data.gender
         admin.birthday = dayjs(response.data.birthday)
       })
-      .catch((err) => {
-        console.log(err);
-      });
     getAdmin();
 
 
@@ -202,7 +199,6 @@ export default defineComponent({
       formData.append('gender', admin.gender);
       formData.append('birthday', admin.birthday);
 
-      // console.log(admin);
 
       axios.put(`/api/admin/${route.params.id}`, admin, {
         headers: {
@@ -211,13 +207,11 @@ export default defineComponent({
       }) 
         .then((response) => {
           // window.location.href = 'http://127.0.0.1:8000/admin/account'
-          console.log(response);
         })
         .catch((err) => {
           if (err.response.status === 422) {
             errors.value = err.response.data.errors;
           }
-          console.log(errors.value);
         })
     }
     return {
@@ -225,7 +219,6 @@ export default defineComponent({
       dateFormatList,
       errors,
       admin,
-      // ...toRefs(admin),
       updateAdmin,
       handleFileUpload
     };

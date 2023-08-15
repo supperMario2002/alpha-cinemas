@@ -42,10 +42,6 @@ export default {
         movie.running_time = responsive.data.running_time;
         movie.categories = responsive.data.categories
         movie.schedules = responsive.data.schedules
-        // console.log(responsive);
-      })
-      .catch((error) => {
-        console.log(error);
       })
 
     getMovieBook()

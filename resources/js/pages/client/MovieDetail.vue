@@ -91,11 +91,7 @@ export default {
                     movie.running_time = response.data.running_time;
                     movie.categories = response.data.categories;
                     movie.schedules = response.data.schedules;
-                    console.log(response);
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
         }
 
         watch(router, () => {

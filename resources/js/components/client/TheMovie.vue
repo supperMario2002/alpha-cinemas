@@ -90,9 +90,6 @@ export default {
             .then((reponse) => {
                 movies.value = reponse.data.listMovie;
             })
-            .catch((error) => {
-                console.log(error);
-            })
         getmovie(); 
         return { 
             movies,

@@ -82,9 +82,6 @@ export default defineComponent({
       .then((reponse) => {
         user.value = reponse.data;
       })
-      .catch((error) => {
-        console.log(error);
-      })
     getUser();
 
 

@@ -131,7 +131,6 @@ export default defineComponent({
     const logout = () => {
       axios.get('api/user/logout')
         .then((response) => {
-          console.log(response);
           if (response.status == 200 && response.data.status_code == 200) {
             localStorage.removeItem('user_token');
             info.onLoginUser([]);
@@ -146,12 +145,8 @@ export default defineComponent({
     const listMovies = () => axios.get('/api/client/movie/index')
       .then((reponse) => {
         movies.value = reponse.data.listMovie;
-
-        console.log(movies.value);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+ 
+      }) 
     listMovies()
     return {
       displayStyle,

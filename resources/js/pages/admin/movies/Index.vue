@@ -93,10 +93,6 @@ export default {
     const getmovie = () => axios.get('/api/movie/index')
       .then((reponse) => {
         movie.value = reponse.data;
-        console.log(reponse);
-      })
-      .catch((error) => {
-        console.log(error);
       })
     getmovie();
 
@@ -104,9 +100,6 @@ export default {
       axios.delete(`api/movie/${id}`)
         .then((response) => {
           getmovie();
-        })
-        .catch((error) => {
-          console.log(error);
         })
     }
 
