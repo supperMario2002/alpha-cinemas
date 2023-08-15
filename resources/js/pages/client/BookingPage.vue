@@ -1,7 +1,7 @@
 <template>
   <div id="book-ticket" class="container">
     <div class="container-fluid">
-      <TheBreadcrumb />
+      <TheBreadcrumb :items=" movie.name"/>
       <div class="row">
         <TheSeat :movieBooking="movie" />
       </div>
@@ -15,11 +15,11 @@ import { useRoute } from 'vue-router';
 import TheBreadcrumb from '../../components/client/TheBreadcrumb.vue';
 import TheSeat from '../../components/client/TheSeat.vue';
 import dayjs from 'dayjs';
-import { reactive, ref, toRefs } from 'vue';
+import { reactive } from 'vue';
 export default {
   components: { TheBreadcrumb, TheSeat },
   setup() {
-    const route = useRoute()
+    const route = useRoute() 
     const movie = reactive({
       name: '',
       slug: '',
@@ -31,6 +31,7 @@ export default {
       director: '',
       running_time: '',
     })
+  
     const getMovieBook = () => axios.get(`/api/client/movie/${route.params.id}/show`)
       .then((responsive) => {
         movie.name = responsive.data.name;

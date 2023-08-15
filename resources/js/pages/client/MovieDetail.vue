@@ -95,7 +95,9 @@ export default {
         }
 
         watch(router, () => {
-            getMovie();
+            if(router.params.id){
+                getMovie();
+            }
         });
         getMovie();
         return {

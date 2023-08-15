@@ -10,7 +10,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
-        items: Object,
+        items: String,
     },
     setup(items){
         
