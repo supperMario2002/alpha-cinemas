@@ -1,7 +1,7 @@
 <template>
     <div id="movie-detail" class="container">
         <div class="container-fluid">
-            <TheBreadcrumb /> 
+            <TheBreadcrumb />
             <article class="postcard">
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -13,7 +13,7 @@
                     <div class="col-12 col-md-8">
                         <div class="descr_movie p-2">
                             <h2 class="h2">{{ movie.name }}</h2>
-                            <span  style="text-align: justify">
+                            <span style="text-align: justify">
                                 {{ movie.descrition }}
                             </span>
                             <div class="row mt-3">
@@ -58,11 +58,11 @@
 <script>
 import { useRoute } from 'vue-router';
 import dayjs from 'dayjs';
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import TheBreadcrumb from '../../components/client/TheBreadcrumb.vue';
 import TheShowtime from '../../components/client/TheShowtime.vue';
 export default {
-  components: { TheBreadcrumb, TheShowtime },
+    components: { TheBreadcrumb, TheShowtime },
     setup() {
         const router = useRoute();
 
@@ -96,6 +96,10 @@ export default {
                     console.log(error);
                 });
         }
+
+        watch(router, () => {
+            getMovie();
+        });
         getMovie();
         return {
             movie

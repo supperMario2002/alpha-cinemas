@@ -3,13 +3,13 @@
     <nav class="navbar navbar-expand-lg container">
       <div class="container-fluid">
         <router-link :to="{ name: 'home' }" class="nav-link">
-          <img src="/image/logo/logoFull.png" alt="" style="width: 150px;"/>
+          <img src="/image/logo/logoFull.png" alt="" style="width: 150px;" />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-between "  id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-between " id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item text-navigation ">
               <router-link :to="{ name: 'home' }" class="nav-link">
@@ -32,7 +32,7 @@
               </router-link>
             </li>
             <li class="nav-item text-navigation">
-              <router-link :to="{ name: 'home' }" class="nav-link">
+              <router-link :to="{ name: 'ticket' }" class="nav-link">
                 GIÁ VÉ
               </router-link>
             </li>
@@ -42,13 +42,28 @@
               </router-link>
             </li>
           </ul>
-          <ul v-if="userInfo.length == 0"  class="navbar-nav ">
+          <ul class="navbar-nav">
+            <input type="text" style="width: 250px;" placeholder="Nhập Phim Cần Tìm" class="input_search"
+              v-model="inputSearch" @click="handleInputClick">
+            <li class="movie_search bg-dark" :style="{ display: displayStyle }" @mouseleave="handleInputBlur">
+              <template v-for="movie in movies" v-bind:key="movie.id">
+                <template v-if="movie.name.includes(inputSearch)">
+                  <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }"
+                    class="my-3 d-flex justify-content-between text-decoration-none" style="width: 250px;">
+                    <img v-bind:src="movie.img" alt="" style="width: 50px; height: 50px;">
+                    <p class="text-light">{{ movie.name }}</p>
+                  </router-link>
+                </template>
+              </template>
+            </li>
+          </ul>
+          <ul v-if="userInfo.length == 0" class="navbar-nav ">
             <li class="nav-item ">
               <router-link :to="{ name: 'login' }" class="nav-link">
                 Đăng Nhập
               </router-link>
             </li>
-            
+
             <li class="nav-item ">
               <router-link :to="{ name: 'register' }" class="nav-link">
                 Đăng Ký
@@ -57,8 +72,8 @@
           </ul>
           <ul v-else class="navbar-nav ">
             <div class="dropdown">
-              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1"
-                data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 <i class="fa-solid fa-user"></i> &nbsp;
                 <span>{{ userInfo.fullname }}</span>
               </button>
@@ -78,17 +93,29 @@
 <script>
 import axios from "axios";
 import { storeToRefs } from "pinia";
-import { defineComponent, ref } from "vue"; 
+import { defineComponent, ref, watch } from "vue";
 import { useRouter } from 'vue-router';
 import { SaveInfoLogin } from '../../stores/helper.js'
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const info =  SaveInfoLogin();
+    const info = SaveInfoLogin();
+    const movies = ref([]);
+    const inputSearch = ref("");
+    const displayStyle = ref("none");
+
+    const handleInputClick = () => {
+      displayStyle.value = "block";
+    };
+
+    const handleInputBlur = () => {
+      displayStyle.value = "none";
+    };
+
 
     const getUserInfo = () => {
       axios.get('api/user/info')
-        .then((response) => { 
+        .then((response) => {
           if (response.status == 200 && response.data.status_code == 200) {
             // user.value = response.data.user;
             info.onLoginUser(response.data.user);
@@ -109,11 +136,29 @@ export default defineComponent({
             localStorage.removeItem('user_token');
             info.onLoginUser([]);
             router.push({ name: 'login' });
-            
-          } 
+
+          }
         })
     }
+
+
+
+    const listMovies = () => axios.get('/api/client/movie/index')
+      .then((reponse) => {
+        movies.value = reponse.data.listMovie;
+
+        console.log(movies.value);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    listMovies()
     return {
+      displayStyle,
+      handleInputClick,
+      handleInputBlur,
+      inputSearch,
+      movies,
       logout,
       ...storeToRefs(info),
     }
@@ -121,4 +166,13 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style scoped>
+.input_search {
+  position: relative;
+}
+
+.movie_search {
+  position: absolute;
+  top: 70px;
+}
+</style>
