@@ -106,13 +106,13 @@ const admin = [
                 component: () => import("../pages/admin/schedules/Edit.vue"),
             },
         ],
-        // beforeEnter: (to, from, next) => {
-        //     if (localStorage.getItem("admin_token") == null) {
-        //         next({ name: "admin-login" });
-        //     } else {
-        //         next(); 
-        //     }
-        // },
+        beforeEnter: (to, from, next) => {
+            if (localStorage.getItem("admin_token") == null) {
+                next({ name: "admin-login" });
+            } else {
+                next(); 
+            }
+        },
     },
     // Đăng ký đăng nhập
     {

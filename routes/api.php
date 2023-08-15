@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/admin/login', [LoginAdminController::class, 'login']);
 
-// Route::middleware(['auth:sanctum' , 'auth:admin' ])->group(function () {
+Route::middleware(['auth:sanctum' , 'auth:admin' ])->group(function () {
 
     Route::get('/admin', [UserAdminController::class, 'getAdmin']);
     Route::get('/admin/logout', [UserAdminController::class, 'logoutAdmin']);
@@ -65,7 +65,7 @@ Route::post('/admin/login', [LoginAdminController::class, 'login']);
     Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
     Route::delete('/schedule/{id}', [ScheduleController::class, 'delete']);
 
-// });
+});
 
 
 //Client routes
