@@ -14,6 +14,11 @@ const client = [
                 component: () => import("../pages/client/MoviePage.vue"),
             },
             {
+                path: "ticket",
+                name: "ticket",
+                component: () => import("../pages/client/TicketPage.vue"),
+            },
+            {
                 path: "schedule",
                 name: "schedule",
                 component: () => import("../pages/client/Schedule.vue"),
