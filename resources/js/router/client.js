@@ -32,6 +32,13 @@ const client = [
                 path: "/:id/dat-ve/:timeId",
                 name: "book-ticket",
                 component: () => import("../pages/client/BookingPage.vue"),
+                beforeEnter: (to, from, next) => {
+                    if (localStorage.getItem("user_token") == null) {
+                        next({name: 'login'});
+                    } else {
+                        next(); 
+                    }
+                },
             },
         ],
     },
