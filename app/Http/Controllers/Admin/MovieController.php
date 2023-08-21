@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMovieRequest;
 use App\Http\Services\FileService;
 use App\Models\Category;
 use App\Models\Movie;
@@ -33,7 +34,7 @@ class MovieController extends Controller
         $listCategories = Category::get();
         return response()->json($listCategories);
     }
-    public function store(Request $request)
+    public function store(StoreMovieRequest $request)
     {
         if ($request->hasFile('file')) {
             $path = $this->file->uploadImage($request->file, 'movies');

@@ -48,7 +48,7 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-date-picker v-model:value="movie.release_date" />
+                            <a-date-picker v-model:value="movie.release_date" class="d-block" />
                             <span v-if="errors.release_date" class="text-danger">{{ errors.release_date[0] }}</span>
                         </div>
                     </div>
@@ -59,9 +59,10 @@
                                 <span>Thể loại: </span>
                             </label>
                         </div>
-                        <div class="col-12 col-sm-5"> 
-                            <a-select v-model:value="movie.categories" mode="multiple" placeholder="Inserted are removed"
-                                style="width: 100%" :options="options.map(item => ({ value: item.id , label: item.name}))"></a-select>
+                        <div class="col-12 col-sm-5">
+                            <a-select v-model:value="movie.categories" mode="multiple"
+                                placeholder="Ấn vào đây để chọn thể loại" style="width: 100%"
+                                :options="options.map(item => ({ value: item.id, label: item.name }))"></a-select>
 
                         </div>
                     </div>
@@ -85,9 +86,12 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-input-number placeholder="Thời lượng " v-model:value="movie.running_time" min="0" /> <span>
-                                (min)</span>
-                            <span v-if="errors.running_time" class="text-danger">{{ errors.running_time[0] }}</span>
+                            <div class="d-flex">
+                                <a-input-number placeholder="Thời lượng " v-model:value="movie.running_time" min="0"
+                                    class="d-block" /> <span class="d-block">
+                                    (min)</span>
+                            </div>
+                            <span v-if="errors.running_time" class="text-danger w-100">{{ errors.running_time[0] }}</span>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -98,14 +102,13 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <a-upload list-type="picture"  :max-count="1"
-                                action="" :before-upload="uploadImage">
+                            <a-upload list-type="picture" :max-count="1" action="" :before-upload="uploadImage">
                                 <a-button html-type="button">
                                     <i class="fa-solid fa-upload"></i>
                                     <span class="ms-2">Chọn ảnh</span>
                                 </a-button>
                             </a-upload>
-                            <span v-if="errors.running_time" class="text-danger">{{ errors.running_time[0] }}</span>
+                            <span v-if="errors.img" class="text-danger">{{ errors.img[0] }}</span>
                         </div>
                     </div>
                 </div>
@@ -132,9 +135,7 @@ export default {
         const store = useMenu();
         store.onSelectKeys(['admin-movies-create']);
 
-
         const errors = ref({});
-
         const options = ref([{}]);
         const movie = reactive({
             name: '',
@@ -156,7 +157,7 @@ export default {
             movie.slug = ChangeToSlug(e.target.value);
         }
 
-        const create = async () => { 
+        const create = async () => {
             const formData = new FormData();
             formData.append('name', movie.name);
             formData.append('slug', movie.slug);
@@ -196,7 +197,7 @@ export default {
         const getLitsCategories = async () => {
             axios.get('api/movie/create')
                 .then((response) => {
-                    options.value = response.data; 
+                    options.value = response.data;
                 })
         }
         getLitsCategories();

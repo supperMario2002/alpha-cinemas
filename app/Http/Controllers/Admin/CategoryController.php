@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class CategoryController extends Controller
         return response()->json($listCategories);
     }
 
-    public function store(Request $request) {
+    public function store(StoreCategoryRequest $request) {
         $create = Category::create([
             "name" => $request->name,
             "slug" => $request->slug,

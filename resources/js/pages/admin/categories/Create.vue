@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-12 col-sm-5">
                             <a-input placeholder="slug" v-model:value="category.slug" allow-clear/>
-                            <span v-if="errors.slug" class="text-danger">{{ errors.address[0] }}</span>
+                            <span v-if="errors.slug" class="text-danger">{{ errors.slug[0] }}</span>
                         </div>
                     </div>
                 </div>
