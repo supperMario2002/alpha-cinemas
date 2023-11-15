@@ -51,7 +51,7 @@
                   <router-link :to="{ name: 'movie-detail', params: { id: movie.slug } }"
                     class="my-3 d-flex justify-content-between text-decoration-none" style="width: 250px;">
                     <img v-bind:src="movie.img" alt="" style="width: 50px; height: 50px;">
-                    <p class="text-light">{{ movie.name }}</p>
+                    <p class="text-light truncate-text">{{ movie.name }}</p>
                   </router-link>
                 </template>
               </template>
@@ -169,5 +169,11 @@ export default defineComponent({
 .movie_search {
   position: absolute;
   top: 70px;
+}
+.truncate-text {
+  white-space: nowrap;      
+  overflow: hidden;         
+  text-overflow: ellipsis;  
+  max-width: 150px;         
 }
 </style>
