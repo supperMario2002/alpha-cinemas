@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\client\Auth\LoginClientController;
+use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\client\MovieControler;
 use App\Http\Controllers\client\SeatController;
 use Illuminate\Http\Request;
@@ -78,6 +79,7 @@ Route::middleware(['auth:sanctum', 'auth:user'])->group(function () {
     Route::get('/user/info', [LoginClientController::class, 'getUser']);
     Route::get('/user/logout', [LoginClientController::class, 'logout']);
 });
+Route::get('/vnpay_payment', [CheckoutController::class, 'vnpayPayment']);
 Route::get('/client/movie/index', [MovieControler::class, 'index']);
 Route::get('/client/movie/{slug}/show', [MovieControler::class, 'movieBySlug']);
 Route::get('/client/movie/seat', [SeatController::class, 'index']);
