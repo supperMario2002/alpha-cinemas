@@ -103,11 +103,11 @@
         <div class="w-100 title-info mb-4 col-12"><i class="fa-solid fa-credit-card mx-3"></i>CHỌN THẺ THANH TOÁN</div>
         <div class="col-12">
           <a-radio-group v-model:value="card" class="row ">
-          <a-radio :value="1" class="col-md-2">Thẻ ngân hàng</a-radio>
-          <a-radio :value="2" class="col-md-2">Mono</a-radio>
-          <a-radio :value="3" class="col-md-2">..</a-radio>
-          <a-radio :value="4" class="col-md-2">...</a-radio>
-        </a-radio-group>
+            <a-radio :value="1" class="col-md-2">Thẻ ngân hàng</a-radio>
+            <a-radio :value="2" class="col-md-2">Mono</a-radio>
+            <a-radio :value="3" class="col-md-2">..</a-radio>
+            <a-radio :value="4" class="col-md-2">...</a-radio>
+          </a-radio-group>
         </div>
       </div>
 
@@ -209,7 +209,11 @@ export default {
     }
 
     const ContinuetoPaymentinfo = (data, card) => {
-      if (data.length > 0 ) {
+      axios.get("api/vnpay_payment")
+        .then(() => {
+
+        })
+      if (data.length > 0) {
         console.log(data.length);
         console.log(card);
       }
