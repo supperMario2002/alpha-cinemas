@@ -13,22 +13,21 @@ class SeatTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        DB::table('seats')->truncate();
-        $giatri = array("thuong", "vip");
-        for($i = 1; $i < 121; $i++){
-            $name = 'a'. $i;
-            $price = $i * 100;
-            $type_seat = "thuong";
-            $random_key = array_rand($giatri);
-            $giatriRandom = $giatri[$random_key];
-            DB::table('seats')->insert([
-                "name" => $name,
-                "price" => $price,
-                "type_seat" => $giatriRandom,
-            ]);
+        for ($i = 1; $i < 121; $i++) {
+            if ($i < 62) {
+                $name = 'a' . $i;
+                DB::table('seats')->insert([
+                    "name" => $name,
+                    "type_seat" => 1,
+                ]);
+            } else {
+                $name = 'a' . $i;
+                DB::table('seats')->insert([
+                    "name" => $name,
+                    "type_seat" => 2,
+                ]);
+            }
+
         }
-        Schema::enableForeignKeyConstraints();
     }
 }
-    
