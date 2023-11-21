@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
+            SeatTypeSeeder::class,
             SeatTableSeeder::class,
             CategorySeeder::class,
             MovieSeeder::class,
-
+            RoomSeeder::class
         ]);
     }
 }
