@@ -23,63 +23,82 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/admin/login', [LoginAdminController::class, 'login']);
+// Authentication route
+Route::post('admin/login', [LoginAdminController::class, 'login']);
 
-Route::middleware(['auth:sanctum' , 'auth:admin' ])->group(function () {
+// Authenticated routes for admin
+Route::middleware(['auth:sanctum', 'auth:admin'])->group(function () {
+    Route::get('admin', [UserAdminController::class, 'getAdmin']);
+    Route::get('admin/logout', [UserAdminController::class, 'logoutAdmin']);
 
-    Route::get('/admin', [UserAdminController::class, 'getAdmin']);
-    Route::get('/admin/logout', [UserAdminController::class, 'logoutAdmin']);
+    Route::prefix('admin')->group(function () {
+        Route::get('index', [UserAdminController::class, 'indexAdmin']);
+        Route::post('create', [UserAdminController::class, 'storeAdmin']);
+        Route::get('{id}/edit', [UserAdminController::class, 'getAdminById']);
+        Route::put('{id}', [UserAdminController::class, 'updateAdmin']);
+    });
 
-    Route::get('/admin/index', [UserAdminController::class, 'indexAdmin']);
-    Route::post('/admin/create', [UserAdminController::class, 'storeAdmin']);
-    Route::get('/admin/{id}/edit', [UserAdminController::class, 'getAdminById']);
-    Route::put('/admin/{id}', [UserAdminController::class, 'updateAdmin']);
+    Route::prefix('user')->group(function () {
+        Route::get('index', [UserAdminController::class, 'indexUser']);
+        Route::get('{id}/edit', [UserAdminController::class, 'getUserById']);
+        Route::put('{id}', [UserAdminController::class, 'updateUser']);
+    });
 
-    
-    Route::get('/user/index', [UserAdminController::class, 'indexUser']);
-    Route::get('/user/{id}/edit', [UserAdminController::class, 'getUserById']);
-    Route::put('/user/{id}', [UserAdminController::class, 'updateUser']);
+    Route::prefix('room')->group(function () {
+        Route::get('index', [RoomController::class, 'index']);
+        Route::post('create', [RoomController::class, 'create']);
+        Route::get('{id}/edit', [RoomController::class, 'edit']);
+        Route::put('{id}', [RoomController::class, 'update']);
+        Route::delete('{id}', [RoomController::class, 'delete']);
+    });
 
+    Route::prefix('category')->group(function () {
+        Route::get('index', [CategoryController::class, 'index']);
+        Route::post('create', [CategoryController::class, 'store']);
+        Route::get('{id}/edit', [CategoryController::class, 'edit']);
+        Route::put('{id}', [CategoryController::class, 'update']);
+    });
 
-    Route::get('/room/index', [RoomController::class, 'index']);
-    Route::post('/room/create', [RoomController::class, 'create']);
-    Route::get('/room/{id}/edit', [RoomController::class, 'edit']);
-    Route::put('/room/{id}', [RoomController::class, 'update']);
-    Route::delete('/room/{id}', [RoomController::class, 'delete']);
+    Route::prefix('movie')->group(function () {
+        Route::get('index', [MovieController::class, 'index']);
+        Route::get('create', [MovieController::class, 'create']);
+        Route::post('', [MovieController::class, 'store']);
+        Route::get('{id}/edit', [MovieController::class, 'edit']);
+        Route::put('{id}', [MovieController::class, 'update']);
+        Route::delete('{id}', [MovieController::class, 'delete']);
+    });
 
-    Route::get('/category/index', [CategoryController::class, 'index']);
-    Route::post('/category/create', [CategoryController::class, 'store']);
-    Route::get('/category/{id}/edit', [CategoryController::class, 'edit']);
-    Route::put('/category/{id}', [CategoryController::class, 'update']);
-
-    Route::get('/movie/index', [MovieController::class, 'index']);
-    Route::get('/movie/create', [MovieController::class, 'create']);
-    Route::post('/movie', [MovieController::class, 'store']);
-    Route::get('/movie/{id}/edit', [MovieController::class, 'edit']);
-    Route::put('/movie/{id}', [MovieController::class, 'update']);
-    Route::delete('/movie/{id}', [MovieController::class, 'delete']);
-
-    Route::get('/schedule/index', [ScheduleController::class, 'index']);
-    Route::get('/schedule/create', [ScheduleController::class, 'create']);
-    Route::post('/schedule', [ScheduleController::class, 'store']);
-    Route::get('/schedule/{id}/edit', [ScheduleController::class, 'edit']);
-    Route::put('/schedule/{id}', [ScheduleController::class, 'update']);
-    Route::delete('/schedule/{id}', [ScheduleController::class, 'delete']);
-
+    Route::prefix('schedule')->group(function () {
+        Route::get('index', [ScheduleController::class, 'index']);
+        Route::get('create', [ScheduleController::class, 'create']);
+        Route::post('', [ScheduleController::class, 'store']);
+        Route::get('{id}/edit', [ScheduleController::class, 'edit']);
+        Route::put('{id}', [ScheduleController::class, 'update']);
+        Route::delete('{id}', [ScheduleController::class, 'delete']);
+    });
 });
 
 
 //Client routes
 
 
+// Authentication client routes
+Route::post('client/login', [LoginClientController::class, 'login']);
+Route::post('user/create', [LoginClientController::class, 'register']);
 
-Route::post('/client/login', [LoginClientController::class, 'login']);
-Route::post('/user/create', [LoginClientController::class, 'register']);
+// Authenticated client routes
 Route::middleware(['auth:sanctum', 'auth:user'])->group(function () {
-    Route::get('/user/info', [LoginClientController::class, 'getUser']);
-    Route::get('/user/logout', [LoginClientController::class, 'logout']);
+    Route::get('user/info', [LoginClientController::class, 'getUser']);
+    Route::get('user/logout', [LoginClientController::class, 'logout']);
 });
-Route::get('/vnpay_payment', [CheckoutController::class, 'vnpayPayment']);
-Route::get('/client/movie/index', [MovieControler::class, 'index']);
-Route::get('/client/movie/{slug}/show', [MovieControler::class, 'movieBySlug']);
-Route::get('/client/movie/seat', [SeatController::class, 'index']);
+
+// Checkout route
+Route::get('vnpay_payment', [CheckoutController::class, 'vnpayPayment']);
+
+// Movie routes
+Route::prefix('client/movie')->group(function(){
+    Route::get('index', [MovieControler::class, 'index']);
+    Route::get('{slug}/show', [MovieControler::class, 'movieBySlug']);
+    Route::get('seat', [SeatController::class, 'index']);
+    Route::get('seat_types', [SeatController::class, 'seatType']);
+});

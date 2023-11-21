@@ -13,7 +13,10 @@ class Seat extends Model
 
     protected $fillable = [
         "name",
-        "price",
         "type_seat",
     ];
+
+    public function seatType(){
+        return $this->belongsTo(SeatType::class, "type_seat","id", "seat_type");
+    }
 }

@@ -5,7 +5,7 @@
       <div class="row">
         <div class="seat-def col-1 d-flex flex-column" v-for="seat in seats" :key="seat.id" v-bind:id="seat.id"
           @click="handleSeat(seat.id)">
-          <i class="fa-solid fa-chair fs-4 " v-if="seat.type_seat == 'thuong'"></i>
+          <i class="fa-solid fa-chair fs-4 " v-if="seat.type_seat == 1"></i>
           <i class="fa-solid fa-couch fs-5 " v-else></i>
           <span>{{ seat.name }}</span>
         </div>
@@ -33,8 +33,9 @@
             <div class="col-6">
               <h4>Ghế Vip</h4>
             </div>
-            <div class="col-3"><span>1 x 45.000 </span></div>
-            <div class="col-3 text-end"><span>= 45.000 vnđ</span></div>
+            <div class="col-3"><span>{{ totalSeatAmount.indexVip }} x {{ totalSeatAmount.vipAmount }} </span></div>
+            <div class="col-3 text-end"><span>= {{ totalSeatAmount.indexVip * totalSeatAmount.vipAmount }} vnđ</span>
+            </div>
           </div>
         </div>
         <div class="col-12">
@@ -42,8 +43,10 @@
             <div class="col-6">
               <h4>Ghế thường</h4>
             </div>
-            <div class="col-3"><span>1 x 40.000 </span></div>
-            <div class="col-3 text-end"><span>= 40.000 vnđ</span></div>
+            <div class="col-3"><span>{{ totalSeatAmount.indexRegular }} x {{ totalSeatAmount.regularAmount }} </span>
+            </div>
+            <div class="col-3 text-end"><span>= {{ totalSeatAmount.indexRegular * totalSeatAmount.regularAmount }}
+                vnđ</span></div>
           </div>
         </div>
       </div>
@@ -86,7 +89,7 @@
         <div class="col-6">
           <div class="row">
             <div class="col-6"><span>Tổng tiền:</span></div>
-            <div class="col-6 text-end">20.000.000 vnđ</div>
+            <div class="col-6 text-end">{{ totalSeatPrice }} vnđ</div>
           </div>
           <div class="row">
             <div class="col-6"><span>Số tiền được giảm:</span></div>
@@ -94,7 +97,7 @@
           </div>
           <div class="row">
             <div class="col-6"><span>Số tiền cần thanh toán:</span></div>
-            <div class="col-6 text-end">20.000.000 vnđ</div>
+            <div class="col-6 text-end">{{ totalSeatPrice }} vnđ</div>
           </div>
         </div>
       </div>
@@ -171,7 +174,7 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { SaveInfoLogin } from '../../stores/helper';
@@ -184,9 +187,17 @@ export default {
     const route = useRoute()
     const timeId = route.params.timeId
     const seats = ref([])
-    const listSeat = ref([]);
-    const info = SaveInfoLogin();
-    const card = ref(1);
+    const listSeat = ref([])
+    const info = SaveInfoLogin()
+    const card = ref(1)
+    const REGULAR_SEAT = 1;
+    const VIP_SEAT = 2
+    const totalSeatAmount = reactive({
+      indexVip: 0,
+      vipAmount: 60000,
+      indexRegular: 0,
+      regularAmount: 45000,
+    });
 
 
     const getSeats = () => axios.get('/api/client/movie/seat')
@@ -198,23 +209,40 @@ export default {
     const handleSeat = (id) => {
       const clickedSeat = document.getElementById(id);
       const index = listSeat.value.findIndex(item => item.key == id);
-
+      const seatCurrent = seats.value.filter(item => item.id === id)[0]
+      console.log(seatCurrent);
       if (index != -1) {
         listSeat.value.splice(index, 1);
+        updateSeatsAmount(seatCurrent.type_seat,-1);
       } else {
         listSeat.value.push({ key: id, value: clickedSeat.textContent })
+        updateSeatsAmount(seatCurrent.type_seat,1);
       }
-      clickedSeat.querySelector('i').classList.toggle('color-default')
-      clickedSeat.querySelector('span').classList.toggle('color-default')
+      // Toggling class
+      ['i', 'span'].forEach(element => {
+        clickedSeat.querySelector(element).classList.toggle('color-default');
+      });
     }
 
+    const updateSeatsAmount = (typeSeat, increment) => {
+      if (typeSeat == REGULAR_SEAT) {
+        totalSeatAmount.indexRegular += increment;
+      } 
+      if(typeSeat == VIP_SEAT) {
+        totalSeatAmount.indexVip += increment;
+      }
+    };
+
+    const totalSeatPrice = computed(() => {
+      return totalSeatAmount.indexVip * totalSeatAmount.vipAmount + totalSeatAmount.indexRegular * totalSeatAmount.regularAmount;
+    })
     const ContinuetoPaymentinfo = (data, card) => {
       axios.get("api/vnpay_payment")
         .then(() => {
-
+          
         })
       if (data.length > 0) {
-        console.log(data.length);
+        console.log(data);
         console.log(card);
       }
     }
@@ -225,6 +253,8 @@ export default {
       listSeat,
       info,
       card,
+      totalSeatAmount,
+      totalSeatPrice,
       handleSeat,
       ContinuetoPaymentinfo,
       ...storeToRefs(info)
