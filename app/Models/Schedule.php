@@ -26,4 +26,8 @@ class Schedule extends Model
     public function room() {
         return $this->belongsTo(Room::class, 'room_id');
     }
+
+    public function tickets(){
+        return $this->hasMany(Ticket::class, 'schedule_id', 'id');
+    }
 }

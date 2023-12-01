@@ -19,4 +19,8 @@ class Seat extends Model
     public function seatType(){
         return $this->belongsTo(SeatType::class, "type_seat","id", "seat_type");
     }
+
+    public function ticket(){
+        return $this->hasOne(Ticket::class, 'seat_id','id');
+    }
 }
