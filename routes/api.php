@@ -90,10 +90,11 @@ Route::post('user/create', [LoginClientController::class, 'register']);
 Route::middleware(['auth:sanctum', 'auth:user'])->group(function () {
     Route::get('user/info', [LoginClientController::class, 'getUser']);
     Route::get('user/logout', [LoginClientController::class, 'logout']);
+    Route::post('vnpay_payment', [CheckoutController::class, 'vnpayPayment']);
 });
+Route::get('vnpay_php/vnpay_return', [CheckoutController::class, 'ipn']);
 
 // Checkout route
-Route::get('vnpay_payment', [CheckoutController::class, 'vnpayPayment']);
 
 // Movie routes
 Route::prefix('client/movie')->group(function(){

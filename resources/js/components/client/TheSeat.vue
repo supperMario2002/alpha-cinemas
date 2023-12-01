@@ -213,10 +213,10 @@ export default {
       console.log(seatCurrent);
       if (index != -1) {
         listSeat.value.splice(index, 1);
-        updateSeatsAmount(seatCurrent.type_seat,-1);
+        updateSeatsAmount(seatCurrent.type_seat, -1);
       } else {
         listSeat.value.push({ key: id, value: clickedSeat.textContent })
-        updateSeatsAmount(seatCurrent.type_seat,1);
+        updateSeatsAmount(seatCurrent.type_seat, 1);
       }
       // Toggling class
       ['i', 'span'].forEach(element => {
@@ -227,8 +227,8 @@ export default {
     const updateSeatsAmount = (typeSeat, increment) => {
       if (typeSeat == REGULAR_SEAT) {
         totalSeatAmount.indexRegular += increment;
-      } 
-      if(typeSeat == VIP_SEAT) {
+      }
+      if (typeSeat == VIP_SEAT) {
         totalSeatAmount.indexVip += increment;
       }
     };
@@ -236,14 +236,20 @@ export default {
     const totalSeatPrice = computed(() => {
       return totalSeatAmount.indexVip * totalSeatAmount.vipAmount + totalSeatAmount.indexRegular * totalSeatAmount.regularAmount;
     })
-    const ContinuetoPaymentinfo = (data, card) => {
-      axios.get("api/vnpay_payment")
-        .then(() => {
-          
-        })
-      if (data.length > 0) {
-        console.log(data);
-        console.log(card);
+    const ContinuetoPaymentinfo = (seats, card) => {
+      if (seats.length > 0) {
+        const  data = reactive({
+          seats: seats,
+          typeCard : card
+        });
+        axios.post("api/vnpay_payment", data)
+          .then((reponse) => {
+            if(reponse.data.code == "00"){
+              window.location.href = reponse.data.data
+            }
+          })
+      }else{
+        alert("Hãy chọn ghế ngồi!");
       }
     }
 
