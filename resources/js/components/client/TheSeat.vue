@@ -55,36 +55,35 @@
         <div class="w-100 title-info mb-4"><i class="fa-solid fa-ticket mx-3"></i>GIẢM GIÁ</div>
         <div class="col-12">
           <div class="row">
-            <div class="col-6">
+            <div class="col-4">
               <span>Nhập mã giảm:</span>
-              <p>Đây là ô nhập mã giảm giá</p>
             </div>
-            <div class="col-3">
-              <p>Đề tạm</p>
+            <div class="col-6 d-flex">
+              <a-input placeholder="Nhập mã giảm giá..." class="me-3" />
+              <a class="btn btn-2 text-white w-50">Sử dụng</a>
             </div>
-            <div class="col-3">
-              <p class="text-end">- 13.000 vnđ</p>
+            <div class="col-2">
+              <p class="text-end">-13.000 vnđ</p>
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="row">
-            <div class="col-6">
-              <span>Điểm hiện có:</span>
-              <p>100</p>
+        <div class="col-12 mt-3">
+          <div class="row d-flex">
+            <div class="col-4">
+              <span>Điểm hiện có: {{ userInfo.point }}</span>
             </div>
-            <div class="col-3">
-              <span>Nhập điểm:</span>
-              <p>Đây là ô nhập điểm</p>
+            <div class="col-6 d-flex">
+              <a-input placeholder="Nhập mã giảm giá..." class="me-3" />
+              <a class="btn btn-2 text-white w-50">Sử dụng</a>
             </div>
-            <div class="col-3">
-              <p class="text-end">- 13.000 vnđ</p>
+            <div class="col-2">
+              <p class="text-end">-13.000 vnđ</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row mt-2">
+      <div class="row mt-3">
         <div class="col-6"></div>
         <div class="col-6">
           <div class="row">
@@ -210,7 +209,7 @@ export default {
       const clickedSeat = document.getElementById(id);
       const index = listSeat.value.findIndex(item => item.key == id);
       const seatCurrent = seats.value.filter(item => item.id === id)[0]
-      console.log(seatCurrent);
+
       if (index != -1) {
         listSeat.value.splice(index, 1);
         updateSeatsAmount(seatCurrent.type_seat, -1);
@@ -238,17 +237,17 @@ export default {
     })
     const ContinuetoPaymentinfo = (seats, card) => {
       if (seats.length > 0) {
-        const  data = reactive({
+        const data = reactive({
           seats: seats,
-          typeCard : card
+          typeCard: card
         });
         axios.post("api/vnpay_payment", data)
           .then((reponse) => {
-            if(reponse.data.code == "00"){
+            if (reponse.data.code == "00") {
               window.location.href = reponse.data.data
             }
           })
-      }else{
+      } else {
         alert("Hãy chọn ghế ngồi!");
       }
     }
