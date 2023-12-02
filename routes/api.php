@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\client\Auth\LoginClientController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\client\MovieControler;
@@ -46,7 +47,7 @@ Route::middleware(['auth:sanctum', 'auth:admin'])->group(function () {
 
     Route::prefix('room')->group(function () {
         Route::get('index', [RoomController::class, 'index']);
-        Route::post('create', [RoomController::class, 'create']);
+        Route::post('create', [RoomController::class, 'store']);
         Route::get('{id}/edit', [RoomController::class, 'edit']);
         Route::put('{id}', [RoomController::class, 'update']);
         Route::delete('{id}', [RoomController::class, 'delete']);
@@ -61,8 +62,7 @@ Route::middleware(['auth:sanctum', 'auth:admin'])->group(function () {
 
     Route::prefix('movie')->group(function () {
         Route::get('index', [MovieController::class, 'index']);
-        Route::get('create', [MovieController::class, 'create']);
-        Route::post('', [MovieController::class, 'store']);
+        Route::post('create', [MovieController::class, 'store']);
         Route::get('{id}/edit', [MovieController::class, 'edit']);
         Route::put('{id}', [MovieController::class, 'update']);
         Route::delete('{id}', [MovieController::class, 'delete']);
@@ -70,11 +70,18 @@ Route::middleware(['auth:sanctum', 'auth:admin'])->group(function () {
 
     Route::prefix('schedule')->group(function () {
         Route::get('index', [ScheduleController::class, 'index']);
-        Route::get('create', [ScheduleController::class, 'create']);
-        Route::post('', [ScheduleController::class, 'store']);
+        Route::post('create', [ScheduleController::class, 'store']);
         Route::get('{id}/edit', [ScheduleController::class, 'edit']);
         Route::put('{id}', [ScheduleController::class, 'update']);
         Route::delete('{id}', [ScheduleController::class, 'delete']);
+    });
+
+    Route::prefix('voucher')->group(function () {
+        Route::get('index', [VoucherController::class, 'index']);
+        Route::post('create', [VoucherController::class, 'store']);
+        Route::get('{id}/edit', [VoucherController::class, 'edit']);
+        Route::put('{id}', [VoucherController::class, 'update']);
+        Route::delete('{id}', [VoucherController::class, 'delete']);
     });
 });
 

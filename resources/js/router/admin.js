@@ -105,6 +105,23 @@ const admin = [
                 name: "admin-schedules-edit",
                 component: () => import("../pages/admin/schedules/Edit.vue"),
             },
+
+            // quản lý mã giảm giá
+            {
+                path: "vouchers",
+                name: "admin-vouchers",
+                component: () => import("../pages/admin/vouchers/Index.vue")
+            },
+            {
+                path: "vouchers/create",
+                name: "admin-vouchers-create",
+                component: () => import("../pages/admin/vouchers/Create.vue")
+            },
+            {
+                path: "vouchers/:id/edit",
+                name: "admin-vouchers-edit",
+                component: () => import("../pages/admin/vouchers/Edit.vue")
+            }
         ],
         beforeEnter: (to, from, next) => {
             if (localStorage.getItem("admin_token") == null) {
@@ -114,6 +131,8 @@ const admin = [
             }
         },
     },
+
+    
     // Đăng ký đăng nhập
     {
         path: "/admin/login",

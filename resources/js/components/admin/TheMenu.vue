@@ -111,6 +111,25 @@
                 </a-menu-item>
             </a-menu-item-group>
         </a-sub-menu>
+        <a-sub-menu >
+            <template #icon>
+                <i class="fa-solid fa-ticket"></i>
+            </template>
+            <template #title>Quản lý mã</template>
+            <a-menu-item-group key="g7">
+                <template #title>Mã giảm giá</template>
+                <a-menu-item key="admin-vouchers">
+                    <router-link :to="{ name: 'admin-vouchers' }" class="text-decoration-none">
+                        <span>Danh sách mã giảm giá</span>
+                    </router-link>
+                </a-menu-item>
+                <a-menu-item key="admin-vouchers-create">
+                    <router-link :to="{ name: 'admin-vouchers-create' }" class="text-decoration-none">
+                        <span>Thêm mã giảm giá</span>
+                    </router-link>
+                </a-menu-item>
+            </a-menu-item-group>
+        </a-sub-menu>
     </a-menu>
 </template>
 

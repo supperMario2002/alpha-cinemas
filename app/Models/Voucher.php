@@ -11,7 +11,9 @@ class Voucher extends Model
 
     protected $table = 'vouchers';
 
-    protected $fillable = ['name', 'quality', 'discount', 'date_start', 'date_end'];
+    protected $fillable = ['name', 'quatity', 'discount', 'date_start', 'date_end'];
+
+    public $timestamps = false;
 
     public function tickets(){
         return $this->hasMany(Ticket::class, 'voucher_id', 'id');

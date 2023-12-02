@@ -15,7 +15,7 @@ class RoomController extends Controller
         return response()->json($room);
     }
 
-    public function create(RoomRequest $request)
+    public function store(RoomRequest $request)
     {
         $create = Room::create([
             "name" => $request->name,
