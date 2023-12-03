@@ -91,9 +91,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import { storeToRefs } from "pinia";
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import { useRouter } from 'vue-router';
 import { SaveInfoLogin } from '../../stores/helper.js'
 export default defineComponent({

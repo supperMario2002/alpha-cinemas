@@ -4,6 +4,8 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import Antd from "ant-design-vue";
 import axios from "axios";
+import { notification } from 'ant-design-vue';
+window.notification = notification;
 window.axios = axios;
 axios.defaults.baseURL = "http://127.0.0.1:8000";
 import App from "../js/App.vue";

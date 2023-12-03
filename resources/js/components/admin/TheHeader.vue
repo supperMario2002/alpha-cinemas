@@ -21,9 +21,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { UserOutlined } from "@ant-design/icons-vue";
 import TheMenu from "./TheMenu.vue";
-import axios from "axios";
 import { useRouter } from "vue-router"; 
 export default defineComponent({
     setup() {
@@ -62,7 +60,6 @@ export default defineComponent({
         };
     },
     components: {
-        UserOutlined,
         TheMenu,
     },
 });
